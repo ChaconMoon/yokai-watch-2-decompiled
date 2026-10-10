@@ -1,0 +1,12 @@
+# Ignorar ROMs y ejecutables comerciales protegidos por derechos de autor
+*.3ds
+*.cia
+*.cxi
+*.bin
+*.raw
+.code
+code
+extracted/
+build/
+*.o
+*.elf
