@@ -1,4 +1,4 @@
-# yokai-watch-2-decompiled
+# Yo-kai Watch 2: Psychic Specters — Decompilation
 
 A work-in-progress matching decompilation of *Yo-kai Watch 2: Psychic Specters* (*Mentespectros / Shin'uchi*, Level-5, 2014–2017) for the Nintendo 3DS.
 
