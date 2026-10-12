@@ -1,0 +1,23 @@
+{
+  "$schema": "https://raw.githubusercontent.com/encounter/objdiff/main/config.schema.json",
+  "min_version": "2.0.0",
+  "custom_make": "make",
+  "build_target": false,
+  "build_base": true,
+  "watch_patterns": [
+    "src/**/*.c",
+    "src/**/*.cpp",
+    "include/**/*.h"
+  ],
+  "units": [
+    {
+      "name": "func_0010B6D0",
+      "target_path": "expected/func_0010B6D0.o",
+      "base_path": "build/src/system/func_0010B6D0.o",
+      "source_path": "src/system/func_0010B6D0.c",
+      "metadata": {
+        "complete": true
+      }
+    }
+  ]
+}

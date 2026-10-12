@@ -10,6 +10,7 @@ and updates statistics and the README table in a reproducible, mathematical mann
 
 import argparse
 import csv
+import json
 import os
 import re
 import sys
@@ -18,6 +19,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 CONFIG_DIR = PROJECT_ROOT / "config"
 README_FILE = PROJECT_ROOT / "README.md"
+OBJDIFF_CONFIG = PROJECT_ROOT / "objdiff.json"
 MANIFEST_CSV = CONFIG_DIR / "functions.csv"
 if not MANIFEST_CSV.exists() and (CONFIG_DIR / "functions_candidates.csv").exists():
     MANIFEST_CSV = CONFIG_DIR / "functions_candidates.csv"
@@ -159,6 +161,56 @@ def update_readme(readme_path: Path, progress_table: str, manifest_table: str):
     return True
 
 
+def update_objdiff_config(functions):
+    src_dir = PROJECT_ROOT / "src"
+    source_files = list(src_dir.rglob("*.c")) + list(src_dir.rglob("*.cpp"))
+    file_map = {sf.stem: sf.relative_to(PROJECT_ROOT) for sf in source_files}
+
+    units = []
+    for f in functions:
+        sym = f["symbol"]
+        status = f["status"].lower()
+        is_matched = (status == "matched")
+
+        if sym in file_map:
+            src_rel = str(file_map[sym])
+            base_o = f"build/{file_map[sym].with_suffix('.o')}"
+        elif is_matched:
+            src_rel = f"src/system/{sym}.c"
+            base_o = f"build/src/system/{sym}.o"
+        else:
+            continue
+
+        units.append({
+            "name": sym,
+            "target_path": f"expected/{sym}.o",
+            "base_path": base_o,
+            "source_path": src_rel,
+            "metadata": {
+                "complete": is_matched
+            }
+        })
+
+    config = {
+        "$schema": "https://raw.githubusercontent.com/encounter/objdiff/main/config.schema.json",
+        "min_version": "2.0.0",
+        "custom_make": "make",
+        "build_target": False,
+        "build_base": True,
+        "watch_patterns": [
+            "src/**/*.c",
+            "src/**/*.cpp",
+            "include/**/*.h"
+        ],
+        "units": units
+    }
+
+    with open(OBJDIFF_CONFIG, "w", encoding="utf-8") as f:
+        json.dump(config, f, indent=2)
+
+    print("✅ objdiff.json automatically synchronized.")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Progress auditor for Yo-kai Watch 2 decompilation")
     parser.add_argument("--update-readme", action="store_true", help="Automatically update markdown tables in README.md")
@@ -181,6 +233,9 @@ def main():
     if args.update_readme:
         update_readme(README_FILE, progress_table, manifest_table)
 
+    update_objdiff_config(functions)
+
 
 if __name__ == "__main__":
     main()
+
