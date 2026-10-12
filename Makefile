@@ -6,12 +6,16 @@ PYTHON   := python3
 TOOLS    := tools
 EXTRACT  := $(PYTHON) $(TOOLS)/extract_rom.py
 PROGRESS := $(PYTHON) $(TOOLS)/audit_progress.py
+CHECK    := $(PYTHON) $(TOOLS)/check_match.py
 
 CC       := arm-none-eabi-gcc
 AS       := arm-none-eabi-as
 CFLAGS   := -c -mcpu=mpcore -O3 -I . -I include
 
-.PHONY: all extract progress info clean distclean
+C_SRCS   := $(shell find src -name '*.c' 2>/dev/null)
+OBJS     := $(patsubst src/%.c, build/src/%.o, $(C_SRCS))
+
+.PHONY: all extract progress check info clean distclean
 
 all: info
 
@@ -20,8 +24,9 @@ info:
 	@echo "  Yo-kai Watch 2: Psychic Specters — Decompilation (3DS)"
 	@echo "============================================================"
 	@echo "Available targets:"
-	@echo "  make extract    - Inspect ROM and decompress 'code.bin'"
+	@echo "  make check      - Compile and verify byte-matching of implemented functions"
 	@echo "  make progress   - Audit progress and update README tables"
+	@echo "  make extract    - Inspect ROM and decompress 'code.bin'"
 	@echo "  make clean      - Clean temporary build artifacts"
 	@echo "  make distclean  - Also remove extracted binaries in 'extracted/'"
 	@echo ""
@@ -38,6 +43,9 @@ extract:
 
 progress:
 	@$(PROGRESS) --update-readme
+
+check: $(OBJS)
+	@$(CHECK)
 
 build/%.o: %.c
 	@mkdir -p $(dir $@)
