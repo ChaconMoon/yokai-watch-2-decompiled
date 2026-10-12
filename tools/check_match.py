@@ -11,6 +11,7 @@ import argparse
 import csv
 import os
 import re
+import struct
 import subprocess
 import sys
 import tempfile
@@ -72,6 +73,33 @@ def get_symbols_from_elf(obj_path: Path):
     return symbols
 
 
+def get_relocations_from_elf(obj_path: Path):
+    """Parses relocations from .rel.text or .rela.text using arm-none-eabi-readelf."""
+    cmd = ["arm-none-eabi-readelf", "-r", "-W", str(obj_path)]
+    try:
+        out = subprocess.check_output(cmd, text=True, stderr=subprocess.PIPE)
+    except subprocess.CalledProcessError as e:
+        print(f"Error running readelf -r on {obj_path}: {e}")
+        return []
+
+    relocs = []
+    for line in out.splitlines():
+        parts = line.strip().split()
+        if len(parts) >= 5 and "R_ARM_" in parts[2]:
+            try:
+                offset = int(parts[0], 16)
+                rtype = parts[2]
+                sym_name = parts[-1]
+                relocs.append({
+                    "offset": offset,
+                    "type": rtype,
+                    "symbol": sym_name
+                })
+            except ValueError:
+                continue
+    return relocs
+
+
 def extract_section_bytes(obj_path: Path, section=".text"):
     with tempfile.NamedTemporaryFile(delete=False) as tmp:
         tmp_name = tmp.name
@@ -129,6 +157,7 @@ def main():
         if not symbols:
             continue
 
+        relocs = get_relocations_from_elf(obj)
         text_bytes = extract_section_bytes(obj, ".text")
 
         for sym, sym_info in symbols.items():
@@ -163,15 +192,39 @@ def main():
             actual_slice = text_bytes[obj_off : obj_off + obj_size]
 
             comp_len = min(len(expected_slice), len(actual_slice))
-            is_match = (expected_slice == actual_slice)
+
+            # Identify relocations belonging to this function
+            fn_relocs = [r for r in relocs if obj_off <= r["offset"] < obj_off + obj_size]
+            reloc_byte_indices = set()
+            reloc_details = []
+            for r in fn_relocs:
+                rel_off = r["offset"] - obj_off
+                if r["type"] == "R_ARM_ABS32":
+                    for b in range(4):
+                        reloc_byte_indices.add(rel_off + b)
+                    if rel_off + 4 <= len(expected_slice):
+                        target_addr = struct.unpack_from("<I", expected_slice, rel_off)[0]
+                        reloc_details.append(f"{r['symbol']} -> 0x{target_addr:08X}")
+                    else:
+                        reloc_details.append(r["symbol"])
+
+            # Verify non-relocation bytes match byte-for-byte
+            code_diffs = [
+                i for i in range(comp_len)
+                if i not in reloc_byte_indices and expected_slice[i] != actual_slice[i]
+            ]
+            length_match = (len(expected_slice) == len(actual_slice))
+            is_match = length_match and (len(code_diffs) == 0)
 
             if is_match:
                 matched_count += 1
-                print(f"  \033[92m>>> MATCH <<<\033[0m: {sym} (0x{addr:08X}) — {size} B identical")
+                detail_str = ""
+                if reloc_details:
+                    detail_str = f" [reloc: {', '.join(reloc_details)}]"
+                print(f"  \033[92m>>> MATCH <<<\033[0m: {sym} (0x{addr:08X}) — {size} B identical{detail_str}")
             else:
                 mismatched_count += 1
-                diff_count = sum(1 for a, b in zip(expected_slice[:comp_len], actual_slice[:comp_len]) if a != b)
-                diff_count += abs(len(expected_slice) - len(actual_slice))
+                diff_count = len(code_diffs) + abs(len(expected_slice) - len(actual_slice))
                 print(f"  \033[91m>>> MISMATCH <<<\033[0m: {sym} (0x{addr:08X})")
                 print(f"      Expected ({len(expected_slice)} B): {expected_slice[:16].hex()}...")
                 print(f"      Compiled ({len(actual_slice)} B): {actual_slice[:16].hex()}...")
