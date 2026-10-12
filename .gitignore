@@ -1,4 +1,4 @@
-# Ignorar ROMs y ejecutables comerciales protegidos por derechos de autor
+# Ignore copyrighted ROMs and commercial binaries
 *.3ds
 *.cia
 *.cxi
@@ -10,3 +10,7 @@ extracted/
 build/
 *.o
 *.elf
+
+# Local reverse-engineering notes and scratchpads
+notes/
+*.local.md
