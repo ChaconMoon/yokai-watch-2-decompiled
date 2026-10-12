@@ -2,38 +2,43 @@
 #  Makefile — Yo-kai Watch 2 Decompilation (Nintendo 3DS)
 # ============================================================
 
-PYTHON  := python3
-TOOLS   := tools
-EXTRACT := $(PYTHON) $(TOOLS)/extract_rom.py
+PYTHON   := python3
+TOOLS    := tools
+EXTRACT  := $(PYTHON) $(TOOLS)/extract_rom.py
+PROGRESS := $(PYTHON) $(TOOLS)/audit_progress.py
 
-.PHONY: all extract info clean distclean
+.PHONY: all extract progress info clean distclean
 
 all: info
 
 info:
 	@echo "============================================================"
-	@echo "  Yo-kai Watch 2: Mentespectros — Decompilación (3DS)"
+	@echo "  Yo-kai Watch 2: Psychic Specters — Decompilation (3DS)"
 	@echo "============================================================"
-	@echo "Comandos disponibles:"
-	@echo "  make extract    - Inspecciona la ROM y descomprime 'code.bin'"
-	@echo "  make clean      - Limpia artefactos temporales de compilación"
-	@echo "  make distclean  - Elimina también binarios extraídos en 'extracted/'"
+	@echo "Available targets:"
+	@echo "  make extract    - Inspect ROM and decompress 'code.bin'"
+	@echo "  make progress   - Audit progress and update README tables"
+	@echo "  make clean      - Clean temporary build artifacts"
+	@echo "  make distclean  - Also remove extracted binaries in 'extracted/'"
 	@echo ""
 	@if [ -f "extracted/code.raw.bin" ]; then \
-		echo "✓ Ejecutable descomprimido presente: extracted/code.raw.bin"; \
+		echo "✓ Decompressed executable present: extracted/code.raw.bin"; \
 	elif [ -f "extracted/code.bin" ]; then \
-		echo "✓ Ejecutable 'code.bin' detectado en extracted/"; \
+		echo "✓ Executable 'code.bin' detected in extracted/"; \
 	else \
-		echo "⚠️ Pendiente de extraer: ejecuta 'make extract' con la ROM descifrada"; \
+		echo "⚠️ Extraction pending: run 'make extract' with a decrypted ROM"; \
 	fi
 
 extract:
 	@$(EXTRACT)
 
+progress:
+	@$(PROGRESS) --update-readme
+
 clean:
 	@rm -rf build/
-	@echo "Build limpio."
+	@echo "Build cleaned."
 
 distclean: clean
 	@rm -rf extracted/
-	@echo "Binarios extraídos eliminados."
+	@echo "Extracted binaries removed."
