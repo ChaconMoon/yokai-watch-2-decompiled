@@ -7,6 +7,7 @@ TOOLS    := tools
 EXTRACT  := $(PYTHON) $(TOOLS)/extract_rom.py
 PROGRESS := $(PYTHON) $(TOOLS)/audit_progress.py
 CHECK    := $(PYTHON) $(TOOLS)/check_match.py
+DUMP     := $(PYTHON) $(TOOLS)/dump_asm.py
 
 CC       := arm-none-eabi-gcc
 AS       := arm-none-eabi-as
@@ -15,7 +16,7 @@ CFLAGS   := -c -mcpu=mpcore -O3 -I . -I include
 C_SRCS   := $(shell find src -name '*.c' 2>/dev/null)
 OBJS     := $(patsubst src/%.c, build/src/%.o, $(C_SRCS))
 
-.PHONY: all extract progress check info clean distclean
+.PHONY: all extract progress check dump info clean distclean
 
 all: info
 
@@ -25,6 +26,7 @@ info:
 	@echo "============================================================"
 	@echo "Available targets:"
 	@echo "  make check      - Compile and verify byte-matching of implemented functions"
+	@echo "  make dump       - Dump clean assembly for decomp.me (e.g. make dump FUNC=0x0010B6D8)"
 	@echo "  make progress   - Audit progress and update README tables"
 	@echo "  make extract    - Inspect ROM and decompress 'code.bin'"
 	@echo "  make clean      - Clean temporary build artifacts"
@@ -46,6 +48,13 @@ progress:
 
 check: $(OBJS)
 	@$(CHECK)
+
+dump:
+	@if [ -z "$(FUNC)" ]; then \
+		echo "Usage: make dump FUNC=<address_or_symbol> [e.g. make dump FUNC=0x0010B6D8]"; \
+	else \
+		$(DUMP) $(FUNC) --plain; \
+	fi
 
 build/%.o: %.c
 	@mkdir -p $(dir $@)
