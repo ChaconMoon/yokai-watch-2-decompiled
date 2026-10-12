@@ -9,14 +9,138 @@
     "src/**/*.cpp",
     "include/**/*.h"
   ],
+  "progress_categories": [
+    {
+      "id": "game",
+      "name": "Game Engine (Level-5)"
+    },
+    {
+      "id": "sdk",
+      "name": "Nintendo CTR-SDK"
+    },
+    {
+      "id": "crt",
+      "name": "C Runtime / Startup"
+    }
+  ],
   "units": [
     {
       "name": "func_0010B6D0",
       "target_path": "expected/func_0010B6D0.o",
       "base_path": "build/src/system/func_0010B6D0.o",
-      "source_path": "src/system/func_0010B6D0.c",
       "metadata": {
-        "complete": true
+        "complete": true,
+        "source_path": "src/system/func_0010B6D0.c",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "func_0010B6D8",
+      "target_path": "expected/func_0010B6D8.o",
+      "base_path": "build/src/system/func_0010B6D8.o",
+      "metadata": {
+        "complete": false,
+        "source_path": "src/system/func_0010B6D8.c",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "func_00104D18",
+      "target_path": "expected/func_00104D18.o",
+      "base_path": "build/src/system/func_00104D18.o",
+      "metadata": {
+        "complete": false,
+        "source_path": "src/system/func_00104D18.c",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "func_001063F4",
+      "target_path": "expected/func_001063F4.o",
+      "base_path": "build/src/sdk/func_001063F4.o",
+      "metadata": {
+        "complete": false,
+        "source_path": "src/sdk/func_001063F4.c",
+        "progress_categories": [
+          "sdk"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "clear_bss",
+      "target_path": "expected/clear_bss.o",
+      "base_path": "build/src/crt/clear_bss.o",
+      "metadata": {
+        "complete": false,
+        "source_path": "src/crt/clear_bss.c",
+        "progress_categories": [
+          "crt"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "svcExitProcess",
+      "target_path": "expected/svcExitProcess.o",
+      "base_path": "build/src/sdk/svcExitProcess.o",
+      "metadata": {
+        "complete": false,
+        "source_path": "src/sdk/svcExitProcess.c",
+        "progress_categories": [
+          "sdk"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "func_0010B6E4",
+      "target_path": "expected/func_0010B6E4.o",
+      "base_path": "build/src/system/func_0010B6E4.o",
+      "metadata": {
+        "complete": false,
+        "source_path": "src/system/func_0010B6E4.c",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
       }
     }
   ]

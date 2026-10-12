@@ -161,35 +161,84 @@ def update_readme(readme_path: Path, progress_table: str, manifest_table: str):
     return True
 
 
+PROGRESS_CATEGORIES = [
+    {"id": "game", "name": "Game Engine (Level-5)"},
+    {"id": "sdk", "name": "Nintendo CTR-SDK"},
+    {"id": "crt", "name": "C Runtime / Startup"}
+]
+
+DEFAULT_SCRATCH = {
+    "platform": "n3ds",
+    "compiler": "armcc_40_821",
+    "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+}
+
+
+def categorize_function(func):
+    sym = func.get("symbol", "").lower()
+    desc = func.get("description", "").lower()
+    if sym.startswith("svc") or "ctr" in desc or "syscall" in desc or "sdk" in desc:
+        return "sdk"
+    if sym in ("clear_bss", "_start", "__rt_entry") or "crt" in desc or "startup" in desc:
+        return "crt"
+    return "game"
+
+
 def update_objdiff_config(functions):
     src_dir = PROJECT_ROOT / "src"
     source_files = list(src_dir.rglob("*.c")) + list(src_dir.rglob("*.cpp"))
     file_map = {sf.stem: sf.relative_to(PROJECT_ROOT) for sf in source_files}
 
     units = []
+    seen_symbols = set()
+
     for f in functions:
         sym = f["symbol"]
+        seen_symbols.add(sym)
         status = f["status"].lower()
         is_matched = (status == "matched")
+        category = categorize_function(f)
 
         if sym in file_map:
             src_rel = str(file_map[sym])
             base_o = f"build/{file_map[sym].with_suffix('.o')}"
-        elif is_matched:
-            src_rel = f"src/system/{sym}.c"
-            base_o = f"build/src/system/{sym}.o"
         else:
-            continue
+            folder = "sdk" if category == "sdk" else ("crt" if category == "crt" else "system")
+            src_rel = f"src/{folder}/{sym}.c"
+            base_o = f"build/src/{folder}/{sym}.o"
 
-        units.append({
+        unit = {
             "name": sym,
             "target_path": f"expected/{sym}.o",
             "base_path": base_o,
-            "source_path": src_rel,
             "metadata": {
-                "complete": is_matched
-            }
-        })
+                "complete": is_matched,
+                "source_path": src_rel,
+                "progress_categories": [category]
+            },
+            "scratch": DEFAULT_SCRATCH
+        }
+        units.append(unit)
+
+    # Add any extra source files discovered in src/ that were not in manifest
+    for stem, path in file_map.items():
+        if stem not in seen_symbols:
+            category = "game"
+            if "sdk" in path.parts:
+                category = "sdk"
+            elif "crt" in path.parts:
+                category = "crt"
+            units.append({
+                "name": stem,
+                "target_path": f"expected/{stem}.o",
+                "base_path": f"build/{path.with_suffix('.o')}",
+                "metadata": {
+                    "complete": True,
+                    "source_path": str(path),
+                    "progress_categories": [category]
+                },
+                "scratch": DEFAULT_SCRATCH
+            })
 
     config = {
         "$schema": "https://raw.githubusercontent.com/encounter/objdiff/main/config.schema.json",
@@ -202,6 +251,7 @@ def update_objdiff_config(functions):
             "src/**/*.cpp",
             "include/**/*.h"
         ],
+        "progress_categories": PROGRESS_CATEGORIES,
         "units": units
     }
 

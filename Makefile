@@ -7,6 +7,10 @@ TOOLS    := tools
 EXTRACT  := $(PYTHON) $(TOOLS)/extract_rom.py
 PROGRESS := $(PYTHON) $(TOOLS)/audit_progress.py
 
+CC       := arm-none-eabi-gcc
+AS       := arm-none-eabi-as
+CFLAGS   := -c -mcpu=mpcore -O3 -I . -I include
+
 .PHONY: all extract progress info clean distclean
 
 all: info
@@ -34,6 +38,10 @@ extract:
 
 progress:
 	@$(PROGRESS) --update-readme
+
+build/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $< -o $@
 
 clean:
 	@rm -rf build/
