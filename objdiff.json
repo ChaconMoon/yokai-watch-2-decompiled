@@ -112,10 +112,10 @@
     {
       "name": "svcExitProcess",
       "target_path": "expected/svcExitProcess.o",
-      "base_path": "build/src/sdk/svcExitProcess.o",
+      "base_path": "build/src/system/svcExitProcess.o",
       "metadata": {
-        "complete": false,
-        "source_path": "src/sdk/svcExitProcess.c",
+        "complete": true,
+        "source_path": "src/system/svcExitProcess.c",
         "progress_categories": [
           "sdk"
         ]
