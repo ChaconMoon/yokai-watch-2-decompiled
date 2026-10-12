@@ -56,6 +56,9 @@ dump:
 		$(DUMP) $(FUNC) --plain; \
 	fi
 
+
+build/src/system/func_00104D18.o: CFLAGS += -ffixed-r3 -ffixed-r2
+
 build/%.o: %.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $< -o $@

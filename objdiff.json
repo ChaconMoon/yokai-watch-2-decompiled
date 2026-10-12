@@ -46,7 +46,7 @@
       "target_path": "expected/func_0010B6D8.o",
       "base_path": "build/src/system/func_0010B6D8.o",
       "metadata": {
-        "complete": false,
+        "complete": true,
         "source_path": "src/system/func_0010B6D8.c",
         "progress_categories": [
           "game"
@@ -63,7 +63,7 @@
       "target_path": "expected/func_00104D18.o",
       "base_path": "build/src/system/func_00104D18.o",
       "metadata": {
-        "complete": false,
+        "complete": true,
         "source_path": "src/system/func_00104D18.c",
         "progress_categories": [
           "game"

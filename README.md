@@ -30,9 +30,9 @@ Progress is split into categories so that assembly is never counted as C decompi
 
 | Category | Count | Meaning |
 | :--- | :---: | :--- |
-| **Real C-decompiled matched functions** | **1** / ~18,292 (0.01%) | Functions implemented in C and verified byte-exact (func_0010B6D0) |
-| **Complete functions (C + verified original library assembly)** | **1** / ~18,292 (0.01%) | Real C, plus library functions whose original source is assembly |
-| **Real C-decompiled matched bytes** | **8** / 7,737,344 bytes (0.0001%) | Real-C-only byte progress; `asm_stubs/`, inline ASM and `scratches/` are excluded |
+| **Real C-decompiled matched functions** | **3** / ~18,292 (0.02%) | Functions implemented in C and verified byte-exact (func_0010B6D0, func_0010B6D8, func_00104D18) |
+| **Complete functions (C + verified original library assembly)** | **3** / ~18,292 (0.02%) | Real C, plus library functions whose original source is assembly |
+| **Real C-decompiled matched bytes** | **36** / 7,737,344 bytes (0.0005%) | Real-C-only byte progress; `asm_stubs/`, inline ASM and `scratches/` are excluded |
 | **Inline ASM / ASM stub matched functions** | **0** / ~18,292 | ASM implementations: library assembly and authorized inline exceptions |
 | **SDK / library byte-match identifications** | **0** / ~18,292 | CTR-SDK / Nintendo library functions identified separately |
 | **Named / mapped candidates** | **7** / ~18,292 | Functions cataloged in scratches with isolated disassembly |
@@ -59,8 +59,8 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | Virtual Address | Symbol / Name | Size (bytes) | Status | Description / Notes |
 | :--- | :--- | :---: | :---: | :--- |
 | `0x0010B6D0` | `func_0010B6D0` | 8 B | 🟢 Matched | Leaf identity stub (returns constant 0) |
-| `0x0010B6D8` | `func_0010B6D8` | 12 B | ⏳ Staged | Global pointer getter via literal pool (0x008602F8) |
-| `0x00104D18` | `func_00104D18` | 16 B | ⏳ Staged | Global 8-bit flag setter (0x00814E54) |
+| `0x0010B6D8` | `func_0010B6D8` | 12 B | 🟢 Matched | Global pointer getter via literal pool (0x008602F8) |
+| `0x00104D18` | `func_00104D18` | 16 B | 🟢 Matched | Global 8-bit flag setter (0x00814E54) |
 | `0x001063F4` | `func_001063F4` | 16 B | ⏳ Staged | CTR OS SystemConfig block field reader (0x1FF80000 + 0x40) |
 | `0x00100024` | `clear_bss` | 28 B | ⏳ Staged | CRT startup zeroing loop for .bss section |
 | `0x00104778` | `svcExitProcess` | 8 B | ⏳ Staged | CTR kernel syscall wrapper stub (svc 0x03) |
