@@ -14,3 +14,7 @@ build/
 # Local reverse-engineering notes and scratchpads
 notes/
 *.local.md
+# Local proprietary compilers & emulators
+tools/armcc/
+tools/*.zip
+tools/wibo
