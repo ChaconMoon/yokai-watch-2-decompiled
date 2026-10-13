@@ -112,10 +112,10 @@
     {
       "name": "svcExitProcess",
       "target_path": "expected/svcExitProcess.o",
-      "base_path": "build/src/system/svcExitProcess.o",
+      "base_path": "build/src/sdk/svcExitProcess.o",
       "metadata": {
         "complete": true,
-        "source_path": "src/system/svcExitProcess.c",
+        "source_path": "src/sdk/svcExitProcess.c",
         "progress_categories": [
           "sdk"
         ]
@@ -184,6 +184,193 @@
       "metadata": {
         "complete": true,
         "source_path": "src/system/func_0012FEC0.c",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "func_00130018",
+      "target_path": "expected/func_00130018.o",
+      "base_path": "build/src/system/func_00130018.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/system/func_00130018.c",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "svcSleepThread",
+      "target_path": "expected/svcSleepThread.o",
+      "base_path": "build/src/sdk/svcSleepThread.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/sdk/svcSleepThread.c",
+        "progress_categories": [
+          "sdk"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "func_0010678C",
+      "target_path": "expected/func_0010678C.o",
+      "base_path": "build/src/system/func_0010678C.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/system/func_0010678C.c",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "func_0010C894",
+      "target_path": "expected/func_0010C894.o",
+      "base_path": "build/src/system/func_0010C894.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/system/func_0010C894.c",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "func_00127520",
+      "target_path": "expected/func_00127520.o",
+      "base_path": "build/src/system/func_00127520.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/system/func_00127520.c",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "func_00127EEC",
+      "target_path": "expected/func_00127EEC.o",
+      "base_path": "build/src/system/func_00127EEC.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/system/func_00127EEC.c",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "func_0012CB00",
+      "target_path": "expected/func_0012CB00.o",
+      "base_path": "build/src/system/func_0012CB00.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/system/func_0012CB00.c",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "func_001300B0",
+      "target_path": "expected/func_001300B0.o",
+      "base_path": "build/src/system/func_001300B0.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/system/func_001300B0.c",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "func_0013F29C",
+      "target_path": "expected/func_0013F29C.o",
+      "base_path": "build/src/system/func_0013F29C.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/system/func_0013F29C.c",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "func_00171C78",
+      "target_path": "expected/func_00171C78.o",
+      "base_path": "build/src/system/func_00171C78.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/system/func_00171C78.c",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "func_0011054C",
+      "target_path": "expected/func_0011054C.o",
+      "base_path": "build/src/system/func_0011054C.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/system/func_0011054C.c",
         "progress_categories": [
           "game"
         ]

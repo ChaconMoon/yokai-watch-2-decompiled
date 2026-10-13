@@ -43,12 +43,12 @@ Progress is split into categories so that assembly is never counted as C decompi
 
 | Category | Count | Meaning |
 | :--- | :---: | :--- |
-| **Real C-decompiled matched functions** | **9** / ~18,292 (0.05%) | Functions implemented in C and verified byte-exact (func_0010B6D0, func_0010B6D8, func_00104D18, func_001063F4, clear_bss, svcExitProcess, func_0017656C, func_00301248, func_0012FEC0) |
-| **Complete functions (C + verified original library assembly)** | **9** / ~18,292 (0.05%) | Real C, plus library functions whose original source is assembly |
-| **Real C-decompiled matched bytes** | **112** / 7,737,344 bytes (0.0014%) | Real-C-only byte progress; `asm_stubs/`, inline ASM and `scratches/` are excluded |
+| **Real C-decompiled matched functions** | **19** / ~18,292 (0.10%) | Functions implemented in C and verified byte-exact (func_0010B6D0, func_0010B6D8, func_00104D18, func_001063F4, clear_bss, svcExitProcess, func_0017656C, func_00301248, func_0012FEC0, func_00130018, svcSleepThread, func_0010678C, func_0010C894, func_00127520, func_00127EEC, func_0012CB00, func_001300B0, func_0013F29C, func_00171C78) |
+| **Complete functions (C + verified original library assembly)** | **19** / ~18,292 (0.10%) | Real C, plus library functions whose original source is assembly |
+| **Real C-decompiled matched bytes** | **228** / 7,737,344 bytes (0.0029%) | Real-C-only byte progress; `asm_stubs/`, inline ASM and `scratches/` are excluded |
 | **Inline ASM / ASM stub matched functions** | **0** / ~18,292 | ASM implementations: library assembly and authorized inline exceptions |
 | **SDK / library byte-match identifications** | **0** / ~18,292 | CTR-SDK / Nintendo library functions identified separately |
-| **Named / mapped candidates** | **10** / ~18,292 | Functions cataloged in scratches with isolated disassembly |
+| **Named / mapped candidates** | **20** / ~18,292 | Functions cataloged in scratches with isolated disassembly |
 | **Initialized DATA** | Staged | `.rodata` / `.data` relocation and literal pool mapping |
 | **Total known functions** | ~18,292 | Estimated function count for the EU target |
 | **Region** | EU (`00040000001B2900`) | Multi-5 (PAL v1.0) |
@@ -81,6 +81,16 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x0017656C` | `func_0017656C` | 4 B | 🟢 Matched | Leaf empty void stub function |
 | `0x00301248` | `func_00301248` | 4 B | 🟢 Matched | Leaf empty void stub function |
 | `0x0012FEC0` | `func_0012FEC0` | 8 B | 🟢 Matched | Leaf boolean true stub (returns constant 1) |
+| `0x00130018` | `func_00130018` | 8 B | 🟢 Matched | Leaf boolean true stub (returns constant 1) |
+| `0x00151FBC` | `svcSleepThread` | 8 B | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x28) |
+| `0x0010678C` | `func_0010678C` | 16 B | 🟢 Matched | Global signed byte reader via literal pool (0x00814E00) |
+| `0x0010C894` | `func_0010C894` | 12 B | 🟢 Matched | Global pointer getter via literal pool (0x0086C8CC) |
+| `0x00127520` | `func_00127520` | 12 B | 🟢 Matched | Global pointer getter via literal pool (0x005F32AC) |
+| `0x00127EEC` | `func_00127EEC` | 12 B | 🟢 Matched | Global pointer getter via literal pool (0x00865F10) |
+| `0x0012CB00` | `func_0012CB00` | 12 B | 🟢 Matched | Global pointer getter via literal pool (0x00868A9C) |
+| `0x001300B0` | `func_001300B0` | 12 B | 🟢 Matched | Global pointer getter via literal pool (0x00868F10) |
+| `0x0013F29C` | `func_0013F29C` | 12 B | 🟢 Matched | Global pointer getter via literal pool (0x00867DA8) |
+| `0x00171C78` | `func_00171C78` | 12 B | 🟢 Matched | Global pointer getter via literal pool (0x0091B7B8) |
 
 <!-- MANIFEST_TABLE_END -->
 

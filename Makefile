@@ -61,6 +61,7 @@ dump:
 
 build/src/system/func_00104D18.o: CFLAGS += -ffixed-r3 -ffixed-r2
 build/src/sdk/func_001063F4.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
+build/src/system/func_0010678C.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
 
 build/%.o: %.c
 	@mkdir -p $(dir $@)
