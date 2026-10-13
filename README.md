@@ -83,6 +83,58 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 
 ---
 
+## Decompilation Roadmap (Candidate Tiers)
+
+The following candidates are organized by complexity tier from [`config/functions_classified.csv`](config/functions_classified.csv) to guide progressive bottom-up matching:
+
+### Tier 1: Trivial Stubs (4–8 bytes)
+Leaf identity routines, constant return stubs, and CTR-SDK syscall wrappers:
+
+| Virtual Address | Symbol | Size | Description |
+| :--- | :--- | :---: | :--- |
+| `0x0017656C` | `FUN_0017656c` | 4 B | Empty void stub function (`bx lr`) |
+| `0x00301248` | `FUN_00301248` | 4 B | Empty void stub function (`bx lr`) |
+| `0x0012FEC0` | `FUN_0012fec0` | 8 B | Boolean true stub (returns constant 1) |
+| `0x00130018` | `FUN_00130018` | 8 B | Boolean true stub (returns constant 1) |
+| `0x00151FBC` | `svcSleepThread` | 8 B | CTR kernel syscall wrapper stub (`svc 0x28`) |
+
+### Tier 2: Accessors & Global Getters (12–16 bytes)
+Single-field object readers and global pointer accessors via literal pools:
+
+| Virtual Address | Symbol | Size | Description |
+| :--- | :--- | :---: | :--- |
+| `0x0010678C` | `FUN_0010678c` | 16 B | Global signed byte reader via literal pool (`0x00814E00`) |
+| `0x0010C894` | `FUN_0010c894` | 12 B | Global pointer getter via literal pool (`0x0086C8CC`) |
+| `0x00127520` | `FUN_00127520` | 12 B | Global pointer getter via literal pool (`0x005F32AC`) |
+| `0x00127EEC` | `FUN_00127eec` | 12 B | Global pointer getter via literal pool (`0x00865F10`) |
+| `0x0012CB00` | `FUN_0012cb00` | 12 B | Global pointer getter via literal pool (`0x00868A9C`) |
+| `0x001300B0` | `FUN_001300b0` | 12 B | Global pointer getter via literal pool (`0x00868F10`) |
+| `0x0013F29C` | `FUN_0013f29c` | 12 B | Global pointer getter via literal pool (`0x00867DA8`) |
+| `0x00171C78` | `FUN_00171c78` | 12 B | Global pointer getter via literal pool (`0x0091B7B8`) |
+
+### Tier 3: Arithmetic, Logic & Object Structures (24 bytes)
+Local computations, atomic synchronizations, array indexers, and syscall wrappers:
+
+| Virtual Address | Symbol | Size | Description |
+| :--- | :--- | :---: | :--- |
+| `0x0011054C` | `FUN_0011054c` | 24 B | Struct header reset (zeros 8 bytes, sets byte 0 to 0xFF) |
+| `0x001274A0` | `FUN_001274a0` | 24 B | Atomic spinlock acquire loop (`ldrex/strex` synchronization) |
+| `0x001280A8` | `FUN_001280a8` | 24 B | Bounds-checked array element indexer with stride 8 |
+| `0x00137F28` | `FUN_00137f28` | 24 B | Conditional struct field pair store (offset `+0x14`) |
+| `0x001386D4` | `FUN_001386d4` | 24 B | Pointer null-check and boolean flag tester |
+| `0x0010AAA8` | `svcCreateEvent` | 24 B | CTR kernel syscall wrapper stub (`svc 0x21`) |
+| `0x0010AAC0` | `svcDuplicateHandle` | 24 B | CTR kernel syscall wrapper stub (`svc 0x38`) |
+
+### Tier 4: Wrappers & Forwarding Thunks (16 bytes)
+Null-checked method forwarding wrappers and tail calls:
+
+| Virtual Address | Symbol | Size | Description |
+| :--- | :--- | :---: | :--- |
+| `0x00130D38` | `FUN_00130d38` | 16 B | Null-checked method forwarding tail-call wrapper |
+| `0x00340858` | `FUN_00340858` | 16 B | Null-checked method forwarding tail-call wrapper |
+
+---
+
 ## Repository layout
 
 ```text
