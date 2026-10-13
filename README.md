@@ -4,7 +4,7 @@ A work-in-progress matching decompilation of *Yo-kai Watch 2: Psychic Specters* 
 
 The goal is C source that recompiles to a binary byte-for-byte identical to the original game code.
 
-Part of the **#DecompilandoEn358Dias** challenge.
+Part of the [**#DecompilandoEn358Dias**](https://github.com/ChaconMoon/Decompilation-in-358-2) challenge.
 
 ---
 
@@ -15,6 +15,19 @@ This repository does **NOT** contain the game ROM, any game assets, or any of th
 This repository is a **matching decompilation only**. It does not contain or produce a playable build or any redistributable game binary, and building it requires an original, legally-obtained copy of the game.
 
 All trademarks, characters, and the original game are property of Level-5 Inc. and Nintendo.
+
+---
+
+## AI Transparency Policy
+
+This project is part of the [**#DecompilandoEn358Dias**](https://github.com/ChaconMoon/Decompilation-in-358-2) learning challenge.
+
+In the interest of full transparency and honesty:
+- **AI-Generated and Assisted Code**: AI (Gemini / Antigravity) is actively used in this project not only as an educational tutor for low-level concepts, but also to generate, draft, and test C implementations for matching. Several functions in this repository have been written or drafted with AI rather than written purely by hand.
+- **Educational Laboratory**: The primary value of this project is learning to navigate ARM11 assembly, compiler quirks (RVCT/ARMCC), and 3DS reverse engineering. Carlos does not claim sole human authorship over code or solutions generated or co-authored with AI.
+- **No False Claims**: We do not pretend this repository is entirely handcrafted. Being clear about what is AI-assisted and what is understood is central to the integrity of this journey.
+
+For Carlos's full personal statement on the role, ethics, and daily reality of AI in this challenge, see the English [**Transparency in AI Usage**](https://github.com/ChaconMoon/Decompilation-in-358-2/blob/master/docs/AI-use-policy.MD) declaration in the main repository.
 
 ---
 
