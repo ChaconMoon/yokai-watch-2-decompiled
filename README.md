@@ -43,12 +43,12 @@ Progress is split into categories so that assembly is never counted as C decompi
 
 | Category | Count | Meaning |
 | :--- | :---: | :--- |
-| **Real C-decompiled matched functions** | **6** / ~18,292 (0.03%) | Functions implemented in C and verified byte-exact (func_0010B6D0, func_0010B6D8, func_00104D18, func_001063F4, clear_bss, svcExitProcess) |
-| **Complete functions (C + verified original library assembly)** | **6** / ~18,292 (0.03%) | Real C, plus library functions whose original source is assembly |
-| **Real C-decompiled matched bytes** | **96** / 7,737,344 bytes (0.0012%) | Real-C-only byte progress; `asm_stubs/`, inline ASM and `scratches/` are excluded |
+| **Real C-decompiled matched functions** | **9** / ~18,292 (0.05%) | Functions implemented in C and verified byte-exact (func_0010B6D0, func_0010B6D8, func_00104D18, func_001063F4, clear_bss, svcExitProcess, func_0017656C, func_00301248, func_0012FEC0) |
+| **Complete functions (C + verified original library assembly)** | **9** / ~18,292 (0.05%) | Real C, plus library functions whose original source is assembly |
+| **Real C-decompiled matched bytes** | **112** / 7,737,344 bytes (0.0014%) | Real-C-only byte progress; `asm_stubs/`, inline ASM and `scratches/` are excluded |
 | **Inline ASM / ASM stub matched functions** | **0** / ~18,292 | ASM implementations: library assembly and authorized inline exceptions |
 | **SDK / library byte-match identifications** | **0** / ~18,292 | CTR-SDK / Nintendo library functions identified separately |
-| **Named / mapped candidates** | **7** / ~18,292 | Functions cataloged in scratches with isolated disassembly |
+| **Named / mapped candidates** | **10** / ~18,292 | Functions cataloged in scratches with isolated disassembly |
 | **Initialized DATA** | Staged | `.rodata` / `.data` relocation and literal pool mapping |
 | **Total known functions** | ~18,292 | Estimated function count for the EU target |
 | **Region** | EU (`00040000001B2900`) | Multi-5 (PAL v1.0) |
@@ -78,6 +78,9 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x00100024` | `clear_bss` | 36 B | 🟢 Matched | CRT startup zeroing loop for .bss section |
 | `0x00104778` | `svcExitProcess` | 8 B | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x03) |
 | `0x0010B6E4` | `func_0010B6E4` | 280 B | 🟡 In Review | C++ class method (partially decompiled, ~82% match in decomp.me) |
+| `0x0017656C` | `func_0017656C` | 4 B | 🟢 Matched | Leaf empty void stub function |
+| `0x00301248` | `func_00301248` | 4 B | 🟢 Matched | Leaf empty void stub function |
+| `0x0012FEC0` | `func_0012FEC0` | 8 B | 🟢 Matched | Leaf boolean true stub (returns constant 1) |
 
 <!-- MANIFEST_TABLE_END -->
 
