@@ -1,8 +1,23 @@
-address,symbol,size,status,description
-0x0010B6D0,func_0010B6D0,8,matched,Leaf identity stub (returns constant 0)
-0x0010B6D8,func_0010B6D8,12,matched,Global pointer getter via literal pool (0x008602F8)
-0x00104D18,func_00104D18,16,matched,Global 8-bit flag setter (0x00814E54)
-0x001063F4,func_001063F4,16,matched,CTR OS SystemConfig block field reader (0x1FF80000 + 0x40)
-0x00100024,clear_bss,36,matched,CRT startup zeroing loop for .bss section
-0x00104778,svcExitProcess,8,matched,CTR kernel syscall wrapper stub (svc 0x03)
-0x0010B6E4,func_0010B6E4,280,staged,"C++ class method (flag check, vtable call, validation)"
+address,symbol,size,difficulty,status,description
+0x0017656C,FUN_0017656c,4,1_trivial,candidate,"Empty void stub function (bx lr)"
+0x00301248,FUN_00301248,4,1_trivial,candidate,"Empty void stub function (bx lr)"
+0x0012FEC0,FUN_0012fec0,8,1_trivial,candidate,"Boolean true stub (returns constant 1)"
+0x00130018,FUN_00130018,8,1_trivial,candidate,"Boolean true stub (returns constant 1)"
+0x00151FBC,svcSleepThread,8,1_trivial,candidate,"CTR kernel syscall wrapper stub (svc 0x28)"
+0x0010678C,FUN_0010678c,16,2_simple_accessor,candidate,"Global signed byte reader via literal pool (0x00814E00)"
+0x0010C894,FUN_0010c894,12,2_simple_accessor,candidate,"Global pointer getter via literal pool (0x0086C8CC)"
+0x00127520,FUN_00127520,12,2_simple_accessor,candidate,"Global pointer getter via literal pool (0x005F32AC)"
+0x00127EEC,FUN_00127eec,12,2_simple_accessor,candidate,"Global pointer getter via literal pool (0x00865F10)"
+0x0012CB00,FUN_0012cb00,12,2_simple_accessor,candidate,"Global pointer getter via literal pool (0x00868A9C)"
+0x001300B0,FUN_001300b0,12,2_simple_accessor,candidate,"Global pointer getter via literal pool (0x00868F10)"
+0x0013F29C,FUN_0013f29c,12,2_simple_accessor,candidate,"Global pointer getter via literal pool (0x00867DA8)"
+0x00171C78,FUN_00171c78,12,2_simple_accessor,candidate,"Global pointer getter via literal pool (0x0091B7B8)"
+0x0011054C,FUN_0011054c,24,3_arithmetic_logic,candidate,"Struct header reset (zeros 8 bytes, sets byte 0 to 0xFF)"
+0x001274A0,FUN_001274a0,24,3_arithmetic_logic,candidate,"Atomic spinlock acquire loop (ldrex/strex synchronization)"
+0x001280A8,FUN_001280a8,24,3_arithmetic_logic,candidate,"Bounds-checked array element indexer with stride 8"
+0x00137F28,FUN_00137f28,24,3_arithmetic_logic,candidate,"Conditional struct field pair store (offset +0x14)"
+0x001386D4,FUN_001386d4,24,3_arithmetic_logic,candidate,"Pointer null-check and boolean flag tester"
+0x0010AAA8,svcCreateEvent,24,3_arithmetic_logic,candidate,"CTR kernel syscall wrapper stub (svc 0x21)"
+0x0010AAC0,svcDuplicateHandle,24,3_arithmetic_logic,candidate,"CTR kernel syscall wrapper stub (svc 0x38)"
+0x00130D38,FUN_00130d38,16,5_simple_wrapper,candidate,"Null-checked method forwarding tail-call wrapper"
+0x00340858,FUN_00340858,16,5_simple_wrapper,candidate,"Null-checked method forwarding tail-call wrapper"
