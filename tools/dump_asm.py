@@ -108,13 +108,14 @@ def main():
 
     symbol = args.symbol or sym or f"func_{addr:08X}"
 
+    scan_stop = addr + size + 64 if args.size is None else addr + size
     cmd = ["arm-none-eabi-objdump", "-b", "binary", "-m", "arm"]
     if args.thumb:
         cmd += ["-M", "force-thumb"]
     cmd += [
         "-D", f"--adjust-vma={BASE:#x}",
         f"--start-address={addr:#x}",
-        f"--stop-address={addr + size:#x}",
+        f"--stop-address={scan_stop:#x}",
         str(BIN),
     ]
 
@@ -124,9 +125,13 @@ def main():
         print(f"❌ Error running arm-none-eabi-objdump: {e}", file=sys.stderr)
         return 1
 
-    # First pass: identify literal pool addresses referenced via PC-relative loads
+    # First pass: identify literal pool addresses and internal branch targets
     pool_targets = set()
-    parsed_lines = []
+    branch_targets = set()
+    raw_lines = []
+
+    BRANCH_RE = re.compile(r"^(bl|b(?:eq|ne|cs|cc|mi|pl|vs|vc|hi|ls|ge|lt|gt|le)?|cbz|cbnz)\s+(?:r\d+,\s*)?(?:0x)?([0-9a-fA-F]+)")
+
     for line in out.splitlines():
         m = LINE_RE.match(line)
         if not m:
@@ -135,16 +140,35 @@ def main():
         hexval = m.group(2)
         rest = m.group(3)
 
-        # Detect literal pool targets in objdump comments (e.g. '@ 0x10b6e0' or '@ 10b6e0')
-        comment_m = re.search(r"@\s*(?:0x)?([0-9a-fA-F]+)", rest)
-        if comment_m:
-            try:
-                target_ref = int(comment_m.group(1), 16)
-                if addr <= target_ref < addr + size:
-                    pool_targets.add(target_ref)
-            except ValueError:
-                pass
-        parsed_lines.append((line_addr, hexval, rest))
+        # Detect literal pool targets only from instructions within the nominal function
+        if line_addr < addr + size:
+            comment_m = re.search(r"@\s*(?:0x)?([0-9a-fA-F]+)", rest)
+            if comment_m:
+                try:
+                    target_ref = int(comment_m.group(1), 16)
+                    if target_ref >= addr:
+                        pool_targets.add(target_ref)
+                except ValueError:
+                    pass
+
+            # Detect internal branch targets
+            insn_clean = re.sub(r"\s+@.*$", "", rest).strip()
+            bm = BRANCH_RE.match(insn_clean)
+            if bm:
+                try:
+                    target_branch = int(bm.group(2), 16)
+                    if addr <= target_branch < addr + size and target_branch != line_addr:
+                        branch_targets.add(target_branch)
+                except ValueError:
+                    pass
+
+        raw_lines.append((line_addr, hexval, rest))
+
+    effective_end = addr + size
+    if pool_targets:
+        effective_end = max(effective_end, max(pool_targets) + 4)
+
+    parsed_lines = [(la, hv, rst) for la, hv, rst in raw_lines if la < effective_end]
 
     if args.plain:
         print(f"{symbol}:")
@@ -153,6 +177,32 @@ def main():
         insn = re.sub(r"\s+@.*$", "", rest).replace("\t", " ").strip()
         if line_addr in pool_targets:
             insn = f".word 0x{hexval.upper()}"
+        else:
+            # Replace branch addresses
+            bm = BRANCH_RE.match(insn)
+            if bm:
+                try:
+                    target_branch = int(bm.group(2), 16)
+                    op = bm.group(1)
+                    if target_branch in branch_targets:
+                        if "cbz" in op:
+                            reg_part = insn.split(",")[0].split()[1]
+                            insn = f"{op} {reg_part}, .L_{target_branch:08X}"
+                        else:
+                            insn = f"{op} .L_{target_branch:08X}"
+                    elif op == "bl":
+                        insn = f"bl func_{target_branch:08X}"
+                except ValueError:
+                    pass
+
+            insn = re.sub(r"nop\s*\{0\}", "nop", insn)
+
+        # Print label if this instruction is a branch target
+        if line_addr in branch_targets:
+            if args.plain:
+                print(f".L_{line_addr:08X}:")
+            else:
+                print(f"      .L_{line_addr:08X}:")
 
         if args.plain:
             print(f"    {insn}")

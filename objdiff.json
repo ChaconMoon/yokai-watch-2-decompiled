@@ -80,7 +80,7 @@
       "target_path": "expected/func_001063F4.o",
       "base_path": "build/src/sdk/func_001063F4.o",
       "metadata": {
-        "complete": false,
+        "complete": true,
         "source_path": "src/sdk/func_001063F4.c",
         "progress_categories": [
           "sdk"
@@ -97,7 +97,7 @@
       "target_path": "expected/clear_bss.o",
       "base_path": "build/src/crt/clear_bss.o",
       "metadata": {
-        "complete": false,
+        "complete": true,
         "source_path": "src/crt/clear_bss.c",
         "progress_categories": [
           "crt"

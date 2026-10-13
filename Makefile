@@ -11,10 +11,12 @@ DUMP     := $(PYTHON) $(TOOLS)/dump_asm.py
 
 CC       := arm-none-eabi-gcc
 AS       := arm-none-eabi-as
+ASFLAGS  := -mcpu=mpcore
 CFLAGS   := -c -mcpu=mpcore -O3 -I . -I include
 
 C_SRCS   := $(shell find src -name '*.c' 2>/dev/null)
-OBJS     := $(patsubst src/%.c, build/src/%.o, $(C_SRCS))
+S_SRCS   := $(shell find src -name '*.s' 2>/dev/null)
+OBJS     := $(patsubst src/%.c, build/src/%.o, $(C_SRCS)) $(patsubst src/%.s, build/src/%.o, $(S_SRCS))
 
 .PHONY: all extract progress check dump info clean distclean
 
@@ -58,10 +60,15 @@ dump:
 
 
 build/src/system/func_00104D18.o: CFLAGS += -ffixed-r3 -ffixed-r2
+build/src/sdk/func_001063F4.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
 
 build/%.o: %.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $< -o $@
+
+build/%.o: %.s
+	@mkdir -p $(dir $@)
+	$(AS) $(ASFLAGS) $< -o $@
 
 clean:
 	@rm -rf build/
