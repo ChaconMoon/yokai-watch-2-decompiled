@@ -27,7 +27,7 @@ Whenever the user requests functions to decompile, deliver them one by one follo
 - **Literal pool / Notes:** <Detail loaded RAM addresses, offsets, or constants>
 
 ```arm
-<clean assembly instructions ready to paste into Target Assembly in decomp.me>
+<clean assembly instructions ready to paste into Target Assembly in decomp.me with internal branches resolved to local labels .L_<ADDRESS>>
 ```
 ```
 

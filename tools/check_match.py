@@ -149,6 +149,7 @@ def main():
     print("============================================================")
 
     matched_count = 0
+    staged_count = 0
     mismatched_count = 0
     checked_symbols = set()
 
@@ -215,23 +216,34 @@ def main():
             ]
             length_match = (len(expected_slice) == len(actual_slice))
             is_match = length_match and (len(code_diffs) == 0)
+            status = meta.get("status", "staged").lower() if meta else "staged"
+            is_staged = status in ("staged", "wip", "in_progress")
 
             if is_match:
                 matched_count += 1
                 detail_str = ""
                 if reloc_details:
                     detail_str = f" [reloc: {', '.join(reloc_details)}]"
-                print(f"  \033[92m>>> MATCH <<<\033[0m: {sym} (0x{addr:08X}) — {size} B identical{detail_str}")
+                staged_note = " \033[96m(ready to promote to matched!)\033[0m" if is_staged else ""
+                print(f"  \033[92m>>> MATCH <<<\033[0m: {sym} (0x{addr:08X}) — {size} B identical{detail_str}{staged_note}")
+            elif is_staged:
+                staged_count += 1
+                diff_count = len(code_diffs) + abs(len(expected_slice) - len(actual_slice))
+                print(f"  \033[93m>>> STAGED (WIP) <<<\033[0m: {sym} (0x{addr:08X}) — {diff_count} byte(s) diff [in development]")
             else:
                 mismatched_count += 1
                 diff_count = len(code_diffs) + abs(len(expected_slice) - len(actual_slice))
-                print(f"  \033[91m>>> MISMATCH <<<\033[0m: {sym} (0x{addr:08X})")
+                print(f"  \033[91m>>> REGRESSION / MISMATCH <<<\033[0m: {sym} (0x{addr:08X})")
                 print(f"      Expected ({len(expected_slice)} B): {expected_slice[:16].hex()}...")
                 print(f"      Compiled ({len(actual_slice)} B): {actual_slice[:16].hex()}...")
                 print(f"      Differences: {diff_count} byte(s)")
 
     print("============================================================")
-    print(f"  Results: {matched_count} matched, {mismatched_count} mismatched")
+    summary_parts = [f"{matched_count} matched"]
+    if staged_count > 0:
+        summary_parts.append(f"{staged_count} staged (WIP)")
+    summary_parts.append(f"{mismatched_count} regressed")
+    print(f"  Results: {', '.join(summary_parts)}")
     print("============================================================")
 
     pending = [s for s, m in manifest.items() if s not in checked_symbols and m["status"].lower() != "matched"]

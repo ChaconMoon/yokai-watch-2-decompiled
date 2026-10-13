@@ -2,7 +2,7 @@ address,symbol,size,status,description
 0x0010B6D0,func_0010B6D0,8,matched,Leaf identity stub (returns constant 0)
 0x0010B6D8,func_0010B6D8,12,matched,Global pointer getter via literal pool (0x008602F8)
 0x00104D18,func_00104D18,16,matched,Global 8-bit flag setter (0x00814E54)
-0x001063F4,func_001063F4,16,staged,CTR OS SystemConfig block field reader (0x1FF80000 + 0x40)
-0x00100024,clear_bss,28,staged,CRT startup zeroing loop for .bss section
+0x001063F4,func_001063F4,16,matched,CTR OS SystemConfig block field reader (0x1FF80000 + 0x40)
+0x00100024,clear_bss,36,matched,CRT startup zeroing loop for .bss section
 0x00104778,svcExitProcess,8,matched,CTR kernel syscall wrapper stub (svc 0x03)
-0x0010B6E4,func_0010B6E4,280,staged,"C++ class method (flag check, vtable call, validation)"
+0x0010B6E4,func_0010B6E4,280,wip,"C++ class method (partially decompiled, ~82% match in decomp.me)"
