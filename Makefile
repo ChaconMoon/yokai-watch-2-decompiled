@@ -63,6 +63,14 @@ build/src/system/func_00104D18.o: CFLAGS += -ffixed-r3 -ffixed-r2
 build/src/sdk/func_001063F4.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
 build/src/system/func_0010678C.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
 
+WIBO     := tools/wibo
+ARMCC    := $(WIBO) tools/armcc/4.0/b821/bin/armcc.exe
+ARMFLAGS := --cpu=mpcore -O3 -c -I . -I include
+
+build/src/system/func_0011054C.o: src/system/func_0011054C.c
+	@mkdir -p $(dir $@)
+	$(ARMCC) $(ARMFLAGS) $< -o $@
+
 build/%.o: %.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $< -o $@
