@@ -6,3 +6,6 @@ address,symbol,size,status,description
 0x00100024,clear_bss,36,matched,CRT startup zeroing loop for .bss section
 0x00104778,svcExitProcess,8,matched,CTR kernel syscall wrapper stub (svc 0x03)
 0x0010B6E4,func_0010B6E4,280,wip,"C++ class method (partially decompiled, ~82% match in decomp.me)"
+0x0017656C,func_0017656C,4,matched,Leaf empty void stub function
+0x00301248,func_00301248,4,matched,Leaf empty void stub function
+0x0012FEC0,func_0012FEC0,8,matched,Leaf boolean true stub (returns constant 1)
