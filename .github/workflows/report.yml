@@ -24,7 +24,7 @@ jobs:
       - name: Install wibo
         run: |
           mkdir -p tools
-          curl -L -o tools/wibo https://github.com/decompals/wibo/releases/download/1.2.0/wibo
+          curl -L -o tools/wibo https://github.com/decompals/wibo/releases/download/1.2.0/wibo-i686
           chmod +x tools/wibo
 
       - name: Install objdiff-cli

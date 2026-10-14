@@ -48,7 +48,7 @@ Progress is split into categories so that assembly is never counted as C decompi
 | **Real C-decompiled matched bytes** | **252** / 7,737,344 bytes (0.0033%) | Real-C-only byte progress; `asm_stubs/`, inline ASM and `scratches/` are excluded |
 | **Inline ASM / ASM stub matched functions** | **0** / ~18,292 | ASM implementations: library assembly and authorized inline exceptions |
 | **SDK / library byte-match identifications** | **0** / ~18,292 | CTR-SDK / Nintendo library functions identified separately |
-| **Named / mapped candidates** | **21** / ~18,292 | Functions cataloged in scratches with isolated disassembly |
+| **Named / mapped candidates** | **22** / ~18,292 | Functions cataloged in scratches with isolated disassembly |
 | **Initialized DATA** | Staged | `.rodata` / `.data` relocation and literal pool mapping |
 | **Total known functions** | ~18,292 | Estimated function count for the EU target |
 | **Region** | EU (`00040000001B2900`) | Multi-5 (PAL v1.0) |
@@ -92,6 +92,7 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x0013F29C` | `func_0013F29C` | 12 B | 🟢 Matched | Global pointer getter via literal pool (0x00867DA8) |
 | `0x00171C78` | `func_00171C78` | 12 B | 🟢 Matched | Global pointer getter via literal pool (0x0091B7B8) |
 | `0x0011054C` | `func_0011054C` | 24 B | 🟢 Matched | Struct header reset (zeros 8 bytes, sets byte 0 to 0xFF) |
+| `0x001274A0` | `func_001274A0` | 24 B | 🟡 In Review | Atomic spinlock acquire loop (ldrex/strex synchronization) |
 
 <!-- MANIFEST_TABLE_END -->
 
