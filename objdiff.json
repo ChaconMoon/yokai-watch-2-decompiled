@@ -363,6 +363,16 @@
         "compiler": "armcc_40_821",
         "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
       }
+    },
+    {
+      "name": "undecompiled_game_code",
+      "target_path": "expected/undecompiled.o",
+      "metadata": {
+        "complete": false,
+        "progress_categories": [
+          "game"
+        ]
+      }
     }
   ]
 }

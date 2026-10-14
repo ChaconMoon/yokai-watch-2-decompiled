@@ -238,6 +238,16 @@ def update_objdiff_config(functions):
                 "scratch": DEFAULT_SCRATCH
             })
 
+    # Add undecompiled game code unit to ensure objdiff reflects full game binary progress
+    units.append({
+        "name": "undecompiled_game_code",
+        "target_path": "expected/undecompiled.o",
+        "metadata": {
+            "complete": False,
+            "progress_categories": ["game"]
+        }
+    })
+
     config = {
         "$schema": "https://raw.githubusercontent.com/encounter/objdiff/main/config.schema.json",
         "min_version": "2.0.0",

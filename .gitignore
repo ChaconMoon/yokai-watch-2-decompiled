@@ -13,6 +13,7 @@ build/
 
 # Track expected target object slices for objdiff / decomp.dev
 !expected/*.o
+expected/undecompiled.o
 
 # Local reverse-engineering notes and scratchpads
 notes/
