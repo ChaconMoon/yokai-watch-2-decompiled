@@ -25,7 +25,8 @@ all: build
 build: $(OBJS)
 
 report: $(OBJS)
-	@mkdir -p build
+	@mkdir -p build expected
+	@python3 tools/generate_undecompiled.py
 	@if [ -f "./tools/objdiff-cli" ]; then \
 		./tools/objdiff-cli report generate -o build/report.json; \
 	else \
