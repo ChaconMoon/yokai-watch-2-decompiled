@@ -18,9 +18,19 @@ C_SRCS   := $(shell find src -name '*.c' 2>/dev/null)
 S_SRCS   := $(shell find src -name '*.s' 2>/dev/null)
 OBJS     := $(patsubst src/%.c, build/src/%.o, $(C_SRCS)) $(patsubst src/%.s, build/src/%.o, $(S_SRCS))
 
-.PHONY: all extract progress check dump info clean distclean
+.PHONY: all build extract progress check dump report info clean distclean
 
-all: info
+all: build
+
+build: $(OBJS)
+
+report: $(OBJS)
+	@mkdir -p build
+	@if [ -f "./tools/objdiff-cli" ]; then \
+		./tools/objdiff-cli report generate -o build/report.json; \
+	else \
+		echo "⚠️ objdiff-cli not found. Download it to tools/objdiff-cli first."; \
+	fi
 
 info:
 	@echo "============================================================"
@@ -69,7 +79,21 @@ ARMFLAGS := --cpu=mpcore -O3 -c -I . -I include
 
 build/src/system/func_0011054C.o: src/system/func_0011054C.c
 	@mkdir -p $(dir $@)
-	$(ARMCC) $(ARMFLAGS) $< -o $@
+	@if [ -f "tools/armcc/4.0/b821/bin/armcc.exe" ]; then \
+		$(ARMCC) $(ARMFLAGS) $< -o $@; \
+	else \
+		echo "⚠️ Warning: ARMCC not found, compiling with GCC fallback..."; \
+		$(CC) $(CFLAGS) $< -o $@; \
+	fi
+
+build/src/system/func_001274A0.o: src/system/func_001274A0.c
+	@mkdir -p $(dir $@)
+	@if [ -f "tools/armcc/4.0/b821/bin/armcc.exe" ]; then \
+		$(ARMCC) $(ARMFLAGS) $< -o $@; \
+	else \
+		echo "⚠️ Warning: ARMCC not found, compiling with GCC fallback..."; \
+		$(CC) $(CFLAGS) $< -o $@; \
+	fi
 
 build/%.o: %.c
 	@mkdir -p $(dir $@)

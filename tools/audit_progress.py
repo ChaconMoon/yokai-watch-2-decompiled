@@ -199,13 +199,11 @@ def update_objdiff_config(functions):
         is_matched = (status == "matched")
         category = categorize_function(f)
 
-        if sym in file_map:
-            src_rel = str(file_map[sym])
-            base_o = f"build/{file_map[sym].with_suffix('.o')}"
-        else:
-            folder = "sdk" if category == "sdk" else ("crt" if category == "crt" else "system")
-            src_rel = f"src/{folder}/{sym}.c"
-            base_o = f"build/src/{folder}/{sym}.o"
+        if sym not in file_map:
+            continue
+
+        src_rel = str(file_map[sym])
+        base_o = f"build/{file_map[sym].with_suffix('.o')}"
 
         unit = {
             "name": sym,

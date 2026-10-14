@@ -11,6 +11,9 @@ build/
 *.o
 *.elf
 
+# Track expected target object slices for objdiff / decomp.dev
+!expected/*.o
+
 # Local reverse-engineering notes and scratchpads
 notes/
 *.local.md
@@ -18,3 +21,4 @@ notes/
 tools/armcc/
 tools/*.zip
 tools/wibo
+tools/objdiff-cli

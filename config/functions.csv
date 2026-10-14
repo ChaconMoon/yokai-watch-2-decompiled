@@ -21,3 +21,4 @@ address,symbol,size,status,description
 0x00171C78,func_00171C78,12,matched,"Global pointer getter via literal pool (0x0091B7B8)"
 0x0011054C,func_0011054C,24,matched,"Struct header reset (zeros 8 bytes, sets byte 0 to 0xFF)"
 
+0x001274A0,func_001274A0,24,wip,"Atomic spinlock acquire loop (ldrex/strex synchronization)"
