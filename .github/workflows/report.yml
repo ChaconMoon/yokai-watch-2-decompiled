@@ -53,6 +53,6 @@ jobs:
       - name: Upload progress report artifact for decomp.dev
         uses: actions/upload-artifact@v4
         with:
-          name: report
+          name: 00040000001B2900_report
           path: build/report.json
 
