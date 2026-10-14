@@ -1,0 +1,58 @@
+name: Decompilation Progress
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+  workflow_dispatch:
+
+jobs:
+  report:
+    name: Build & Report Progress
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install ARM GNU Toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi make python3 curl unzip
+
+      - name: Install wibo
+        run: |
+          mkdir -p tools
+          curl -L -o tools/wibo https://github.com/decompals/wibo/releases/download/1.2.0/wibo
+          chmod +x tools/wibo
+
+      - name: Install objdiff-cli
+        run: |
+          curl -L -o tools/objdiff-cli https://github.com/encounter/objdiff/releases/download/v3.8.2/objdiff-cli-linux-x86_64
+          chmod +x tools/objdiff-cli
+
+      - name: Download ARMCC toolchain (if secret configured)
+        continue-on-error: true
+        env:
+          ARMCC_ZIP_URL: ${{ secrets.ARMCC_ZIP_URL }}
+        run: |
+          if [ -n "$ARMCC_ZIP_URL" ]; then
+            echo "Downloading ARMCC from secret URL..."
+            curl -L -o /tmp/armcc.zip "$ARMCC_ZIP_URL"
+            mkdir -p tools/armcc
+            unzip -q /tmp/armcc.zip -d tools/armcc/
+          else
+            echo "No ARMCC_ZIP_URL secret set. Will use GCC fallback for ARMCC targets."
+          fi
+
+      - name: Build objects and generate progress report
+        run: |
+          make report
+
+      - name: Upload progress report artifact for decomp.dev
+        uses: actions/upload-artifact@v4
+        with:
+          name: report
+          path: build/report.json
+
