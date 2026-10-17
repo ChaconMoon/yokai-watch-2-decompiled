@@ -162,6 +162,8 @@ def main():
         text_bytes = extract_section_bytes(obj, ".text")
 
         for sym, sym_info in symbols.items():
+            if "$$" in sym or sym.startswith("__arm_cp"):
+                continue
             if args.symbol and sym != args.symbol:
                 continue
 

@@ -1,0 +1,57 @@
+{
+  "title": "yw2",
+  "product_code": "CTR-P-BYPP",
+  "title_id": "00040000001B2900",
+  "sha256_code_raw": "b536dfce0a7138f2d5691532604d782b1ea3e20731120cc662baee118c370547",
+  "sections": {
+    ".text": {
+      "vma_start": "0x00100000",
+      "vma_end": "0x006F32AC",
+      "page_aligned_end": "0x006F4000",
+      "size_bytes": 6238892,
+      "total_functions": 18225,
+      "description": "Executable ARM11 / Thumb instructions and inline literal pools"
+    },
+    ".rodata": {
+      "vma_start": "0x006F4000",
+      "vma_end": "0x0080C42C",
+      "page_aligned_end": "0x0080D000",
+      "size_bytes": 1147948,
+      "description": "Read-only data, ASCII/UTF-8 strings, float constants, and C++ vtables"
+    },
+    ".data": {
+      "vma_start": "0x0080D000",
+      "vma_end": "0x00860934",
+      "page_aligned_end": "0x00861000",
+      "size_bytes": 342324,
+      "description": "Initialized read-write global variables and RTTI class name tables"
+    },
+    ".bss": {
+      "vma_start": "0x00860934",
+      "vma_end": "0x0091B9BC",
+      "size_bytes": 766088,
+      "description": "Zero-initialized global state cleared at startup by clear_bss (0x00100024)"
+    }
+  },
+  "layers": [
+    {
+      "id": "ctr",
+      "name": "Nintendo CTR-SDK & Runtime",
+      "path": "src/ctr",
+      "subsystems": ["crt", "svc", "nn_os", "nn_fs", "nn_ndm", "nn_nex", "nn_gx", "nn_dsp"]
+    },
+    {
+      "id": "engine",
+      "name": "Level-5 Engine (lfw / lxp / gds)",
+      "path": "src/engine",
+      "subsystems": ["lfw", "lxp", "gds", "core"]
+    },
+    {
+      "id": "game",
+      "name": "Yo-kai Watch 2 (yw2)",
+      "path": "src/game",
+      "subsystems": ["loops", "battle", "rpg", "menu", "world", "core"]
+    }
+  ]
+}
+

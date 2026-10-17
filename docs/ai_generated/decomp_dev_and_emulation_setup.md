@@ -66,3 +66,4 @@ En el panel de control aparece el siguiente aviso:
   - **[`src/system/func_001274A0.c`](../../src/system/func_001274A0.c)** (`0x001274A0`, 24 B)
   - *Tipo:* Bucle atómico spinlock (`ldrex` / `strex`)
   - *Compilador:* ARMCC 4.0 [Build 821] (`--cpu=mpcore -O3`)
+
