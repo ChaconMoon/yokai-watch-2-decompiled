@@ -43,17 +43,18 @@ Progress is split into categories so that assembly is never counted as C decompi
 
 | Category | Count | Meaning |
 | :--- | :---: | :--- |
-| **Real C-decompiled matched functions** | **20** / ~18,292 (0.11%) | Functions implemented in C and verified byte-exact (func_0010B6D0, func_0010B6D8, func_00104D18, func_001063F4, clear_bss, svcExitProcess, func_0017656C, func_00301248, func_0012FEC0, func_00130018, svcSleepThread, func_0010678C, func_0010C894, func_00127520, func_00127EEC, func_0012CB00, func_001300B0, func_0013F29C, func_00171C78, func_0011054C) |
-| **Complete functions (C + verified original library assembly)** | **20** / ~18,292 (0.11%) | Real C, plus library functions whose original source is assembly |
-| **Real C-decompiled matched bytes** | **252** / 7,737,344 bytes (0.0033%) | Real-C-only byte progress; `asm_stubs/`, inline ASM and `scratches/` are excluded |
-| **Inline ASM / ASM stub matched functions** | **0** / ~18,292 | ASM implementations: library assembly and authorized inline exceptions |
-| **SDK / library byte-match identifications** | **0** / ~18,292 | CTR-SDK / Nintendo library functions identified separately |
-| **Named / mapped candidates** | **22** / ~18,292 | Functions cataloged in scratches with isolated disassembly |
-| **Initialized DATA** | Staged | `.rodata` / `.data` relocation and literal pool mapping |
-| **Total known functions** | ~18,292 | Estimated function count for the EU target |
-| **Region** | EU (`00040000001B2900`) | Multi-5 (PAL v1.0) |
+| **Real C-decompiled matched functions** | **19** / 18,225 (0.10%) | Functions implemented in C and verified byte-exact |
+| **Complete functions (C + verified original library assembly)** | **20** / 18,225 (0.11%) | Real C (19) + CRT/SDK assembly routines (1: `clear_bss`, etc.) |
+| **Real C-decompiled matched bytes** | **216** / 6,238,892 bytes (0.0035%) | Real-C-only byte progress (252 B including CRT assembly) |
+| **Layer 1: Nintendo CTR-SDK & Runtime (`src/ctr/`)** | **9** matched (128 B) | CRT startup, `svc` syscalls, `nn::os`, `nn::ndm`, `nn::nex` |
+| **Layer 2: Level-5 Engine (`src/engine/`)** | **7** matched (72 B) | `lfw` (Framework), `lxp` (Cross-Platform), `gds` (Scripts) |
+| **Layer 3: Yo-kai Watch 2 Game (`src/game/`)** | **4** matched (52 B) | `ywCLoop*` states, battle, RPG, menus, and entities |
+| **Named / mapped candidates in manifest** | **22** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
+| **Memory Map (`.text` / `.rodata` / `.data` / `.bss`)** | Verified | Exact ExHeader boundaries mapped in `config/memory_map.json` |
+| **Total `.text` functions** | 18,225 | Verified function count in `0x00100000`–`0x006F32AC` (EU v1.0) |
+| **Region** | EU (`00040000001B2900`) | Multi-5 (PAL v1.0, `CTR-P-BYPP`) |
 | **Architecture** | ARM11 MPCore (ARMv6K) | 32-bit Little Endian, VMA `0x00100000` |
-| **Compiler** | ARMCC / RVCT 4.x | Target toolchain identification under verification |
+| **Compiler** | ARMCC / RVCT 4.0 b821 | CTR-SDK 1.2.7 (`1.2.7.f-NINTENDO-CTR-SDK-v1`) |
 
 <!-- PROGRESS_STATS_END -->
 
@@ -69,97 +70,102 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 
 <!-- MANIFEST_TABLE_START -->
 
-| Virtual Address | Symbol / Name | Size (bytes) | Status | Description / Notes |
-| :--- | :--- | :---: | :---: | :--- |
-| `0x0010B6D0` | `func_0010B6D0` | 8 B | 🟢 Matched | Leaf identity stub (returns constant 0) |
-| `0x0010B6D8` | `func_0010B6D8` | 12 B | 🟢 Matched | Global pointer getter via literal pool (0x008602F8) |
-| `0x00104D18` | `func_00104D18` | 16 B | 🟢 Matched | Global 8-bit flag setter (0x00814E54) |
-| `0x001063F4` | `func_001063F4` | 16 B | 🟢 Matched | CTR OS SystemConfig block field reader (0x1FF80000 + 0x40) |
-| `0x00100024` | `clear_bss` | 36 B | 🟢 Matched | CRT startup zeroing loop for .bss section |
-| `0x00104778` | `svcExitProcess` | 8 B | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x03) |
-| `0x0010B6E4` | `func_0010B6E4` | 280 B | 🟡 In Review | C++ class method (partially decompiled, ~82% match in decomp.me) |
-| `0x0017656C` | `func_0017656C` | 4 B | 🟢 Matched | Leaf empty void stub function |
-| `0x00301248` | `func_00301248` | 4 B | 🟢 Matched | Leaf empty void stub function |
-| `0x0012FEC0` | `func_0012FEC0` | 8 B | 🟢 Matched | Leaf boolean true stub (returns constant 1) |
-| `0x00130018` | `func_00130018` | 8 B | 🟢 Matched | Leaf boolean true stub (returns constant 1) |
-| `0x00151FBC` | `svcSleepThread` | 8 B | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x28) |
-| `0x0010678C` | `func_0010678C` | 16 B | 🟢 Matched | Global signed byte reader via literal pool (0x00814E00) |
-| `0x0010C894` | `func_0010C894` | 12 B | 🟢 Matched | Global pointer getter via literal pool (0x0086C8CC) |
-| `0x00127520` | `func_00127520` | 12 B | 🟢 Matched | Global pointer getter via literal pool (0x005F32AC) |
-| `0x00127EEC` | `func_00127EEC` | 12 B | 🟢 Matched | Global pointer getter via literal pool (0x00865F10) |
-| `0x0012CB00` | `func_0012CB00` | 12 B | 🟢 Matched | Global pointer getter via literal pool (0x00868A9C) |
-| `0x001300B0` | `func_001300B0` | 12 B | 🟢 Matched | Global pointer getter via literal pool (0x00868F10) |
-| `0x0013F29C` | `func_0013F29C` | 12 B | 🟢 Matched | Global pointer getter via literal pool (0x00867DA8) |
-| `0x00171C78` | `func_00171C78` | 12 B | 🟢 Matched | Global pointer getter via literal pool (0x0091B7B8) |
-| `0x0011054C` | `func_0011054C` | 24 B | 🟢 Matched | Struct header reset (zeros 8 bytes, sets byte 0 to 0xFF) |
-| `0x001274A0` | `func_001274A0` | 24 B | 🟡 In Review | Atomic spinlock acquire loop (ldrex/strex synchronization) |
+| Virtual Address | Symbol / Name | Layer / Module | Size | Level | Status | Description / Notes |
+| :--- | :--- | :---: | :---: | :---: | :---: | :--- |
+| `0x00100024` | `clear_bss` | `ctr/crt` | 36 B | `2_control_flow` | 🟢 Matched | CRT startup zeroing loop for .bss section (0x00860934 - 0x0091B9BC) |
+| `0x00104778` | `svcExitProcess` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x03) |
+| `0x00104D18` | `func_00104D18` | `ctr/nn_os` | 16 B | `2_accessor` | 🟢 Matched | nn::os startup global 8-bit flag setter (0x00814E54) |
+| `0x001063F4` | `func_001063F4` | `ctr/nn_os` | 16 B | `2_accessor` | 🟢 Matched | CTR OS SystemConfig block field reader (0x1FF80000 + 0x40) |
+| `0x0010678C` | `func_0010678C` | `ctr/nn_os` | 16 B | `2_accessor` | 🟢 Matched | nn::os startup global signed byte reader via literal pool (0x00814E00) |
+| `0x0010B6D0` | `func_0010B6D0` | `engine/lfw` | 8 B | `1_leaf_stub` | 🟢 Matched | lfwCLoopEmpty virtual method (returns constant 0, table 0x00107488) |
+| `0x0010B6D8` | `func_0010B6D8` | `engine/lfw` | 12 B | `2_accessor` | 🟢 Matched | lfwCLoopEmpty::GetClassName getter via literal pool (0x008602F8) |
+| `0x0010B6E4` | `func_0010B6E4` | `engine/lfw` | 280 B | `4_cpp_vtable` | 🟡 In Review | lfwCLoop C++ class method (partially decompiled, ~82% match in decomp.me) |
+| `0x0010C894` | `func_0010C894` | `game/loops` | 12 B | `2_accessor` | 🟢 Matched | Game loop subsystem pointer getter via literal pool (0x0086C8CC) |
+| `0x0011054C` | `func_0011054C` | `game/loops` | 24 B | `3_arithmetic_logic` | 🟢 Matched | Struct header reset (zeros 8 bytes, sets byte 0 to 0xFF) |
+| `0x001274A0` | `func_001274A0` | `ctr/nn_os` | 24 B | `3_arithmetic_logic` | 🟡 In Review | nn::os atomic spinlock acquire loop (ldrex/strex synchronization) |
+| `0x00127520` | `func_00127520` | `ctr/nn_os` | 12 B | `2_accessor` | 🟢 Matched | CTR-SDK .text size / limit getter via literal pool (0x005F32AC) |
+| `0x00127EEC` | `func_00127EEC` | `ctr/nn_ndm` | 12 B | `2_accessor` | 🟢 Matched | nn::ndm global state pointer getter via literal pool (0x00865F10) |
+| `0x0012CB00` | `func_0012CB00` | `engine/lxp` | 12 B | `2_accessor` | 🟢 Matched | Level-5 engine global singleton getter via literal pool (0x00868A9C) |
+| `0x0012FEC0` | `func_0012FEC0` | `engine/lxp` | 8 B | `1_leaf_stub` | 🟢 Matched | lxpCMemory boolean true stub (returns constant 1) |
+| `0x00130018` | `func_00130018` | `engine/lxp` | 8 B | `1_leaf_stub` | 🟢 Matched | lxpCMemory virtual boolean true stub (returns constant 1) |
+| `0x001300B0` | `func_001300B0` | `engine/lxp` | 12 B | `2_accessor` | 🟢 Matched | lxpCMemory manager pointer getter via literal pool (0x00868F10) |
+| `0x0013F29C` | `func_0013F29C` | `engine/core` | 12 B | `2_accessor` | 🟢 Matched | Level-5 engine subsystem pointer getter via literal pool (0x00867DA8) |
+| `0x00151FBC` | `svcSleepThread` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x28) |
+| `0x00171C78` | `func_00171C78` | `game/core` | 12 B | `2_accessor` | 🟢 Matched | Game subsystem global pointer getter via literal pool (0x0091B7B8) |
+| `0x0017656C` | `func_0017656C` | `game/core` | 4 B | `1_leaf_stub` | 🟢 Matched | Game subsystem leaf empty void stub function (bx lr) |
+| `0x00301248` | `func_00301248` | `ctr/nn_nex` | 4 B | `1_leaf_stub` | 🟢 Matched | nn::nex leaf empty void stub function (bx lr) |
 
 <!-- MANIFEST_TABLE_END -->
 
 ---
 
-## Decompilation Roadmap (Candidate Tiers)
+## Architectural Layers & Didactic Decompilation Roadmap
 
-The following candidates are organized by complexity tier from [`config/functions_classified.csv`](config/functions_classified.csv) to guide progressive bottom-up matching:
+Instead of sorting functions purely by byte size across the entire binary, the decompilation is organized into **three architectural layers** (`ctr`, `engine`, `game`), and within each layer candidates are ordered by **didactic complexity level** (from Level 1 leaf stubs up to Level 4 C++ vtables):
 
-### Tier 1: Trivial Stubs (4–8 bytes)
-Leaf identity routines, constant return stubs, and CTR-SDK syscall wrappers:
+### Layer 1: Nintendo CTR-SDK & ARM Runtime (`src/ctr/`)
+Standard Nintendo 3DS system libraries (`1.2.7.f-NINTENDO-CTR-SDK-v1`), kernel supervisor calls (`svc`), C/C++ runtime startup (`crt`), and `nn::*` modules (`nn::os`, `nn::fs`, `nn::ndm`, `nn::nex`, `nn::dsp`).
 
-| Virtual Address | Symbol | Size | Description |
-| :--- | :--- | :---: | :--- |
-| `0x0017656C` | `FUN_0017656c` | 4 B | Empty void stub function (`bx lr`) |
-| `0x00301248` | `FUN_00301248` | 4 B | Empty void stub function (`bx lr`) |
-| `0x0012FEC0` | `FUN_0012fec0` | 8 B | Boolean true stub (returns constant 1) |
-| `0x00130018` | `FUN_00130018` | 8 B | Boolean true stub (returns constant 1) |
-| `0x00151FBC` | `svcSleepThread` | 8 B | CTR kernel syscall wrapper stub (`svc 0x28`) |
+| Didactic Level | Virtual Address | Symbol | Module | Size | Status | Description |
+| :--- | :--- | :--- | :---: | :---: | :---: | :--- |
+| **L1: Syscall Stub** | `0x00104778` | `svcExitProcess` | `ctr/svc` | 8 B | 🟢 Matched | Kernel syscall wrapper (`svc 0x03`) |
+| **L1: Syscall Stub** | `0x00151FBC` | `svcSleepThread` | `ctr/svc` | 8 B | 🟢 Matched | Kernel syscall wrapper (`svc 0x28`) |
+| **L1: Leaf Stub** | `0x00301248` | `func_00301248` | `ctr/nn_nex` | 4 B | 🟢 Matched | Empty void stub (`bx lr`) in `nn::nex` |
+| **L2: OS Accessor** | `0x00104D18` | `func_00104D18` | `ctr/nn_os` | 16 B | 🟢 Matched | Global 8-bit flag setter (`0x00814E54`) |
+| **L2: MMIO Reader** | `0x001063F4` | `func_001063F4` | `ctr/nn_os` | 16 B | 🟢 Matched | Reads CTR `SystemConfig` page (`0x1FF80040`) |
+| **L2: OS Accessor** | `0x0010678C` | `func_0010678C` | `ctr/nn_os` | 16 B | 🟢 Matched | Signed byte reader (`0x00814E00`) |
+| **L2: CRT Loop** | `0x00100024` | `clear_bss` | `ctr/crt` | 36 B | 🟢 Matched | Startup `.bss` zeroing loop (`0x00860934`–`0x0091B9BC`) |
+| **L3: Synchronization** | `0x001274A0` | `func_001274A0` | `ctr/nn_os` | 24 B | 🟡 In Review | Atomic spinlock acquire loop (`ldrex`/`strex`) |
+| **L3: Syscall + Stack** | `0x0010AAA8` | `svcCreateEvent` | `ctr/svc` | 24 B | ⏳ Candidate | Kernel syscall wrapper with output pointer (`svc 0x21`) |
+| **L3: Syscall + Stack** | `0x0010AAC0` | `svcDuplicateHandle` | `ctr/svc` | 24 B | ⏳ Candidate | Kernel syscall wrapper (`svc 0x38`) |
+| **L3: Array Indexer** | `0x001280A8` | `func_001280A8` | `ctr/nn_ndm` | 24 B | ⏳ Candidate | Bounds-checked array element indexer (stride 8) |
 
-### Tier 2: Accessors & Global Getters (12–16 bytes)
-Single-field object readers and global pointer accessors via literal pools:
+### Layer 2: Level-5 Proprietary Engine (`src/engine/`)
+Shared Level-5 middleware used across 3DS titles: **LFW** (*Level-5 Framework*: `lfwCObject`, `lfwCLoop`, `lfwCObj2DManager`, `lfwCObj3DManager`, `lfwCCameraManager`), **LXP** (*Level-5 Cross-Platform*: `lxpCMemory`, `lxpCStack`, `.fa` / `XPCK` archives), and **GDS** (*Generic Data Script*: `GDSFix`, `GDSSwitch`, `.cfg.bin` parsers).
 
-| Virtual Address | Symbol | Size | Description |
-| :--- | :--- | :---: | :--- |
-| `0x0010678C` | `FUN_0010678c` | 16 B | Global signed byte reader via literal pool (`0x00814E00`) |
-| `0x0010C894` | `FUN_0010c894` | 12 B | Global pointer getter via literal pool (`0x0086C8CC`) |
-| `0x00127520` | `FUN_00127520` | 12 B | Global pointer getter via literal pool (`0x005F32AC`) |
-| `0x00127EEC` | `FUN_00127eec` | 12 B | Global pointer getter via literal pool (`0x00865F10`) |
-| `0x0012CB00` | `FUN_0012cb00` | 12 B | Global pointer getter via literal pool (`0x00868A9C`) |
-| `0x001300B0` | `FUN_001300b0` | 12 B | Global pointer getter via literal pool (`0x00868F10`) |
-| `0x0013F29C` | `FUN_0013f29c` | 12 B | Global pointer getter via literal pool (`0x00867DA8`) |
-| `0x00171C78` | `FUN_00171c78` | 12 B | Global pointer getter via literal pool (`0x0091B7B8`) |
+| Didactic Level | Virtual Address | Symbol | Module | Size | Status | Description |
+| :--- | :--- | :--- | :---: | :---: | :---: | :--- |
+| **L1: Virtual Stub** | `0x0010B6D0` | `func_0010B6D0` | `engine/lfw` | 8 B | 🟢 Matched | `lfwCLoopEmpty` virtual method (returns `0`, table `0x00107488`) |
+| **L1: Virtual Stub** | `0x0012FEC0` | `func_0012FEC0` | `engine/lxp` | 8 B | 🟢 Matched | `lxpCMemory` boolean stub (returns `1`) |
+| **L1: Virtual Stub** | `0x00130018` | `func_00130018` | `engine/lxp` | 8 B | 🟢 Matched | `lxpCMemory` virtual method (returns `1`, in 3 `.rodata` vtables) |
+| **L2: RTTI Getter** | `0x0010B6D8` | `func_0010B6D8` | `engine/lfw` | 12 B | 🟢 Matched | `lfwCLoopEmpty::GetClassName` (`"lfwCLoopEmpty"` at `0x008602F8`) |
+| **L2: Singleton Getter** | `0x0012CB00` | `func_0012CB00` | `engine/lxp` | 12 B | 🟢 Matched | Engine singleton getter (`0x00868A9C`, 10 callers) |
+| **L2: Manager Getter** | `0x001300B0` | `func_001300B0` | `engine/lxp` | 12 B | 🟢 Matched | `lxpCMemory` manager pointer getter (`0x00868F10`) |
+| **L3: Forwarding Thunk** | `0x00130D38` | `func_00130D38` | `engine/lxp` | 16 B | ⏳ Candidate | Null-checked method forwarding tail-call wrapper |
+| **L4: C++ Class Method** | `0x0010B5D8` | `func_0010B5D8` | `engine/lfw` | 248 B | ⏳ Candidate | `lfwCLoopEmpty` factory / constructor (`0x00107484`) |
+| **L4: C++ Class Method** | `0x0010B6E4` | `func_0010B6E4` | `engine/lfw` | 280 B | 🟡 In Review | `lfwCLoop` state update method with vtable dispatch |
 
-### Tier 3: Arithmetic, Logic & Object Structures (24 bytes)
-Local computations, atomic synchronizations, array indexers, and syscall wrappers:
+### Layer 3: Yo-kai Watch 2 Game Logic (`src/game/`)
+Game-specific state machines (`ywCLoopMain`, `ywCLoopRPG`, `ywCLoopBattle`, `ywCLoopMenu*`, `ywCLoopOrgeTime`), Yo-kai entities (`C$obj_yokai`), quests, watch map, and UI logic.
 
-| Virtual Address | Symbol | Size | Description |
-| :--- | :--- | :---: | :--- |
-| `0x0011054C` | `FUN_0011054c` | 24 B | Struct header reset (zeros 8 bytes, sets byte 0 to 0xFF) |
-| `0x001274A0` | `FUN_001274a0` | 24 B | Atomic spinlock acquire loop (`ldrex/strex` synchronization) |
-| `0x001280A8` | `FUN_001280a8` | 24 B | Bounds-checked array element indexer with stride 8 |
-| `0x00137F28` | `FUN_00137f28` | 24 B | Conditional struct field pair store (offset `+0x14`) |
-| `0x001386D4` | `FUN_001386d4` | 24 B | Pointer null-check and boolean flag tester |
-| `0x0010AAA8` | `svcCreateEvent` | 24 B | CTR kernel syscall wrapper stub (`svc 0x21`) |
-| `0x0010AAC0` | `svcDuplicateHandle` | 24 B | CTR kernel syscall wrapper stub (`svc 0x38`) |
-
-### Tier 4: Wrappers & Forwarding Thunks (16 bytes)
-Null-checked method forwarding wrappers and tail calls:
-
-| Virtual Address | Symbol | Size | Description |
-| :--- | :--- | :---: | :--- |
-| `0x00130D38` | `FUN_00130d38` | 16 B | Null-checked method forwarding tail-call wrapper |
-| `0x00340858` | `FUN_00340858` | 16 B | Null-checked method forwarding tail-call wrapper |
+| Didactic Level | Virtual Address | Symbol | Module | Size | Status | Description |
+| :--- | :--- | :--- | :---: | :---: | :---: | :--- |
+| **L1: Leaf Stub** | `0x0017656C` | `func_0017656C` | `game/core` | 4 B | 🟢 Matched | Empty void stub (`bx lr`) |
+| **L1: Virtual Stub** | `0x0010CEE8` | `func_0010CEE8` | `game/loops` | 8 B | ⏳ Candidate | `ywCLoopRPG` virtual method (returns `0`, table `0x001074A0`) |
+| **L1: Virtual Stub** | `0x0010CFF4` | `func_0010CFF4` | `game/loops` | 8 B | ⏳ Candidate | `ywCLoopMain` virtual method (returns `0`, table `0x00107494`) |
+| **L2: RTTI Getter** | `0x0010CEF0` | `func_0010CEF0` | `game/loops` | 12 B | ⏳ Candidate | `ywCLoopRPG::GetClassName` (`"ywCLoopRPG"` at `0x0086048C`) |
+| **L2: RTTI Getter** | `0x0010CFFC` | `func_0010CFFC` | `game/loops` | 12 B | ⏳ Candidate | `ywCLoopMain::GetClassName` (`"ywCLoopMain"` at `0x00860497`) |
+| **L2: Pointer Getter** | `0x0010C894` | `func_0010C894` | `game/loops` | 12 B | 🟢 Matched | Game loop state pointer getter (`0x0086C8CC`) |
+| **L2: Pointer Getter** | `0x00171C78` | `func_00171C78` | `game/core` | 12 B | 🟢 Matched | Global `.bss` state pointer getter (`0x0091B7B8`) |
+| **L3: Struct Init** | `0x0011054C` | `func_0011054C` | `game/loops` | 24 B | 🟢 Matched | Struct header reset (zeros 8 bytes, sets byte 0 to `0xFF`) |
 
 ---
 
 ## Repository layout
 
 ```text
-src/             reconstructed C/C++ source code achieving 100% byte-match
-include/         shared headers: basic types, CTR-SDK declarations, game structures
-asm/             disassembled stubs and un-decompiled assembly slices
-config/          target identity, memory map, linker scripts (.ld), symbols (syms.txt)
-scratches/       isolated function matching scratchpads and experiments
-tools/           ROM extraction (extract_rom.py), disassembly, and verification scripts
-docs/            target architecture, AAPCS conventions, and reverse-engineering notes
+src/
+├── ctr/         Layer 1: Nintendo CTR-SDK & ARM Runtime (crt/, svc/, nn/os/, nn/ndm/, nn/nex/)
+├── engine/      Layer 2: Level-5 Engine (lfw/, lxp/, gds/, core/)
+└── game/        Layer 3: Yo-kai Watch 2 Game Logic (loops/, core/)
+include/
+├── ctr/         CTR-SDK headers (svc.h, os.h)
+├── engine/      Level-5 Framework & engine headers (lfw.h)
+└── game/        Yo-kai Watch 2 game headers (loops.h)
+config/          ExHeader memory map (memory_map.json), manifests (functions.csv, functions_classified.csv)
+scratches/       Isolated WIP function matching scratchpads organized by layer
+tools/           ROM extraction, disassembly, 3-layer classification, and verification scripts
+notes/           Didactic learning roadmap (ROADMAP.md) and per-function reverse-engineering notes
 ```
 
 ---

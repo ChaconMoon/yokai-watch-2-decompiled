@@ -142,14 +142,15 @@ def main():
 
         # Detect literal pool targets only from instructions within the nominal function
         if line_addr < addr + size:
-            comment_m = re.search(r"@\s*(?:0x)?([0-9a-fA-F]+)", rest)
-            if comment_m:
-                try:
-                    target_ref = int(comment_m.group(1), 16)
-                    if target_ref >= addr:
-                        pool_targets.add(target_ref)
-                except ValueError:
-                    pass
+            if re.search(r"ldr[a-z0-9]*\s+[^,]+,\s*\[pc", rest, re.IGNORECASE):
+                comment_m = re.search(r"@\s*(?:0x)?([0-9a-fA-F]+)", rest)
+                if comment_m:
+                    try:
+                        target_ref = int(comment_m.group(1), 16)
+                        if addr <= target_ref < addr + size + 512:
+                            pool_targets.add(target_ref)
+                    except ValueError:
+                        pass
 
             # Detect internal branch targets
             insn_clean = re.sub(r"\s+@.*$", "", rest).strip()

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
 tools/generate_undecompiled.py — Generates a target object representing
-the remaining undecompiled code of the game (~4.8 MB across ~18,272 functions).
+the remaining undecompiled code of the .text segment (6,238,892 bytes across 18,225 functions).
 
 Ensures that objdiff and decomp.dev report accurate progress percentages
-relative to the full game binary, rather than only relative to touched functions.
+relative to the full .text executable segment from the NCCH ExHeader.
 """
 
 import csv
@@ -19,8 +19,8 @@ MANIFEST = CONFIG_DIR / "functions.csv"
 EXPECTED_DIR = PROJECT_ROOT / "expected"
 TARGET_OBJ = EXPECTED_DIR / "undecompiled.o"
 
-# Total executable code bytes cataloged in Yo-kai Watch 2 (4,803,137 bytes)
-TOTAL_GAME_CODE_BYTES = 4803137
+# Exact .text executable size from NCCH ExHeader (0x00100000 - 0x006F32AC)
+TOTAL_GAME_CODE_BYTES = 6238892
 
 
 def get_current_matched_bytes():
@@ -58,7 +58,7 @@ undecompiled_code:
     try:
         cmd = ["arm-none-eabi-as", "-mcpu=mpcore", temp_s, "-o", str(TARGET_OBJ)]
         subprocess.check_call(cmd)
-        print(f"✓ Generated {TARGET_OBJ.name}: {remaining_sz:,} bytes undecompiled (total catalog: {TOTAL_GAME_CODE_BYTES:,} B)")
+        print(f"✓ Generated {TARGET_OBJ.name}: {remaining_sz:,} bytes undecompiled (total .text: {TOTAL_GAME_CODE_BYTES:,} B)")
     finally:
         Path(temp_s).unlink(missing_ok=True)
 
