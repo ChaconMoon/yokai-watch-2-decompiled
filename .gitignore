@@ -5,8 +5,10 @@
 *.bin
 *.raw
 .code
+*.code
 code
 extracted/
+other_code_binaries/
 build/
 *.o
 *.elf
