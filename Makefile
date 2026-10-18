@@ -8,6 +8,8 @@ EXTRACT  := $(PYTHON) $(TOOLS)/extract_rom.py
 PROGRESS := $(PYTHON) $(TOOLS)/audit_progress.py
 CHECK    := $(PYTHON) $(TOOLS)/check_match.py
 DUMP     := $(PYTHON) $(TOOLS)/dump_asm.py
+INJECT   := $(PYTHON) $(TOOLS)/inject_code.py
+AZAHAR_MOD_DIR := $(HOME)/.local/share/azahar-emu/load/mods/00040000001B2900/exefs
 
 CC       := arm-none-eabi-gcc
 AS       := arm-none-eabi-as
@@ -18,7 +20,7 @@ C_SRCS   := $(shell find src -name '*.c' 2>/dev/null)
 S_SRCS   := $(shell find src -name '*.s' 2>/dev/null)
 OBJS     := $(patsubst src/%.c, build/src/%.o, $(C_SRCS)) $(patsubst src/%.s, build/src/%.o, $(S_SRCS))
 
-.PHONY: all build extract progress check dump report info clean distclean
+.PHONY: all build extract progress check inject dump report info clean distclean
 
 all: build
 
@@ -39,6 +41,7 @@ info:
 	@echo "============================================================"
 	@echo "Available targets:"
 	@echo "  make check      - Compile and verify byte-matching of implemented functions"
+	@echo "  make inject     - Build 'build/code.bin' and install to Azahar emulator mods"
 	@echo "  make dump       - Dump clean assembly for decomp.me (e.g. make dump FUNC=0x0010B6D8)"
 	@echo "  make progress   - Audit progress and update README tables"
 	@echo "  make extract    - Inspect ROM and decompress 'code.bin'"
@@ -62,6 +65,13 @@ progress:
 check: $(OBJS)
 	@$(CHECK)
 
+inject: $(OBJS)
+	@$(INJECT)
+	@if [ -d "$(AZAHAR_MOD_DIR)" ]; then \
+		cp build/code.bin "$(AZAHAR_MOD_DIR)/code.bin"; \
+		echo "✅ Installed build/code.bin -> $(AZAHAR_MOD_DIR)/code.bin"; \
+	fi
+
 dump:
 	@if [ -z "$(FUNC)" ]; then \
 		echo "Usage: make dump FUNC=<address_or_symbol> [e.g. make dump FUNC=0x0010B6D8]"; \
@@ -73,6 +83,7 @@ dump:
 build/src/ctr/nn/os/func_00104D18.o: CFLAGS += -ffixed-r3 -ffixed-r2
 build/src/ctr/nn/os/func_001063F4.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
 build/src/ctr/nn/os/func_0010678C.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
+build/src/ctr/nn/ndm/func_001280A8.o: CFLAGS += -ffixed-r3
 
 WIBO     := tools/wibo
 ARMCC    := $(WIBO) tools/armcc/4.0/b821/bin/armcc.exe
