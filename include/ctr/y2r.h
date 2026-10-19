@@ -25,6 +25,9 @@ extern "C"
 
         extern Y2rContext unk_008661EC;
 
+        /* Returns u16 at offset +8648 */
+        u16 func_00112E60(const void *ptr);
+
         /* Returns bit 3 flag from unk_008661EC */
         u32 func_00113F58(void);
 
