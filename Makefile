@@ -13,7 +13,7 @@ AZAHAR_MOD_DIR := $(HOME)/.local/share/azahar-emu/load/mods/00040000001B2900/exe
 
 CC       := arm-none-eabi-gcc
 AS       := arm-none-eabi-as
-ASFLAGS  := -mcpu=mpcore
+ASFLAGS  := -mcpu=mpcore -mfpu=vfpv2
 CFLAGS   := -c -mcpu=mpcore -O3 -I . -I include
 
 C_SRCS   := $(shell find src -name '*.c' 2>/dev/null)
@@ -60,6 +60,9 @@ extract:
 	@$(EXTRACT)
 
 progress:
+	@if [ -f "extracted/code.raw.bin" ]; then \
+		$(PYTHON) $(TOOLS)/generate_expected.py >/dev/null; \
+	fi
 	@$(PROGRESS) --update-readme
 
 check: $(OBJS)

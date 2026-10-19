@@ -65,7 +65,7 @@ def main():
                 temp_s = tf.name
 
             try:
-                as_cmd = ["arm-none-eabi-as", "-mcpu=mpcore", temp_s, "-o", str(out_o)]
+                as_cmd = ["arm-none-eabi-as", "-mcpu=mpcore", "-mfpu=vfpv2", temp_s, "-o", str(out_o)]
                 as_res = subprocess.run(as_cmd, capture_output=True, text=True)
                 if as_res.returncode != 0:
                     print(f"  ❌ Failed to assemble {sym}: {as_res.stderr.strip()}")
