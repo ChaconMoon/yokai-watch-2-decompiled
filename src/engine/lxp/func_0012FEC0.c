@@ -1,6 +1,6 @@
-#include <include/types.h>
+#include <engine/lxp.h>
 
-s32 func_0012FEC0()
+s32 func_0012FEC0(void)
 {
-        return 1;
+    return 1;
 }

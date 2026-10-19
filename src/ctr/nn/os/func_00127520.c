@@ -1,8 +1,8 @@
-#include <include/types.h>
+#include <ctr/os.h>
 
-extern s32 unk_005F32AC;
-void *func_00127520(void)
+extern u32 unk_005F32AC;
+
+u32 func_00127520(void)
 {
-        return &unk_005F32AC;
+    return (u32)&unk_005F32AC;
 }
-

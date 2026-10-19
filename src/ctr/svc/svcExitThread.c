@@ -1,6 +1,6 @@
-#include <include/types.h>
+#include <ctr/svc.h>
 
 void svcExitThread(void)
 {
-        __asm__ volatile("svc 0x00000009");
+    __asm__ volatile("svc 0x00000009");
 }

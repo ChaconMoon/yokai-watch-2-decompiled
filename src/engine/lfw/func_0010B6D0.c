@@ -1,6 +1,6 @@
-#include <include/types.h>
-s32 func_0010B6D0(s32 a)
+#include <engine/lfw.h>
+
+s32 func_0010B6D0(void)
 {
-        a = 0;
-        return a;
+    return 0;
 }

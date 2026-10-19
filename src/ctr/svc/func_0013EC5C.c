@@ -1,6 +1,6 @@
-#include <include/types.h>
+#include <ctr/svc.h>
 
 void func_0013EC5C(s64 nanoseconds)
 {
-        __asm__ volatile("svc 0x0000000A");
+    __asm__ volatile("svc 0x0000000A");
 }

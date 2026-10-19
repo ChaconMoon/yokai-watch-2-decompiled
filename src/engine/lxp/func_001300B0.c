@@ -1,7 +1,6 @@
-#include <include/types.h>
+#include <engine/lxp.h>
 
-extern s32 unk_00868F10;
 void *func_001300B0(void)
 {
-        return &unk_00868F10;
+    return &unk_00868F10;
 }
