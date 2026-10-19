@@ -1,4 +1,4 @@
-#include <include/types.h>
+#include <ctr/svc.h>
 __attribute__((naked)) void func_0013EC50(void)
 {
         __asm__ volatile(

@@ -1,6 +1,6 @@
-#include <include/types.h>
+#include <ctr/svc.h>
 
 void svcSleepThread(s64 nanoseconds)
 {
-        __asm__ volatile("svc 0x00000028");
+    __asm__ volatile("svc 0x00000028");
 }

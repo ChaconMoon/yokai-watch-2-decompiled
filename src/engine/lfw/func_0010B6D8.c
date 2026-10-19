@@ -1,8 +1,8 @@
-#include <include/types.h>
+#include <engine/lfw.h>
 
-extern const s8 s_lfwCLoopEmpty[];
+extern const char s_lfwCLoopEmpty[];
 
-const s8 *func_0010B6D8(void)
+const char *func_0010B6D8(void)
 {
-        return s_lfwCLoopEmpty;
+    return s_lfwCLoopEmpty;
 }

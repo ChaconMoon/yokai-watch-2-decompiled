@@ -1,6 +1,6 @@
-#include <include/types.h>
+#include <ctr/svc.h>
 
-void svcCloseHandle(void)
+Result svcCloseHandle(Handle handle)
 {
-        __asm__ volatile("svc 0x00000023");
+    __asm__ volatile("svc 0x00000023");
 }
