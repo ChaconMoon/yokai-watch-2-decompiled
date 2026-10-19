@@ -43,13 +43,13 @@ Progress is split into categories so that assembly is never counted as C decompi
 
 | Category | Count | Meaning |
 | :--- | :---: | :--- |
-| **Real C-decompiled matched functions** | **43** / 18,225 (0.24%) | Functions implemented in C and verified byte-exact |
-| **Complete functions (C + verified original library assembly)** | **44** / 18,225 (0.24%) | Real C (43) + CRT/SDK assembly routines (1: `clear_bss`, etc.) |
-| **Real C-decompiled matched bytes** | **636** / 6,238,892 bytes (0.0102%) | Real-C-only byte progress (672 B including CRT assembly) |
-| **Layer 1: Nintendo CTR-SDK & Runtime (`src/ctr/`)** | **33** matched (548 B) | CRT startup, `svc` syscalls, `nn::os`, `nn::ndm`, `nn::nex` |
+| **Real C-decompiled matched functions** | **44** / 18,225 (0.24%) | Functions implemented in C and verified byte-exact |
+| **Complete functions (C + verified original library assembly)** | **45** / 18,225 (0.25%) | Real C (44) + CRT/SDK assembly routines (1: `clear_bss`, etc.) |
+| **Real C-decompiled matched bytes** | **656** / 6,238,892 bytes (0.0105%) | Real-C-only byte progress (692 B including CRT assembly) |
+| **Layer 1: Nintendo CTR-SDK & Runtime (`src/ctr/`)** | **34** matched (568 B) | CRT startup, `svc` syscalls, `nn::os`, `nn::ndm`, `nn::nex` |
 | **Layer 2: Level-5 Engine (`src/engine/`)** | **7** matched (72 B) | `lfw` (Framework), `lxp` (Cross-Platform), `gds` (Scripts) |
 | **Layer 3: Yo-kai Watch 2 Game (`src/game/`)** | **4** matched (52 B) | `ywCLoop*` states, battle, RPG, menus, and entities |
-| **Named / mapped candidates in manifest** | **46** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
+| **Named / mapped candidates in manifest** | **47** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
 | **Memory Map (`.text` / `.rodata` / `.data` / `.bss`)** | Verified | Exact ExHeader boundaries mapped in `config/memory_map.json` |
 | **Total `.text` functions** | 18,225 | Verified function count in `0x00100000`–`0x006F32AC` (EU v1.0) |
 | **Region** | EU (`00040000001B2900`) | Multi-5 (PAL v1.0, `CTR-P-BYPP`) |
@@ -84,6 +84,7 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x0010B6E4` | `func_0010B6E4` | `engine/lfw` | 280 B | `4_cpp_vtable` | 🟡 In Review | lfwCLoop C++ class method (partially decompiled, ~82% match in decomp.me) |
 | `0x0010C894` | `func_0010C894` | `game/loops` | 12 B | `2_accessor` | 🟢 Matched | Game loop subsystem pointer getter via literal pool (0x0086C8CC) |
 | `0x0011054C` | `func_0011054C` | `game/loops` | 24 B | `3_arithmetic_logic` | 🟢 Matched | Struct header reset (zeros 8 bytes, sets byte 0 to 0xFF) |
+| `0x00112D8C` | `func_00112D8C` | `ctr/nn_y2r` | 20 B | `6_moderate_caller` | 🟢 Matched | Method chaining wrapper invoking func_0014A06C |
 | `0x00112E60` | `func_00112E60` | `ctr/nn_y2r` | 16 B | `2_accessor` | 🟢 Matched | Y2R struct offset 8648 u16 reader |
 | `0x00112FF0` | `svcCreateTimer` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x2D) |
 | `0x00113F58` | `func_00113F58` | `ctr/nn_y2r` | 20 B | `2_accessor` | 🟢 Matched | Y2R global bit 3 flag getter via literal pool (0x008661EC) |

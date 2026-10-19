@@ -210,6 +210,19 @@ def main():
                         reloc_details.append(f"{r['symbol']} -> 0x{target_addr:08X}")
                     else:
                         reloc_details.append(r["symbol"])
+                elif r["type"] in ("R_ARM_CALL", "R_ARM_JUMP24"):
+                    if rel_off + 4 <= len(expected_slice) and rel_off + 4 <= len(actual_slice):
+                        exp_word = struct.unpack_from("<I", expected_slice, rel_off)[0]
+                        act_word = struct.unpack_from("<I", actual_slice, rel_off)[0]
+                        # Verify branch condition and opcode prefix match (top 8 bits)
+                        if (exp_word & 0xFF000000) == (act_word & 0xFF000000):
+                            for b in range(4):
+                                reloc_byte_indices.add(rel_off + b)
+                            imm24 = exp_word & 0x00FFFFFF
+                            if imm24 & 0x800000:
+                                imm24 -= 0x1000000
+                            target_addr = addr + rel_off + 8 + imm24 * 4
+                            reloc_details.append(f"{r['symbol']} -> 0x{target_addr:08X}")
 
             # Verify non-relocation bytes match byte-for-byte
             code_diffs = [

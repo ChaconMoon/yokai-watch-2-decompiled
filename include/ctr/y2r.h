@@ -25,6 +25,9 @@ extern "C"
 
         extern Y2rContext unk_008661EC;
 
+        /* Method chaining wrapper invoking func_0014A06C */
+        void *func_00112D8C(void *self);
+
         /* Returns u16 at offset +8648 */
         u16 func_00112E60(const void *ptr);
 
