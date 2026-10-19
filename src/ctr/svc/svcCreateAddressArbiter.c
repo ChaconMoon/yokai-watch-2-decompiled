@@ -1,0 +1,14 @@
+#include <ctr/svc.h>
+
+__attribute__((naked))
+Result
+svcCreateAddressArbiter(Handle *arbiter)
+{
+        __asm__ volatile(
+            "push {r0}\n"
+            "svc 0x00000017\n"
+            "ldr r2, [sp]\n"
+            "str r1, [r2]\n"
+            "add sp, sp, #4\n"
+            "bx lr");
+}

@@ -84,10 +84,29 @@ build/src/ctr/nn/os/func_00104D18.o: CFLAGS += -ffixed-r3 -ffixed-r2
 build/src/ctr/nn/os/func_001063F4.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
 build/src/ctr/nn/os/func_0010678C.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
 build/src/ctr/nn/ndm/func_001280A8.o: CFLAGS += -ffixed-r3
+build/src/ctr/nn/nex/func_00340D08.o: CFLAGS += -ffixed-r3 -ffixed-r2
 
 WIBO     := tools/wibo
 ARMCC    := $(WIBO) tools/armcc/4.0/b821/bin/armcc.exe
 ARMFLAGS := --cpu=mpcore -O3 -c -I . -I include
+
+build/src/ctr/nn/nex/func_00340CE8.o: src/ctr/nn/nex/func_00340CE8.c
+	@mkdir -p $(dir $@)
+	@if [ -f "tools/armcc/4.0/b821/bin/armcc.exe" ]; then \
+		$(ARMCC) $(ARMFLAGS) $< -o $@; \
+	else \
+		echo "⚠️ Warning: ARMCC not found, compiling with GCC fallback..."; \
+		$(CC) $(CFLAGS) $< -o $@; \
+	fi
+
+build/src/ctr/nn/nex/func_00340D1C.o: src/ctr/nn/nex/func_00340D1C.c
+	@mkdir -p $(dir $@)
+	@if [ -f "tools/armcc/4.0/b821/bin/armcc.exe" ]; then \
+		$(ARMCC) $(ARMFLAGS) $< -o $@; \
+	else \
+		echo "⚠️ Warning: ARMCC not found, compiling with GCC fallback..."; \
+		$(CC) $(CFLAGS) $< -o $@; \
+	fi
 
 build/src/game/loops/func_0011054C.o: src/game/loops/func_0011054C.c
 	@mkdir -p $(dir $@)
