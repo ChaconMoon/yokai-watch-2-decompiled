@@ -23,6 +23,7 @@ address,symbol,size,layer,subsystem,level,status,description
 0x00130018,func_00130018,8,engine,lxp,1_leaf_stub,matched,"lxpCMemory virtual boolean true stub (returns constant 1)"
 0x001300B0,func_001300B0,12,engine,lxp,2_accessor,matched,"lxpCMemory manager pointer getter via literal pool (0x00868F10)"
 0x0013EC48,svcBreak,8,ctr,svc,1_leaf_stub,matched,"CTR kernel syscall wrapper stub (svc 0x3C)"
+0x0013EC50,func_0013EC50,20,ctr,svc,1_leaf_stub,matched,"Thread yield stub via svc 0x0A (svcSleepThread(0))"
 0x0013EC5C,func_0013EC5C,8,ctr,svc,1_leaf_stub,matched,"CTR kernel syscall wrapper stub (svc 0x0A)"
 0x0013F29C,func_0013F29C,12,engine,core,2_accessor,matched,"Level-5 engine subsystem pointer getter via literal pool (0x00867DA8)"
 0x00151FA0,svcCreateAddressArbiter,24,ctr,svc,1_leaf_stub,matched,"CTR kernel syscall wrapper stub (svc 0x17)"

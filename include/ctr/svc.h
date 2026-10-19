@@ -28,6 +28,7 @@ extern "C"
         Result svcCloseHandle(Handle handle);                           /* 0x0018A714 (svc 0x23) */
         Result svcWaitSynchronization1(Handle handle, s64 nanoseconds); /* 0x0018A868 (svc 0x24) */
         void svcBreak(u32 reason);                                      /* 0x0013EC48 (svc 0x3C) */
+        void func_0013EC50(void);                                       /* 0x0013EC50 (yield thread, svc 0x0A) */
         void func_0013EC5C(s64 nanoseconds);                            /* 0x0013EC5C (svc 0x0A) */
 #ifdef __cplusplus
 }
