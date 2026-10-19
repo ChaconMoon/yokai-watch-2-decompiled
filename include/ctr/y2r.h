@@ -31,6 +31,9 @@ extern "C"
         /* Returns u16 at offset +8648 */
         u16 func_00112E60(const void *ptr);
 
+        /* Invokes func_00136154(&unk_0086A0A4) and returns 1 */
+        s32 func_001137C0(void);
+
         /* Returns bit 3 flag from unk_008661EC */
         u32 func_00113F58(void);
 

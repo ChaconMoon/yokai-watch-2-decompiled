@@ -63,6 +63,8 @@ def get_symbols_from_elf(obj_path: Path):
     for line in out.splitlines():
         parts = line.strip().split()
         if len(parts) >= 8 and parts[3] == "FUNC":
+            if parts[6] == "UND":
+                continue
             name = parts[7]
             try:
                 val = int(parts[1], 16)
