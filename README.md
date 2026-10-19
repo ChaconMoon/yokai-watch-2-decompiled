@@ -43,13 +43,13 @@ Progress is split into categories so that assembly is never counted as C decompi
 
 | Category | Count | Meaning |
 | :--- | :---: | :--- |
-| **Real C-decompiled matched functions** | **29** / 18,225 (0.16%) | Functions implemented in C and verified byte-exact |
-| **Complete functions (C + verified original library assembly)** | **30** / 18,225 (0.16%) | Real C (29) + CRT/SDK assembly routines (1: `clear_bss`, etc.) |
-| **Real C-decompiled matched bytes** | **408** / 6,238,892 bytes (0.0065%) | Real-C-only byte progress (444 B including CRT assembly) |
-| **Layer 1: Nintendo CTR-SDK & Runtime (`src/ctr/`)** | **19** matched (320 B) | CRT startup, `svc` syscalls, `nn::os`, `nn::ndm`, `nn::nex` |
+| **Real C-decompiled matched functions** | **34** / 18,225 (0.19%) | Functions implemented in C and verified byte-exact |
+| **Complete functions (C + verified original library assembly)** | **35** / 18,225 (0.19%) | Real C (34) + CRT/SDK assembly routines (1: `clear_bss`, etc.) |
+| **Real C-decompiled matched bytes** | **528** / 6,238,892 bytes (0.0085%) | Real-C-only byte progress (564 B including CRT assembly) |
+| **Layer 1: Nintendo CTR-SDK & Runtime (`src/ctr/`)** | **24** matched (440 B) | CRT startup, `svc` syscalls, `nn::os`, `nn::ndm`, `nn::nex` |
 | **Layer 2: Level-5 Engine (`src/engine/`)** | **7** matched (72 B) | `lfw` (Framework), `lxp` (Cross-Platform), `gds` (Scripts) |
 | **Layer 3: Yo-kai Watch 2 Game (`src/game/`)** | **4** matched (52 B) | `ywCLoop*` states, battle, RPG, menus, and entities |
-| **Named / mapped candidates in manifest** | **32** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
+| **Named / mapped candidates in manifest** | **37** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
 | **Memory Map (`.text` / `.rodata` / `.data` / `.bss`)** | Verified | Exact ExHeader boundaries mapped in `config/memory_map.json` |
 | **Total `.text` functions** | 18,225 | Verified function count in `0x00100000`–`0x006F32AC` (EU v1.0) |
 | **Region** | EU (`00040000001B2900`) | Multi-5 (PAL v1.0, `CTR-P-BYPP`) |
@@ -84,11 +84,13 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x0010B6E4` | `func_0010B6E4` | `engine/lfw` | 280 B | `4_cpp_vtable` | 🟡 In Review | lfwCLoop C++ class method (partially decompiled, ~82% match in decomp.me) |
 | `0x0010C894` | `func_0010C894` | `game/loops` | 12 B | `2_accessor` | 🟢 Matched | Game loop subsystem pointer getter via literal pool (0x0086C8CC) |
 | `0x0011054C` | `func_0011054C` | `game/loops` | 24 B | `3_arithmetic_logic` | 🟢 Matched | Struct header reset (zeros 8 bytes, sets byte 0 to 0xFF) |
+| `0x00112FF0` | `svcCreateTimer` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x2D) |
 | `0x001274A0` | `func_001274A0` | `ctr/nn_os` | 24 B | `3_arithmetic_logic` | 🟡 In Review | nn::os atomic spinlock acquire loop (ldrex/strex synchronization) |
 | `0x00127520` | `func_00127520` | `ctr/nn_os` | 12 B | `2_accessor` | 🟢 Matched | CTR-SDK .text size / limit getter via literal pool (0x005F32AC) |
 | `0x00127EEC` | `func_00127EEC` | `ctr/nn_ndm` | 12 B | `2_accessor` | 🟢 Matched | nn::ndm global state pointer getter via literal pool (0x00865F10) |
 | `0x001280A8` | `func_001280A8` | `ctr/nn_ndm` | 24 B | `3_arithmetic_logic` | 🟢 Matched | nn::ndm bounds-checked struct array element indexer (stride 8, offset +0x0C) |
 | `0x0012CB00` | `func_0012CB00` | `engine/lxp` | 12 B | `2_accessor` | 🟢 Matched | Level-5 engine global singleton getter via literal pool (0x00868A9C) |
+| `0x0012F198` | `svcCreateResourceLimit` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x35) |
 | `0x0012FEC0` | `func_0012FEC0` | `engine/lxp` | 8 B | `1_leaf_stub` | 🟢 Matched | lxpCMemory boolean true stub (returns constant 1) |
 | `0x00130018` | `func_00130018` | `engine/lxp` | 8 B | `1_leaf_stub` | 🟢 Matched | lxpCMemory virtual boolean true stub (returns constant 1) |
 | `0x001300B0` | `func_001300B0` | `engine/lxp` | 12 B | `2_accessor` | 🟢 Matched | lxpCMemory manager pointer getter via literal pool (0x00868F10) |
@@ -98,6 +100,9 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x00151FC4` | `svcGetThreadId` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x37) |
 | `0x00171C78` | `func_00171C78` | `game/core` | 12 B | `2_accessor` | 🟢 Matched | Game subsystem global pointer getter via literal pool (0x0091B7B8) |
 | `0x0017656C` | `func_0017656C` | `game/core` | 4 B | `1_leaf_stub` | 🟢 Matched | Game subsystem leaf empty void stub function (bx lr) |
+| `0x0018A738` | `svcCreateMemoryBlock` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x13) |
+| `0x0018A750` | `svcCreateThread` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x27) |
+| `0x0018A784` | `svcControlMemory` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x0B) |
 | `0x00301248` | `func_00301248` | `ctr/nn_nex` | 4 B | `1_leaf_stub` | 🟢 Matched | nn::nex leaf empty void stub function (bx lr) |
 | `0x00340CE8` | `func_00340CE8` | `ctr/nn_nex` | 20 B | `2_accessor` | 🟢 Matched | nn::nex multi-field struct copy assignment (32-bit +0x00, 16-bit +0x04) |
 | `0x00340CFC` | `func_00340CFC` | `ctr/nn_nex` | 12 B | `2_accessor` | 🟢 Matched | nn::nex multi-field struct setter (32-bit +0x00, 16-bit +0x04) |

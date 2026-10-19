@@ -77,13 +77,19 @@ svcCreateEvent:
 
 ## 5. Estado Global del Repositorio
 
-- **Total de funciones matched:** **30 funciones** (`19` en `ctr`, `7` en `engine`, `4` en `game`).
-- **Bytes verificados:** **444 bytes** de `.text` verificados byte-exact.
-- **Syscalls matched en `ctr/svc` (5):**
-  - `0x00104778` (`svcExitProcess`, 8 B) — `svc 0x03`
+- **Total de funciones matched:** **35 funciones** (`24` en `ctr`, `7` en `engine`, `4` en `game`).
+- **Bytes verificados:** **564 bytes** de `.text` verificados byte-exact.
+- **Familia completa de 24 bytes en `ctr/svc` (100% matched — 9/9):**
   - `0x0010AAA8` (`svcCreateEvent`, 24 B) — `svc 0x21`
   - `0x0010AAC0` (`svcDuplicateHandle`, 24 B) — `svc 0x38`
+  - `0x00112FF0` (`svcCreateTimer`, 24 B) — `svc 0x2D`
+  - `0x0012F198` (`svcCreateResourceLimit`, 24 B) — `svc 0x35`
   - `0x00151FA0` (`svcCreateAddressArbiter`, 24 B) — `svc 0x17`
-  - `0x00151FBC` (`svcSleepThread`, 8 B) — `svc 0x28`
   - `0x00151FC4` (`svcGetThreadId`, 24 B) — `svc 0x37`
+  - `0x0018A738` (`svcCreateMemoryBlock`, 24 B) — `svc 0x13`
+  - `0x0018A750` (`svcCreateThread`, 24 B) — `svc 0x27`
+  - `0x0018A784` (`svcControlMemory`, 24 B) — `svc 0x0B`
+- **Syscalls directas de 8 bytes en `ctr/svc` (2):**
+  - `0x00104778` (`svcExitProcess`, 8 B) — `svc 0x03`
+  - `0x00151FBC` (`svcSleepThread`, 8 B) — `svc 0x28`
 
