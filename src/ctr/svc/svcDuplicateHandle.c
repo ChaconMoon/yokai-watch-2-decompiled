@@ -2,7 +2,7 @@
 
 __attribute__((naked))
 Result
-svcDuplicateHandle(Handle *handle, u32 resetType)
+svcDuplicateHandle(Handle *handle, Handle original)
 {
         __asm__ volatile(
             "push {r0}\n"
