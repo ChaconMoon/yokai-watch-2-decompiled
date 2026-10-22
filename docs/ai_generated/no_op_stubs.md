@@ -81,6 +81,7 @@ El linker de ARMCC (`armlink`) implementa optimizaciones de plegado de secciones
    - Si la función recibe argumentos (por ejemplo, el puntero `this` en `r0`), en C se puede declarar con `void func_0017656C(void* this)` o sin parámetros `void func_0017656C(void)`, ya que en ambos casos la llamada y el retorno binario son idénticos.
 
 2. **Ubicación en el repositorio**:
-   - Stubs de métodos virtuales, callbacks genéricos o infraestructura del motor pertenecen a **`src/system/`**.
-   - Stubs de subsistemas oficiales de Nintendo pertenecen a **`src/sdk/`**.
+   - Stubs de métodos virtuales, callbacks genéricos o infraestructura del motor pertenecen a **`src/engine/`** (p. ej. `src/engine/lfw/`, `src/engine/lxp/`).
+   - Stubs de subsistemas oficiales de Nintendo pertenecen a **`src/ctr/`** (p. ej. `src/ctr/svc/`, `src/ctr/nn/nex/`).
+   - Stubs de entidades o estados del juego pertenecen a **`src/game/`** (p. ej. `src/game/core/`, `src/game/loops/`).
 

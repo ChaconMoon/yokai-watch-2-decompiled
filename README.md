@@ -142,9 +142,9 @@ Standard Nintendo 3DS system libraries (`1.2.7.f-NINTENDO-CTR-SDK-v1`), kernel s
 | **L2: OS Accessor** | `0x0010678C` | `func_0010678C` | `ctr/nn_os` | 16 B | 🟢 Matched | Signed byte reader (`0x00814E00`) |
 | **L2: CRT Loop** | `0x00100024` | `clear_bss` | `ctr/crt` | 36 B | 🟢 Matched | Startup `.bss` zeroing loop (`0x00860934`–`0x0091B9BC`) |
 | **L3: Synchronization** | `0x001274A0` | `func_001274A0` | `ctr/nn_os` | 24 B | 🟡 In Review | Atomic spinlock acquire loop (`ldrex`/`strex`) |
-| **L3: Syscall + Stack** | `0x0010AAA8` | `svcCreateEvent` | `ctr/svc` | 24 B | ⏳ Candidate | Kernel syscall wrapper with output pointer (`svc 0x21`) |
-| **L3: Syscall + Stack** | `0x0010AAC0` | `svcDuplicateHandle` | `ctr/svc` | 24 B | ⏳ Candidate | Kernel syscall wrapper (`svc 0x38`) |
-| **L3: Array Indexer** | `0x001280A8` | `func_001280A8` | `ctr/nn_ndm` | 24 B | ⏳ Candidate | Bounds-checked array element indexer (stride 8) |
+| **L3: Syscall + Stack** | `0x0010AAA8` | `svcCreateEvent` | `ctr/svc` | 24 B | 🟢 Matched | Kernel syscall wrapper with output pointer (`svc 0x21`) |
+| **L3: Syscall + Stack** | `0x0010AAC0` | `svcDuplicateHandle` | `ctr/svc` | 24 B | 🟢 Matched | Kernel syscall wrapper (`svc 0x38`) |
+| **L3: Array Indexer** | `0x001280A8` | `func_001280A8` | `ctr/nn_ndm` | 24 B | 🟢 Matched | Bounds-checked array element indexer (stride 8) |
 
 ### Layer 2: Level-5 Proprietary Engine (`src/engine/`)
 Shared Level-5 middleware used across 3DS titles: **LFW** (*Level-5 Framework*: `lfwCObject`, `lfwCLoop`, `lfwCObj2DManager`, `lfwCObj3DManager`, `lfwCCameraManager`), **LXP** (*Level-5 Cross-Platform*: `lxpCMemory`, `lxpCStack`, `.fa` / `XPCK` archives), and **GDS** (*Generic Data Script*: `GDSFix`, `GDSSwitch`, `.cfg.bin` parsers).
