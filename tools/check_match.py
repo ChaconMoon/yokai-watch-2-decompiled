@@ -140,7 +140,7 @@ def main():
     obj_files = list(BUILD_DIR.rglob("*.o"))
     if not obj_files:
         print("⚠️ No compiled objects found in 'build/'.")
-        print("   Run 'make build/src/system/func_0010B6D0.o' or similar first.")
+        print("   Run 'make build/src/engine/lfw/func_0010B6D0.o' or similar first.")
         return 1
 
     with open(RAW_BIN, "rb") as f:
