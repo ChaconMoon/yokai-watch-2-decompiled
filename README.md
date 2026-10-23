@@ -115,11 +115,11 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x0018A784` | `svcControlMemory` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x0B) |
 | `0x0018A868` | `svcWaitSynchronization1` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x24) |
 | `0x00301248` | `func_00301248` | `ctr/nn_nex` | 4 B | `1_leaf_stub` | 🟢 Matched | nn::nex leaf empty void stub function (bx lr) |
-| `0x00340CE8` | `func_00340CE8` | `ctr/nn_nex` | 20 B | `2_accessor` | 🟢 Matched | nn::nex multi-field struct copy assignment (32-bit +0x00, 16-bit +0x04) |
-| `0x00340CFC` | `func_00340CFC` | `ctr/nn_nex` | 12 B | `2_accessor` | 🟢 Matched | nn::nex multi-field struct setter (32-bit +0x00, 16-bit +0x04) |
-| `0x00340D08` | `func_00340D08` | `ctr/nn_nex` | 16 B | `2_accessor` | 🟢 Matched | nn::nex multi-field struct zero initializer (32-bit +0x00, 16-bit +0x04) |
-| `0x00340D18` | `func_00340D18` | `ctr/nn_nex` | 4 B | `1_leaf_stub` | 🟢 Matched | nn::nex empty void leaf stub function (bx lr) |
-| `0x00340D1C` | `func_00340D1C` | `ctr/nn_nex` | 20 B | `2_accessor` | 🟢 Matched | nn::nex multi-field struct copy constructor (32-bit +0x00, 16-bit +0x04) |
+| `0x00340CE8` | `_ZN2nn3nex10NexElementaSERKS1_` | `ctr/nn_nex` | 20 B | `2_accessor` | 🟢 Matched | nn::nex::NexElement::operator=(const NexElement&) |
+| `0x00340CFC` | `_ZN2nn3nex10NexElementC1Eis` | `ctr/nn_nex` | 12 B | `2_accessor` | 🟢 Matched | nn::nex::NexElement::NexElement(s32, s16) |
+| `0x00340D08` | `_ZN2nn3nex10NexElementC1Ev` | `ctr/nn_nex` | 16 B | `2_accessor` | 🟢 Matched | nn::nex::NexElement::NexElement() |
+| `0x00340D18` | `_ZN2nn3nex10NexElementD1Ev` | `ctr/nn_nex` | 4 B | `1_leaf_stub` | 🟢 Matched | nn::nex::NexElement::~NexElement() |
+| `0x00340D1C` | `_ZN2nn3nex10NexElementC1ERKS1_` | `ctr/nn_nex` | 20 B | `2_accessor` | 🟢 Matched | nn::nex::NexElement::NexElement(const NexElement&) |
 
 <!-- MANIFEST_TABLE_END -->
 
@@ -174,6 +174,159 @@ Game-specific state machines (`ywCLoopMain`, `ywCLoopRPG`, `ywCLoopBattle`, `ywC
 | **L2: Pointer Getter** | `0x0010C894` | `func_0010C894` | `game/loops` | 12 B | 🟢 Matched | Game loop state pointer getter (`0x0086C8CC`) |
 | **L2: Pointer Getter** | `0x00171C78` | `func_00171C78` | `game/core` | 12 B | 🟢 Matched | Global `.bss` state pointer getter (`0x0091B7B8`) |
 | **L3: Struct Init** | `0x0011054C` | `func_0011054C` | `game/loops` | 24 B | 🟢 Matched | Struct header reset (zeros 8 bytes, sets byte 0 to `0xFF`) |
+
+---
+
+## 🎯 Target Classes Roadmap (C++ & Engine Structures)
+
+In addition to individual atomic functions, the project organizes C++ reverse engineering into **Translation Units (TUs)** corresponding to complete classes, value types, and polymorphic state machines.
+
+The entire catalog of **123 identified classes and structures** is categorized below by architectural layer and sorted in physical memory address order:
+
+<!-- TARGET_CLASSES_TABLE_START -->
+
+> **Total cataloged classes & structures: 123** (synchronized with [`config/classes_identified.csv`](config/classes_identified.csv), sorted in ascending address order).
+
+### Layer 1: Nintendo CTR-SDK & ARM Runtime (CTR) (8 classes)
+
+| Address | Class / Structure | Module | Base Class | Methods / Type | Status | Description |
+| :--- | :--- | :---: | :--- | :---: | :---: | :--- |
+| `0x00112E60` | `nn::y2r::Y2rObject` | `nn_y2r` | - | c_struct | 🟡 Partial | Y2R hardware converter object context |
+| `0x00112E60` | `nn::y2r::Y2rSubContext` | `nn_y2r` | - | c_struct | 🟡 Partial | Y2R conversion channel sub-context descriptor |
+| `0x001274A0` | `nn::os::SpinLock` | `nn_os` | - | c_struct | 🟡 Partial | Nintendo 3DS OS hardware atomic spinlock |
+| `0x001280A8` | `nn::ndm::NdmContainer` | `nn_ndm` | - | c_struct | 🟡 Partial | NDM daemon indexed container header |
+| `0x001280A8` | `nn::ndm::NdmElement8` | `nn_ndm` | - | c_struct | ⏳ Target | NDM daemon 8-byte entry element |
+| `0x00340C60` | `nn::nex::qResult` | `nn_nex` | - | value_type | ⏳ Target | NEX error result code and status wrapper |
+| `0x00340CE8` | `nn::nex::NexElement` | `nn_nex` | - | value_type | 🟢 Matched | Network stream element / station identifier (72 B, 5 methods) |
+| `0x00340D30` | `nn::nex::StationURL` | `nn_nex` | - | value_type | ⏳ Target | NEX Rendez-Vous station connection URL descriptor |
+
+### Layer 2: Level-5 Engine (LFW, LXP, LIZ, Core) (61 classes)
+
+| Address | Class / Structure | Module | Base Class | Methods / Type | Status | Description |
+| :--- | :--- | :---: | :--- | :---: | :---: | :--- |
+| `0x00107478` | `LfwLoopClassInfo` | `lfw` | - | c_struct | ⏳ Target | Level-5 Framework loop state machine descriptor table |
+| `0x001300B0` | `lxpCMemory` | `lxp` | - | engine_class | 🟡 Partial | Level-5 Cross-Platform memory manager |
+| `0x007F16B8` | `liz::MemBase::ILj1ENS_8DontCopyEE` | `liz` | `liz::DontCopy` | interface | ⏳ Target | Abstract / RTTI interface descriptor |
+| `0x007F16C4` | `liz::DontCopy` | `liz` | - | interface | ⏳ Target | Abstract / RTTI interface descriptor |
+| `0x007F20D0` | `lxpCCamera` | `lxp` | - | 8 vmethods | ⏳ Target | Polymorphic C++ class (8 virtual methods) |
+| `0x007F20F8` | `lxpCDrwRes` | `lxp` | - | 175 vmethods | ⏳ Target | Polymorphic C++ class (175 virtual methods) |
+| `0x007F23BC` | `lxpCMemObj` | `lxp` | - | 3 vmethods | ⏳ Target | Polymorphic C++ class (3 virtual methods) |
+| `0x007F23D0` | `lxpCObjDOF` | `lxp` | `lxpCObjColor` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007F2528` | `lfwCMessage` | `lfw` | `lxpCMessage` | 47 vmethods | ⏳ Target | Polymorphic C++ class (47 virtual methods) |
+| `0x007F2600` | `lfwCObjLine` | `lfw` | `lxpCDrwRes` | 41 vmethods | ⏳ Target | Polymorphic C++ class (41 virtual methods) |
+| `0x007F26AC` | `lxpCMessage` | `lxp` | - | 46 vmethods | ⏳ Target | Polymorphic C++ class (46 virtual methods) |
+| `0x007F279C` | `lxpCObjBlur` | `lxp` | `lxpCDrwRes` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007F28A0` | `__lfwCObject` | `lfw` | - | 36 vmethods | ⏳ Target | Polymorphic C++ class (36 virtual methods) |
+| `0x007F2938` | `lfwCObjImage` | `lfw` | `lxpCObjImage` | 70 vmethods | ⏳ Target | Polymorphic C++ class (70 virtual methods) |
+| `0x007F2AC0` | `lxpCObjAnime` | `lxp` | `lxpCDrwRes` | 32 vmethods | ⏳ Target | Polymorphic C++ class (32 virtual methods) |
+| `0x007F2B48` | `lxpCObjChara` | `lxp` | - | 33 vmethods | ⏳ Target | Polymorphic C++ class (33 virtual methods) |
+| `0x007F2BE8` | `lxpCObjColor` | `lxp` | `lxpCDrwRes` | 34 vmethods | ⏳ Target | Polymorphic C++ class (34 virtual methods) |
+| `0x007F2C78` | `lxpCObjImage` | `lxp` | `lxpCObjColor` | 36 vmethods | ⏳ Target | Polymorphic C++ class (36 virtual methods) |
+| `0x007F2D10` | `lxpCObjMovie` | `lxp` | `lxpCObjImage` | 41 vmethods | ⏳ Target | Polymorphic C++ class (41 virtual methods) |
+| `0x007F2DE4` | `lxpCResAnime` | `lxp` | `__lxpCResource` | 11 vmethods | ⏳ Target | Polymorphic C++ class (11 virtual methods) |
+| `0x007F2E18` | `lxpCResChara` | `lxp` | `__lxpCResource` | 16 vmethods | ⏳ Target | Polymorphic C++ class (16 virtual methods) |
+| `0x007F2E74` | `lxpCResModel` | `lxp` | `__lxpCResource` | 16 vmethods | ⏳ Target | Polymorphic C++ class (16 virtual methods) |
+| `0x007F2ED0` | `lxpCResource` | `lxp` | `__lxpCResource` | 22 vmethods | ⏳ Target | Polymorphic C++ class (22 virtual methods) |
+| `0x007F2F30` | `lfwCLoopEmpty` | `lfw` | `lfwCLoop` | 54 vmethods | 🟡 In Review | Polymorphic C++ class (54 virtual methods) |
+| `0x007F3010` | `lxpCObjCanvas` | `lxp` | `lxpCObjImage` | 36 vmethods | ⏳ Target | Polymorphic C++ class (36 virtual methods) |
+| `0x007F30A8` | `lxpCObjImage2` | `lxp` | `lxpCObjImage` | 36 vmethods | ⏳ Target | Polymorphic C++ class (36 virtual methods) |
+| `0x007F3140` | `lxpCObjLocus1` | `lxp` | `__lxpCObjLocus` | 46 vmethods | ⏳ Target | Polymorphic C++ class (46 virtual methods) |
+| `0x007F3200` | `lxpCObjLocus2` | `lxp` | `__lxpCObjLocus` | 123 vmethods | ⏳ Target | Polymorphic C++ class (123 virtual methods) |
+| `0x007F33F4` | `__lxpCObjLocus` | `core` | `lxpCDrwRes` | 46 vmethods | ⏳ Target | Polymorphic C++ class (46 virtual methods) |
+| `0x007F34B4` | `__lxpCResource` | `core` | - | 11 vmethods | ⏳ Target | Polymorphic C++ class (11 virtual methods) |
+| `0x007F34E8` | `lfwCCamera_Dev` | `lfw` | `lxpCCameraControl` | 59 vmethods | ⏳ Target | Polymorphic C++ class (59 virtual methods) |
+| `0x007F35DC` | `lfwCCamera_Fix` | `lfw` | `lxpCCameraControl` | 59 vmethods | ⏳ Target | Polymorphic C++ class (59 virtual methods) |
+| `0x007F36D0` | `lfwCCamera_Mtn` | `lfw` | `lxpCCameraMotion` | 78 vmethods | ⏳ Target | Polymorphic C++ class (78 virtual methods) |
+| `0x007F3810` | `lxpCObjCapture` | `lxp` | `lxpCDrwRes` | 33 vmethods | ⏳ Target | Polymorphic C++ class (33 virtual methods) |
+| `0x007F389C` | `lxpCObjEasyDOF` | `lxp` | `lxpCObjImage` | 92 vmethods | ⏳ Target | Polymorphic C++ class (92 virtual methods) |
+| `0x007F3A14` | `lfwCCamera_Move` | `lfw` | `lxpCCameraControl` | 103 vmethods | ⏳ Target | Polymorphic C++ class (103 virtual methods) |
+| `0x007F3BB8` | `lxpCObjParticle` | `lxp` | - | 6 vmethods | ⏳ Target | Polymorphic C++ class (6 virtual methods) |
+| `0x007F3C60` | `lxpCResParticle` | `lxp` | `__lxpCResource` | 99 vmethods | ⏳ Target | Polymorphic C++ class (99 virtual methods) |
+| `0x007F3DF4` | `lfwCCamera_Dolly` | `lfw` | `lxpCCameraControl` | 59 vmethods | ⏳ Target | Polymorphic C++ class (59 virtual methods) |
+| `0x007F3EE8` | `lfwCCamera_Orbit` | `lfw` | `lxpCCameraControl` | 115 vmethods | ⏳ Target | Polymorphic C++ class (115 virtual methods) |
+| `0x007F40BC` | `lxpCCameraMotion` | `lxp` | `lxpCCameraControl` | 249 vmethods | ⏳ Target | Polymorphic C++ class (249 virtual methods) |
+| `0x007F44A8` | `lxpCCameraControl` | `lxp` | `lxpCCamera` | 77 vmethods | ⏳ Target | Polymorphic C++ class (77 virtual methods) |
+| `0x007F45E4` | `lxpCObjCharaMerge` | `lxp` | `lxpCDrwRes` | 78 vmethods | ⏳ Target | Polymorphic C++ class (78 virtual methods) |
+| `0x007F4724` | `lxpCObjSimpleModel` | `lxp` | - | 32 vmethods | ⏳ Target | Polymorphic C++ class (32 virtual methods) |
+| `0x007F4BC8` | `CLcs1` | `core` | `lxpCObjLocus1` | 46 vmethods | ⏳ Target | Polymorphic C++ class (46 virtual methods) |
+| `0x007F4C88` | `CLcs2` | `core` | `lxpCObjLocus2` | 179 vmethods | ⏳ Target | Polymorphic C++ class (179 virtual methods) |
+| `0x007F4F70` | `lfwCLoop` | `lfw` | `lxpCLoop` | 438 vmethods | ⏳ Target | Polymorphic C++ class (438 virtual methods) |
+| `0x007F5650` | `lxpCLoop` | `lxp` | - | 23 vmethods | ⏳ Target | Polymorphic C++ class (23 virtual methods) |
+| `0x007F5830` | `lfwCObj2D` | `lfw` | `__lfwCObject` | 16 vmethods | ⏳ Target | Polymorphic C++ class (16 virtual methods) |
+| `0x007F5878` | `lfwCObj3D` | `lfw` | `__lfwCObject` | 30 vmethods | ⏳ Target | Polymorphic C++ class (30 virtual methods) |
+| `0x007F590C` | `__cxxabiv1::__class_type_info` | `core` | - | 2 vmethods | ⏳ Target | Polymorphic C++ class (2 virtual methods) |
+| `0x007F591C` | `__cxxabiv1::__si_class_type_info` | `core` | `__cxxabiv1::__class_type_info` | 2 vmethods | ⏳ Target | Polymorphic C++ class (2 virtual methods) |
+| `0x007F592C` | `__cxxabiv1::__vmi_class_type_info` | `core` | `__cxxabiv1::__class_type_info` | 25 vmethods | ⏳ Target | Polymorphic C++ class (25 virtual methods) |
+| `0x00800FD8` | `liz::ResBaseLXP` | `liz` | `liz::IResource` | 7 vmethods | ⏳ Target | Polymorphic C++ class (7 virtual methods) |
+| `0x00800FFC` | `liz::ResAnimeLXP` | `liz` | `liz::IResource` | 7 vmethods | ⏳ Target | Polymorphic C++ class (7 virtual methods) |
+| `0x00801020` | `liz::ResCharaLXP` | `liz` | `liz::IResource` | 7 vmethods | ⏳ Target | Polymorphic C++ class (7 virtual methods) |
+| `0x00801044` | `liz::ResImageLXP` | `liz` | `liz::IResource` | 7 vmethods | ⏳ Target | Polymorphic C++ class (7 virtual methods) |
+| `0x00801068` | `liz::ResModelLXP` | `liz` | `liz::IResource` | 7 vmethods | ⏳ Target | Polymorphic C++ class (7 virtual methods) |
+| `0x0080108C` | `liz::ResObj2DLXP` | `liz` | `liz::IResource` | 15 vmethods | ⏳ Target | Polymorphic C++ class (15 virtual methods) |
+| `0x008010D0` | `liz::IResource` | `liz` | `liz::MemBase::ILj1ENS_8DontCopyEE` | 7 vmethods | ⏳ Target | Polymorphic C++ class (7 virtual methods) |
+| `0x008010F4` | `liz::ResSkyLXP` | `liz` | `liz::IResource` | 1252 vmethods | ⏳ Target | Polymorphic C++ class (1252 virtual methods) |
+
+### Layer 3: Yo-kai Watch 2 Game Logic (YW2) (54 classes)
+
+| Address | Class / Structure | Module | Base Class | Methods / Type | Status | Description |
+| :--- | :--- | :---: | :--- | :---: | :---: | :--- |
+| `0x00107478` | `yw::YwLoopHeader` | `loops` | - | c_struct | ⏳ Target | Game loop state machine descriptor header |
+| `0x007F14AC` | `yw::ywIGDDInventory` | `core` | - | interface | ⏳ Target | Abstract / RTTI interface descriptor |
+| `0x007F1604` | `yw::ywIGDDInventoryStackable` | `core` | `yw::ywIGDDInventory` | interface | ⏳ Target | Abstract / RTTI interface descriptor |
+| `0x007FA598` | `yw::ywCLoopRPG` | `loops` | `yw::ywCLoop` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FA640` | `yw::ywCMessage` | `core` | `lfwCMessage` | 47 vmethods | ⏳ Target | Polymorphic C++ class (47 virtual methods) |
+| `0x007FA77C` | `yw::ywCLoopMain` | `loops` | `yw::ywCLoop` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FA824` | `yw::ywCLoopMenu` | `loops` | `yw::ywCLoopSequence` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FA8CC` | `yw::ywCLoopRace` | `loops` | `yw::ywCLoop` | 60 vmethods | ⏳ Target | Polymorphic C++ class (60 virtual methods) |
+| `0x007FA9C4` | `yw::ywCLoopEvent` | `loops` | `yw::ywCLoop` | 135 vmethods | ⏳ Target | Polymorphic C++ class (135 virtual methods) |
+| `0x007FABE8` | `yw::ywCLoopBattle` | `loops` | `yw::ywCLoop` | 125 vmethods | ⏳ Target | Polymorphic C++ class (125 virtual methods) |
+| `0x007FADE4` | `yw::ywCLoopCapsule` | `loops` | `yw::ywCLoopSequence` | 124 vmethods | ⏳ Target | Polymorphic C++ class (124 virtual methods) |
+| `0x007FAFDC` | `yw::ywCLoopMenuItem` | `loops` | `yw::ywCLoopMenuScrollList` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FB084` | `yw::ywCLoopMenuName` | `loops` | `yw::ywCLoopMenu` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FB12C` | `yw::ywCLoopMenuShop` | `loops` | `yw::ywCLoopMenuScrollList` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FB1D4` | `yw::ywCLoopMenuWarp` | `loops` | `yw::ywCLoopMenuScrollList` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FB27C` | `yw::ywCLoopOrgeTime` | `loops` | `yw::ywCLoop` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FB324` | `yw::ywCLoopSequence` | `loops` | `yw::ywCLoop` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FB3CC` | `yw::ywCLoopWatchmap` | `loops` | `yw::ywCLoopSequence` | 191 vmethods | ⏳ Target | Polymorphic C++ class (191 virtual methods) |
+| `0x007FB6D0` | `yw::ywCLoopMenuQuest` | `loops` | `yw::ywCLoopMenuScrollList` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FB778` | `yw::ywCLoopMenuTrade` | `loops` | `yw::ywCLoopMenuMember` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FB820` | `yw::ywCLoopMenuYSpot` | `loops` | `yw::ywCLoopMenuScrollList` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FB8C8` | `yw::ywCLoopMusicGame` | `loops` | `yw::ywCLoop` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FB970` | `yw::ywCLoopYokaispot` | `loops` | `yw::ywCLoopSequence` | 173 vmethods | ⏳ Target | Polymorphic C++ class (173 virtual methods) |
+| `0x007FBC2C` | `yw::ywCLoopEnenTunnel` | `loops` | `yw::ywCLoop` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FBCD4` | `yw::ywCLoopFaceDetect` | `loops` | `yw::ywCLoopMenu` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FBD7C` | `yw::ywCLoopMenuMember` | `loops` | `yw::ywCLoopMenuScrollList` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FBE24` | `yw::ywCLoopMenuWanted` | `loops` | `yw::ywCLoopMenuScrollList` | 211 vmethods | ⏳ Target | Polymorphic C++ class (211 virtual methods) |
+| `0x007FC178` | `yw::ywCLoopMenuCombine` | `loops` | `yw::ywCLoopMenuScrollList` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FC220` | `yw::ywCLoopMenuFilmApp` | `loops` | `yw::ywCLoopMenuScrollList` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FC2C8` | `yw::ywCLoopMenuLinkage` | `loops` | `yw::ywCLoopMenu` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FC370` | `yw::ywCLoopMenuLottery` | `loops` | `yw::ywCLoopMenu` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FC418` | `yw::ywCLoopMenuObserve` | `loops` | `yw::ywCLoopMenuMember` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FC4C0` | `yw::ywCLoopMenuScratch` | `loops` | `yw::ywCLoopMenu` | 101 vmethods | ⏳ Target | Polymorphic C++ class (101 virtual methods) |
+| `0x007FC65C` | `yw::ywGDDInventorySoul` | `core` | `yw::ywIGDDInventory` | 152 vmethods | ⏳ Target | Polymorphic C++ class (152 virtual methods) |
+| `0x007FC8C4` | `yw::ywCLoopMenuDownload` | `loops` | `yw::ywCLoopMenu` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FC96C` | `yw::ywCLoopMenuMatching` | `loops` | `yw::ywCLoopMenuScrollList` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FCA14` | `yw::ywCLoopMenuMovieApp` | `loops` | `yw::ywCLoopMenuScrollList` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FCABC` | `yw::ywCLoopMenuMusicApp` | `loops` | `yw::ywCLoopMenuScrollList` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FCB64` | `yw::ywCLoopMenuQuestSub` | `loops` | `yw::ywCLoopMenuScrollList` | 248 vmethods | ⏳ Target | Polymorphic C++ class (248 virtual methods) |
+| `0x007FCF4C` | `yw::ywCLoopMenuEcommerce` | `loops` | `yw::ywCLoopMenu` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x007FCFF4` | `yw::ywCLoopMenuMapScroll` | `loops` | `yw::ywCLoopMenu` | 170 vmethods | ⏳ Target | Polymorphic C++ class (170 virtual methods) |
+| `0x007FD2A4` | `yw::ywCLoopMenuScrollList` | `loops` | `yw::ywCLoopMenu` | 59 vmethods | ⏳ Target | Polymorphic C++ class (59 virtual methods) |
+| `0x007FD398` | `yw::ywGDDInventoryConsume` | `core` | `yw::ywIGDDInventoryStackable` | 294 vmethods | ⏳ Target | Polymorphic C++ class (294 virtual methods) |
+| `0x007FD838` | `yw::ywGDDInventoryEquipment` | `core` | `yw::ywIGDDInventoryStackable` | 8 vmethods | ⏳ Target | Polymorphic C++ class (8 virtual methods) |
+| `0x007FD860` | `yw::ywGDDInventoryImportant` | `core` | `yw::ywIGDDInventory` | 141 vmethods | ⏳ Target | Polymorphic C++ class (141 virtual methods) |
+| `0x007FDA9C` | `yw::ywCLoopMenuDataMigration` | `loops` | `yw::ywCLoopMenu` | 265 vmethods | ⏳ Target | Polymorphic C++ class (265 virtual methods) |
+| `0x007FDEC8` | `yw::ywCLoopMenuTrueOrgeMatching` | `loops` | `yw::ywCLoopMenuMatching` | 85 vmethods | ⏳ Target | Polymorphic C++ class (85 virtual methods) |
+| `0x007FE024` | `yw::ywCLoopMenuFriendBookRanking` | `loops` | `yw::ywCLoopMenuScrollList` | 411 vmethods | ⏳ Target | Polymorphic C++ class (411 virtual methods) |
+| `0x007FE698` | `yw::ywCLoopMenuFriendBookFriendList` | `loops` | `yw::ywCLoopMenuScrollList` | 2281 vmethods | ⏳ Target | Polymorphic C++ class (2281 virtual methods) |
+| `0x00800A44` | `yw::World::ywCCamera_Rpg` | `world` | `lxpCCameraControl` | 60 vmethods | ⏳ Target | Polymorphic C++ class (60 virtual methods) |
+| `0x00800B3C` | `yw::World::ywCCamera_Battle` | `battle` | `yw::World::ywCCamera_Rpg` | 60 vmethods | ⏳ Target | Polymorphic C++ class (60 virtual methods) |
+| `0x00800C34` | `yw::World::ywCCamera_Watchmap` | `world` | `yw::World::ywCCamera_Rpg` | 140 vmethods | ⏳ Target | Polymorphic C++ class (140 virtual methods) |
+| `0x00800E6C` | `yw::ywCLoop` | `loops` | `lfwCLoop` | 40 vmethods | ⏳ Target | Polymorphic C++ class (40 virtual methods) |
+| `0x00800F14` | `yw::ywCLoopQR` | `loops` | `yw::ywCLoopSequence` | 47 vmethods | ⏳ Target | Polymorphic C++ class (47 virtual methods) |
+
+
+<!-- TARGET_CLASSES_TABLE_END -->
 
 ---
 

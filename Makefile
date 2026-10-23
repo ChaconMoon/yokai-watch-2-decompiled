@@ -6,21 +6,27 @@ PYTHON   := python3
 TOOLS    := tools
 EXTRACT  := $(PYTHON) $(TOOLS)/extract_rom.py
 PROGRESS := $(PYTHON) $(TOOLS)/audit_progress.py
+CLASSES  := $(PYTHON) $(TOOLS)/extract_classes.py
 CHECK    := $(PYTHON) $(TOOLS)/check_match.py
 DUMP     := $(PYTHON) $(TOOLS)/dump_asm.py
 INJECT   := $(PYTHON) $(TOOLS)/inject_code.py
 AZAHAR_MOD_DIR := $(HOME)/.local/share/azahar-emu/load/mods/00040000001B2900/exefs
 
 CC       := arm-none-eabi-gcc
+CXX      := arm-none-eabi-g++
 AS       := arm-none-eabi-as
 ASFLAGS  := -mcpu=mpcore -mfpu=vfpv2
 CFLAGS   := -c -mcpu=mpcore -O3 -I . -I include
+CXXFLAGS := -c -mcpu=mpcore -O3 -I . -I include -fno-rtti -fno-exceptions
 
 C_SRCS   := $(shell find src -name '*.c' 2>/dev/null)
+CPP_SRCS := $(shell find src -name '*.cpp' 2>/dev/null)
 S_SRCS   := $(shell find src -name '*.s' 2>/dev/null)
-OBJS     := $(patsubst src/%.c, build/src/%.o, $(C_SRCS)) $(patsubst src/%.s, build/src/%.o, $(S_SRCS))
+OBJS     := $(patsubst src/%.c, build/src/%.o, $(C_SRCS)) \
+            $(patsubst src/%.cpp, build/src/%.o, $(CPP_SRCS)) \
+            $(patsubst src/%.s, build/src/%.o, $(S_SRCS))
 
-.PHONY: all build extract progress check inject dump report info clean distclean
+.PHONY: all build extract progress classes check inject dump report info clean distclean
 
 all: build
 
@@ -65,6 +71,9 @@ progress:
 	fi
 	@$(PROGRESS) --update-readme
 
+classes:
+	@$(CLASSES)
+
 check: $(OBJS)
 	@$(CHECK)
 
@@ -87,29 +96,10 @@ build/src/ctr/nn/os/func_00104D18.o: CFLAGS += -ffixed-r3 -ffixed-r2
 build/src/ctr/nn/os/func_001063F4.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
 build/src/ctr/nn/os/func_0010678C.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
 build/src/ctr/nn/ndm/func_001280A8.o: CFLAGS += -ffixed-r3
-build/src/ctr/nn/nex/func_00340D08.o: CFLAGS += -ffixed-r3 -ffixed-r2
 
 WIBO     := tools/wibo
 ARMCC    := $(WIBO) tools/armcc/4.0/b821/bin/armcc.exe
-ARMFLAGS := --cpu=mpcore -O3 -c -I . -I include
-
-build/src/ctr/nn/nex/func_00340CE8.o: src/ctr/nn/nex/func_00340CE8.c
-	@mkdir -p $(dir $@)
-	@if [ -f "tools/armcc/4.0/b821/bin/armcc.exe" ]; then \
-		$(ARMCC) $(ARMFLAGS) $< -o $@; \
-	else \
-		echo "⚠️ Warning: ARMCC not found, compiling with GCC fallback..."; \
-		$(CC) $(CFLAGS) $< -o $@; \
-	fi
-
-build/src/ctr/nn/nex/func_00340D1C.o: src/ctr/nn/nex/func_00340D1C.c
-	@mkdir -p $(dir $@)
-	@if [ -f "tools/armcc/4.0/b821/bin/armcc.exe" ]; then \
-		$(ARMCC) $(ARMFLAGS) $< -o $@; \
-	else \
-		echo "⚠️ Warning: ARMCC not found, compiling with GCC fallback..."; \
-		$(CC) $(CFLAGS) $< -o $@; \
-	fi
+ARMFLAGS := --cpu=mpcore -O3 --gnu -c -I . -I include
 
 build/src/game/loops/func_0011054C.o: src/game/loops/func_0011054C.c
 	@mkdir -p $(dir $@)
@@ -132,7 +122,7 @@ build/src/ctr/nn/os/func_001274A0.o: src/ctr/nn/os/func_001274A0.c
 build/src/ctr/nn/y2r/func_00112E60.o: src/ctr/nn/y2r/func_00112E60.c
 	@mkdir -p $(dir $@)
 	@if [ -f "tools/armcc/4.0/b821/bin/armcc.exe" ]; then \
-		$(ARMCC) $(ARMFLAGS) $< -o $@; \
+		$(ARMCC) $(ARMFLAGS) --cpu=arm1136j-s $< -o $@; \
 	else \
 		echo "⚠️ Warning: ARMCC not found, compiling with GCC fallback..."; \
 		$(CC) $(CFLAGS) $< -o $@; \
@@ -168,6 +158,14 @@ build/src/ctr/nn/y2r/func_00113F70.o: src/ctr/nn/y2r/func_00113F70.c
 build/%.o: %.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $< -o $@
+
+build/%.o: %.cpp
+	@mkdir -p $(dir $@)
+	@if [ -f "tools/armcc/4.0/b821/bin/armcc.exe" ]; then \
+		$(ARMCC) $(ARMFLAGS) --cpp $< -o $@; \
+	else \
+		$(CXX) $(CXXFLAGS) $< -o $@; \
+	fi
 
 build/%.o: %.s
 	@mkdir -p $(dir $@)

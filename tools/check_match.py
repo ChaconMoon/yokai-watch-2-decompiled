@@ -43,7 +43,7 @@ def load_manifest(csv_path: Path):
                     "address": addr,
                     "size": size,
                     "status": row.get("status", "staged"),
-                    "description": row.get("description", "")
+                    "description": row.get("description", ""),
                 }
             except (ValueError, KeyError):
                 continue
@@ -92,11 +92,7 @@ def get_relocations_from_elf(obj_path: Path):
                 offset = int(parts[0], 16)
                 rtype = parts[2]
                 sym_name = parts[-1]
-                relocs.append({
-                    "offset": offset,
-                    "type": rtype,
-                    "symbol": sym_name
-                })
+                relocs.append({"offset": offset, "type": rtype, "symbol": sym_name})
             except ValueError:
                 continue
     return relocs
@@ -108,10 +104,11 @@ def extract_section_bytes(obj_path: Path, section=".text"):
     try:
         cmd = [
             "arm-none-eabi-objcopy",
-            "-O", "binary",
+            "-O",
+            "binary",
             f"--only-section={section}",
             str(obj_path),
-            tmp_name
+            tmp_name,
         ]
         res = subprocess.run(cmd, capture_output=True, text=True)
         if res.returncode != 0 or not os.path.exists(tmp_name):
@@ -124,13 +121,19 @@ def extract_section_bytes(obj_path: Path, section=".text"):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Verify compiled functions against code.raw.bin")
-    parser.add_argument("--symbol", type=str, default=None, help="Check only specific symbol")
+    parser = argparse.ArgumentParser(
+        description="Verify compiled functions against code.raw.bin"
+    )
+    parser.add_argument(
+        "--symbol", type=str, default=None, help="Check only specific symbol"
+    )
     args = parser.parse_args()
 
     if not RAW_BIN.exists():
         print("❌ Error: 'extracted/code.raw.bin' not found.")
-        print("   Run 'make extract' with a decrypted ROM to extract the reference binary.")
+        print(
+            "   Run 'make extract' with a decrypted ROM to extract the reference binary."
+        )
         return 1
 
     manifest = load_manifest(MANIFEST_CSV)
@@ -164,7 +167,7 @@ def main():
         text_bytes = extract_section_bytes(obj, ".text")
 
         for sym, sym_info in symbols.items():
-            if "$$" in sym or sym.startswith("__arm_cp"):
+            if "$$" in sym or sym.startswith("__arm_cp") or sym_info["size"] == 0:
                 continue
             if args.symbol and sym != args.symbol:
                 continue
@@ -199,7 +202,9 @@ def main():
             comp_len = min(len(expected_slice), len(actual_slice))
 
             # Identify relocations belonging to this function
-            fn_relocs = [r for r in relocs if obj_off <= r["offset"] < obj_off + obj_size]
+            fn_relocs = [
+                r for r in relocs if obj_off <= r["offset"] < obj_off + obj_size
+            ]
             reloc_byte_indices = set()
             reloc_details = []
             for r in fn_relocs:
@@ -208,12 +213,16 @@ def main():
                     for b in range(4):
                         reloc_byte_indices.add(rel_off + b)
                     if rel_off + 4 <= len(expected_slice):
-                        target_addr = struct.unpack_from("<I", expected_slice, rel_off)[0]
+                        target_addr = struct.unpack_from("<I", expected_slice, rel_off)[
+                            0
+                        ]
                         reloc_details.append(f"{r['symbol']} -> 0x{target_addr:08X}")
                     else:
                         reloc_details.append(r["symbol"])
                 elif r["type"] in ("R_ARM_CALL", "R_ARM_JUMP24"):
-                    if rel_off + 4 <= len(expected_slice) and rel_off + 4 <= len(actual_slice):
+                    if rel_off + 4 <= len(expected_slice) and rel_off + 4 <= len(
+                        actual_slice
+                    ):
                         exp_word = struct.unpack_from("<I", expected_slice, rel_off)[0]
                         act_word = struct.unpack_from("<I", actual_slice, rel_off)[0]
                         # Verify branch condition and opcode prefix match (top 8 bits)
@@ -224,14 +233,17 @@ def main():
                             if imm24 & 0x800000:
                                 imm24 -= 0x1000000
                             target_addr = addr + rel_off + 8 + imm24 * 4
-                            reloc_details.append(f"{r['symbol']} -> 0x{target_addr:08X}")
+                            reloc_details.append(
+                                f"{r['symbol']} -> 0x{target_addr:08X}"
+                            )
 
             # Verify non-relocation bytes match byte-for-byte
             code_diffs = [
-                i for i in range(comp_len)
+                i
+                for i in range(comp_len)
                 if i not in reloc_byte_indices and expected_slice[i] != actual_slice[i]
             ]
-            length_match = (len(expected_slice) == len(actual_slice))
+            length_match = len(expected_slice) == len(actual_slice)
             is_match = length_match and (len(code_diffs) == 0)
             status = meta.get("status", "staged").lower() if meta else "staged"
             is_staged = status in ("staged", "wip", "in_progress")
@@ -241,18 +253,36 @@ def main():
                 detail_str = ""
                 if reloc_details:
                     detail_str = f" [reloc: {', '.join(reloc_details)}]"
-                staged_note = " \033[96m(ready to promote to matched!)\033[0m" if is_staged else ""
-                print(f"  \033[92m>>> MATCH <<<\033[0m: {sym} (0x{addr:08X}) — {size} B identical{detail_str}{staged_note}")
+                staged_note = (
+                    " \033[96m(ready to promote to matched!)\033[0m"
+                    if is_staged
+                    else ""
+                )
+                print(
+                    f"  \033[92m>>> MATCH <<<\033[0m: {sym} (0x{addr:08X}) — {size} B identical{detail_str}{staged_note}"
+                )
             elif is_staged:
                 staged_count += 1
-                diff_count = len(code_diffs) + abs(len(expected_slice) - len(actual_slice))
-                print(f"  \033[93m>>> STAGED (WIP) <<<\033[0m: {sym} (0x{addr:08X}) — {diff_count} byte(s) diff [in development]")
+                diff_count = len(code_diffs) + abs(
+                    len(expected_slice) - len(actual_slice)
+                )
+                print(
+                    f"  \033[93m>>> STAGED (WIP) <<<\033[0m: {sym} (0x{addr:08X}) — {diff_count} byte(s) diff [in development]"
+                )
             else:
                 mismatched_count += 1
-                diff_count = len(code_diffs) + abs(len(expected_slice) - len(actual_slice))
-                print(f"  \033[91m>>> REGRESSION / MISMATCH <<<\033[0m: {sym} (0x{addr:08X})")
-                print(f"      Expected ({len(expected_slice)} B): {expected_slice[:16].hex()}...")
-                print(f"      Compiled ({len(actual_slice)} B): {actual_slice[:16].hex()}...")
+                diff_count = len(code_diffs) + abs(
+                    len(expected_slice) - len(actual_slice)
+                )
+                print(
+                    f"  \033[91m>>> REGRESSION / MISMATCH <<<\033[0m: {sym} (0x{addr:08X})"
+                )
+                print(
+                    f"      Expected ({len(expected_slice)} B): {expected_slice[:16].hex()}..."
+                )
+                print(
+                    f"      Compiled ({len(actual_slice)} B): {actual_slice[:16].hex()}..."
+                )
                 print(f"      Differences: {diff_count} byte(s)")
 
     print("============================================================")
@@ -263,11 +293,17 @@ def main():
     print(f"  Results: {', '.join(summary_parts)}")
     print("============================================================")
 
-    pending = [s for s, m in manifest.items() if s not in checked_symbols and m["status"].lower() != "matched"]
+    pending = [
+        s
+        for s, m in manifest.items()
+        if s not in checked_symbols and m["status"].lower() != "matched"
+    ]
     if pending:
         print(f"  Pending candidates ({len(pending)}):")
         for s in pending[:5]:
-            print(f"    ⏳ {s} (0x{manifest[s]['address']:08X}) — {manifest[s]['size']} B")
+            print(
+                f"    ⏳ {s} (0x{manifest[s]['address']:08X}) — {manifest[s]['size']} B"
+            )
         if len(pending) > 5:
             print(f"    ... and {len(pending) - 5} more")
         print("============================================================")
