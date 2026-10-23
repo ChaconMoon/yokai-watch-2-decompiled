@@ -25,3 +25,5 @@ tools/armcc/
 tools/*.zip
 tools/wibo
 tools/objdiff-cli
+__pycache__/
+*.pyc

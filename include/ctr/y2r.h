@@ -25,8 +25,14 @@ extern "C"
 
         typedef struct
         {
-                u8 pad[0x21C8];
+                u8 pad[0x48];
                 u16 flag;
+        } Y2rSubContext;
+
+        typedef struct
+        {
+                u8 pad[0x2180];
+                Y2rSubContext sub;
         } Y2rObject;
 
         extern Y2rContext unk_008661EC;

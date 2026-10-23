@@ -740,80 +740,12 @@
       }
     },
     {
-      "name": "ctr/nn_nex/func_00340CE8",
-      "target_path": "expected/func_00340CE8.o",
-      "base_path": "build/src/ctr/nn/nex/func_00340CE8.o",
+      "name": "ctr/NexElement",
+      "target_path": "expected/NexElement.o",
+      "base_path": "build/src/ctr/nn/nex/NexElement.o",
       "metadata": {
         "complete": true,
-        "source_path": "src/ctr/nn/nex/func_00340CE8.c",
-        "progress_categories": [
-          "ctr"
-        ]
-      },
-      "scratch": {
-        "platform": "n3ds",
-        "compiler": "armcc_40_821",
-        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
-      }
-    },
-    {
-      "name": "ctr/nn_nex/func_00340CFC",
-      "target_path": "expected/func_00340CFC.o",
-      "base_path": "build/src/ctr/nn/nex/func_00340CFC.o",
-      "metadata": {
-        "complete": true,
-        "source_path": "src/ctr/nn/nex/func_00340CFC.c",
-        "progress_categories": [
-          "ctr"
-        ]
-      },
-      "scratch": {
-        "platform": "n3ds",
-        "compiler": "armcc_40_821",
-        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
-      }
-    },
-    {
-      "name": "ctr/nn_nex/func_00340D08",
-      "target_path": "expected/func_00340D08.o",
-      "base_path": "build/src/ctr/nn/nex/func_00340D08.o",
-      "metadata": {
-        "complete": true,
-        "source_path": "src/ctr/nn/nex/func_00340D08.c",
-        "progress_categories": [
-          "ctr"
-        ]
-      },
-      "scratch": {
-        "platform": "n3ds",
-        "compiler": "armcc_40_821",
-        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
-      }
-    },
-    {
-      "name": "ctr/nn_nex/func_00340D18",
-      "target_path": "expected/func_00340D18.o",
-      "base_path": "build/src/ctr/nn/nex/func_00340D18.o",
-      "metadata": {
-        "complete": true,
-        "source_path": "src/ctr/nn/nex/func_00340D18.c",
-        "progress_categories": [
-          "ctr"
-        ]
-      },
-      "scratch": {
-        "platform": "n3ds",
-        "compiler": "armcc_40_821",
-        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
-      }
-    },
-    {
-      "name": "ctr/nn_nex/func_00340D1C",
-      "target_path": "expected/func_00340D1C.o",
-      "base_path": "build/src/ctr/nn/nex/func_00340D1C.o",
-      "metadata": {
-        "complete": true,
-        "source_path": "src/ctr/nn/nex/func_00340D1C.c",
+        "source_path": "src/ctr/nn/nex/NexElement.cpp",
         "progress_categories": [
           "ctr"
         ]

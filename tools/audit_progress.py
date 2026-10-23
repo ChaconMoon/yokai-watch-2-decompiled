@@ -20,6 +20,7 @@ CONFIG_DIR = PROJECT_ROOT / "config"
 README_FILE = PROJECT_ROOT / "README.md"
 OBJDIFF_CONFIG = PROJECT_ROOT / "objdiff.json"
 MANIFEST_CSV = CONFIG_DIR / "functions.csv"
+CLASSES_CSV = CONFIG_DIR / "classes_identified.csv"
 if not MANIFEST_CSV.exists() and (CONFIG_DIR / "functions_candidates.csv").exists():
     MANIFEST_CSV = CONFIG_DIR / "functions_candidates.csv"
 
@@ -188,7 +189,62 @@ def format_manifest_table(functions):
     return "\n".join(lines)
 
 
-def update_readme(readme_path: Path, progress_table: str, manifest_table: str):
+def format_classes_roadmap(classes_csv: Path) -> str:
+    if not classes_csv.exists():
+        return ""
+
+    with open(classes_csv, "r", encoding="utf-8") as f:
+        rows = list(csv.DictReader(f))
+
+    def get_badge(name):
+        if name == "nn::nex::NexElement":
+            return "🟢 Matched"
+        if name == "lfwCLoopEmpty":
+            return "🟡 In Review"
+        if name in ("lxpCMemory", "nn::y2r::Y2rObject", "nn::y2r::Y2rSubContext", "nn::ndm::NdmContainer", "nn::os::SpinLock"):
+            return "🟡 Partial"
+        return "⏳ Target"
+
+    layers = [
+        ("ctr", "Layer 1: Nintendo CTR-SDK & ARM Runtime (CTR)"),
+        ("engine", "Layer 2: Level-5 Engine (LFW, LXP, LIZ, Core)"),
+        ("game", "Layer 3: Yo-kai Watch 2 Game Logic (YW2)")
+    ]
+
+    output_lines = [
+        f"> **Total cataloged classes & structures: {len(rows)}** (synchronized with [`config/classes_identified.csv`](config/classes_identified.csv), sorted in ascending address order).",
+        ""
+    ]
+
+    for layer_id, layer_title in layers:
+        items = [r for r in rows if r["layer"] == layer_id]
+        output_lines.append(f"### {layer_title} ({len(items)} classes)\n")
+        output_lines.append("| Address | Class / Structure | Module | Base Class | Methods / Type | Status | Description |")
+        output_lines.append("| :--- | :--- | :---: | :--- | :---: | :---: | :--- |")
+
+        for r in items:
+            badge = get_badge(r["class_name"])
+            base_cls = r["base_class"]
+            base = f"`{base_cls}`" if base_cls else "-"
+            vc = int(r["vfunc_count"]) if r.get("vfunc_count") else 0
+            if vc > 0:
+                vf = f"{vc} vmethods"
+            elif r["kind"] == "polymorphic_class":
+                vf = "interface"
+            else:
+                vf = r["kind"]
+            desc = r["description"]
+            addr = r["address"]
+            name = r["class_name"]
+            sub = r["subsystem"]
+            output_lines.append(f"| `{addr}` | `{name}` | `{sub}` | {base} | {vf} | {badge} | {desc} |")
+
+        output_lines.append("")
+
+    return "\n".join(output_lines)
+
+
+def update_readme(readme_path: Path, progress_table: str, manifest_table: str, classes_table: str = ""):
     if not readme_path.exists():
         print(f"⚠️ README not found at {readme_path}")
         return False
@@ -217,6 +273,17 @@ def update_readme(readme_path: Path, progress_table: str, manifest_table: str):
         )
     else:
         print("⚠️ Marker <!-- MANIFEST_TABLE_START --> not found in README.")
+
+    classes_pattern = r"(<!-- TARGET_CLASSES_TABLE_START -->)(.*?)(<!-- TARGET_CLASSES_TABLE_END -->)"
+    if classes_table and re.search(classes_pattern, content, flags=re.DOTALL):
+        content = re.sub(
+            classes_pattern,
+            rf"\g<1>\n\n{classes_table}\n\n\g<3>",
+            content,
+            flags=re.DOTALL
+        )
+    elif classes_table:
+        print("⚠️ Marker <!-- TARGET_CLASSES_TABLE_START --> not found in README.")
 
     with open(readme_path, "w", encoding="utf-8") as f:
         f.write(content)
@@ -329,9 +396,10 @@ def main():
 
     progress_table = format_progress_table(metrics)
     manifest_table = format_manifest_table(functions)
+    classes_table = format_classes_roadmap(CLASSES_CSV)
 
     if args.update_readme:
-        update_readme(README_FILE, progress_table, manifest_table)
+        update_readme(README_FILE, progress_table, manifest_table, classes_table)
 
     update_objdiff_config(functions)
 
