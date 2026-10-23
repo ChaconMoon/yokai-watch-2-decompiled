@@ -16,6 +16,11 @@ This repository is dedicated to the **matching decompilation** of *Yo-kai Watch 
 >   - Classifying functions into their architectural layer (`ctr`, `engine`, `game`), managing metrics, manifests (`config/functions.csv`, `config/functions_candidates.csv`, `config/functions_classified.csv`), and repository tools.
 >   - Assisting with compiler configurations, options, and flags (ARMCC / RVCT 4.0 b821 vs GCC).
 
+### 🛡️ Estándares de Sintaxis y Calidad en Decompilación (OBLIGATORIO)
+
+- **Debes asegurarte de que la sintaxis de las funciones sea correcta según los estándares de los proyectos de decompilación; no debes aceptar nada que sea incorrecto** (por ejemplo: no aceptar aritmética cruda de punteros `*(u32 *)arg0` sobre `void *` cuando corresponde un `struct`, no dejar `structs` encerrados en archivos `.c` en lugar de `include/`, usar siempre hexadecimal `0x...` para offsets y paddings de estructuras, y evitar `__asm__` inline en funciones C decompilables).
+- **Deberemos hacer una revisión de las funciones decompiladas para mejorar la sintaxis y que sea correcta según los estándares esperados en una decompilación.**
+
 ### 📋 Required Format When Delivering Functions to Decompile
 
 Whenever the user requests functions to decompile, deliver them one by one following this exact structure:
