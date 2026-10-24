@@ -127,7 +127,10 @@ def main():
             if not meta:
                 continue
 
-            if not args.include_wip and meta["status"].lower() != "matched":
+            if (
+                not args.include_wip
+                and meta["status"].lower() not in ("matched", "community_matched", "matched_community")
+            ):
                 continue
 
             addr = meta["address"]

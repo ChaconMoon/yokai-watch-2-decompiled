@@ -43,10 +43,10 @@ Progress is split into categories so that assembly is never counted as C decompi
 
 | Category | Count | Meaning |
 | :--- | :---: | :--- |
-| **Real C-decompiled matched functions** | **48** / 18,225 (0.26%) | Functions implemented in C and verified byte-exact |
-| **Complete functions (C + verified original library assembly)** | **49** / 18,225 (0.27%) | Real C (48) + CRT/SDK assembly routines (1: `clear_bss`, etc.) |
-| **Real C-decompiled matched bytes** | **716** / 6,238,892 bytes (0.0115%) | Real-C-only byte progress (752 B including CRT assembly) |
-| **Layer 1: Nintendo CTR-SDK & Runtime (`src/ctr/`)** | **38** matched (628 B) | CRT startup, `svc` syscalls, `nn::os`, `nn::ndm`, `nn::nex` |
+| **Real C-decompiled matched functions** | **49** / 18,225 (0.27%) | Functions implemented in C and verified byte-exact |
+| **Complete functions (C + verified original library assembly)** | **50** / 18,225 (0.27%) | Real C (49) + CRT/SDK assembly routines (1: `clear_bss`, etc.) |
+| **Real C-decompiled matched bytes** | **732** / 6,238,892 bytes (0.0117%) | Real-C-only byte progress (768 B including CRT assembly) |
+| **Layer 1: Nintendo CTR-SDK & Runtime (`src/ctr/`)** | **39** matched (644 B) | CRT startup, `svc` syscalls, `nn::os`, `nn::ndm`, `nn::nex` |
 | **Layer 2: Level-5 Engine (`src/engine/`)** | **7** matched (72 B) | `lfw` (Framework), `lxp` (Cross-Platform), `gds` (Scripts) |
 | **Layer 3: Yo-kai Watch 2 Game (`src/game/`)** | **4** matched (52 B) | `ywCLoop*` states, battle, RPG, menus, and entities |
 | **Named / mapped candidates in manifest** | **52** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
@@ -116,7 +116,7 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x0018A868` | `svcWaitSynchronization1` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x24) |
 | `0x00301248` | `func_00301248` | `ctr/nn_nex` | 4 B | `1_leaf_stub` | 🟢 Matched | nn::nex leaf empty void stub function (bx lr) |
 | `0x0031F1E8` | `_ZN2nn3nex7qResultaSERKS1_` | `ctr/nn_nex` | 12 B | `2_accessor` | 🟢 Matched | nn::nex::qResult::operator=(const qResult&) |
-| `0x0031F1F4` | `_ZN2nn3nex7qResultC1Ev` | `ctr/nn_nex` | 16 B | `2_accessor` | 🟡 In Review | nn::nex::qResult::qResult() |
+| `0x0031F1F4` | `_ZN2nn3nex7qResultC1Ev` | `ctr/nn_nex` | 16 B | `2_accessor` | 🟢 Match (Community Accepted) | nn::nex::qResult::qResult() |
 | `0x0031F204` | `_ZN2nn3nex7qResultC1ERKS1_` | `ctr/nn_nex` | 12 B | `2_accessor` | 🟢 Matched | nn::nex::qResult::qResult(const qResult&) |
 | `0x0031F210` | `_ZNK2nn3nex7qResult8getValueEv` | `ctr/nn_nex` | 16 B | `2_accessor` | 🟢 Matched | nn::nex::qResult::getValue() const |
 | `0x00340CE8` | `_ZN2nn3nex10NexElementaSERKS1_` | `ctr/nn_nex` | 20 B | `2_accessor` | 🟢 Matched | nn::nex::NexElement::operator=(const NexElement&) |

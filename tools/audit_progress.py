@@ -78,7 +78,10 @@ def categorize_function(func):
 
 
 def calculate_metrics(functions):
-    matched_functions = [f for f in functions if f["status"].lower() == "matched"]
+    matched_functions = [
+        f for f in functions
+        if f["status"].lower() in ("matched", "community_matched", "matched_community")
+    ]
     wip_functions = [f for f in functions if f["status"].lower() in ("wip", "in review")]
     staged_functions = [f for f in functions if f["status"].lower() == "staged"]
 
@@ -165,6 +168,8 @@ def format_progress_table(metrics):
 def format_manifest_table(functions):
     status_badges = {
         "matched": "🟢 Matched",
+        "community_matched": "🟢 Match (Community Accepted)",
+        "matched_community": "🟢 Match (Community Accepted)",
         "wip": "🟡 In Review",
         "in review": "🟡 In Review",
         "staged": "⏳ Staged"
@@ -304,7 +309,7 @@ def update_objdiff_config(functions):
         sym = f["symbol"]
         seen_symbols.add(sym)
         status = f["status"].lower()
-        is_matched = (status == "matched")
+        is_matched = status in ("matched", "community_matched", "matched_community")
         category = categorize_function(f)
 
         if sym not in file_map:

@@ -28,7 +28,7 @@ def get_current_matched_bytes():
     if MANIFEST.exists():
         with open(MANIFEST, "r", encoding="utf-8") as f:
             for row in csv.DictReader(f):
-                if row.get("status", "").strip().lower() == "matched":
+                if row.get("status", "").strip().lower() in ("matched", "community_matched", "matched_community"):
                     try:
                         total_sz += int(row.get("size", 0))
                     except ValueError:

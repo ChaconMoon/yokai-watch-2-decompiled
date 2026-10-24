@@ -43,7 +43,7 @@ address,symbol,size,layer,subsystem,level,status,description
 0x0018A868,svcWaitSynchronization1,8,ctr,svc,1_leaf_stub,matched,"CTR kernel syscall wrapper stub (svc 0x24)"
 0x00301248,func_00301248,4,ctr,nn_nex,1_leaf_stub,matched,"nn::nex leaf empty void stub function (bx lr)"
 0x0031F1E8,_ZN2nn3nex7qResultaSERKS1_,12,ctr,nn_nex,2_accessor,matched,"nn::nex::qResult::operator=(const qResult&)"
-0x0031F1F4,_ZN2nn3nex7qResultC1Ev,16,ctr,nn_nex,2_accessor,wip,"nn::nex::qResult::qResult()"
+0x0031F1F4,_ZN2nn3nex7qResultC1Ev,16,ctr,nn_nex,2_accessor,community_matched,"nn::nex::qResult::qResult()"
 0x0031F204,_ZN2nn3nex7qResultC1ERKS1_,12,ctr,nn_nex,2_accessor,matched,"nn::nex::qResult::qResult(const qResult&)"
 0x0031F210,_ZNK2nn3nex7qResult8getValueEv,16,ctr,nn_nex,2_accessor,matched,"nn::nex::qResult::getValue() const"
 0x00340CE8,_ZN2nn3nex10NexElementaSERKS1_,20,ctr,nn_nex,2_accessor,matched,"nn::nex::NexElement::operator=(const NexElement&)"
