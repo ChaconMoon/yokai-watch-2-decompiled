@@ -100,6 +100,7 @@ build/src/ctr/nn/ndm/func_001280A8.o: CFLAGS += -ffixed-r3
 WIBO     := tools/wibo
 ARMCC    := $(WIBO) tools/armcc/4.0/b821/bin/armcc.exe
 ARMFLAGS := --cpu=mpcore -O3 --gnu -c -I . -I include
+build/src/ctr/nn/nex/qResult.o: ARMFLAGS += -Otime
 
 build/src/game/loops/func_0011054C.o: src/game/loops/func_0011054C.c
 	@mkdir -p $(dir $@)

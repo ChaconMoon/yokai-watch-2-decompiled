@@ -34,6 +34,31 @@ namespace nn
                         s32 unk_01;
                         s16 unk_02;
                 };
+
+                struct ResultData
+                {
+                        u32 unk_01;
+                        u32 unk_02;
+                };
+
+                class qResult
+                {
+                public:
+                        // Function 0031F1E8 (Operator asignament for getter of qResult)
+                        qResult &operator=(const qResult &other);
+
+                        // Function 0031F1F4 (default constructor of qResult)
+                        qResult();
+
+                        // Function 0031F204 (Constructor with copy of qResult)
+                        qResult(const qResult &other);
+
+                        // Function 0031f210 (Getter / Conversion?)
+                        u64 getValue() const;
+
+                private:
+                        ResultData m_data;
+                };
         }
 }
 extern "C"

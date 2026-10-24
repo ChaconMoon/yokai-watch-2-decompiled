@@ -246,7 +246,7 @@ def main():
             length_match = len(expected_slice) == len(actual_slice)
             is_match = length_match and (len(code_diffs) == 0)
             status = meta.get("status", "staged").lower() if meta else "staged"
-            is_staged = status in ("staged", "wip", "in_progress")
+            is_staged = status in ("staged", "wip", "in_progress", "pending")
 
             if is_match:
                 matched_count += 1

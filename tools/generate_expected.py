@@ -84,6 +84,12 @@ def main():
             ("0x00340D08", "_ZN2nn3nex10NexElementC1Ev"),
             ("0x00340D18", "_ZN2nn3nex10NexElementD1Ev"),
             ("0x00340D1C", "_ZN2nn3nex10NexElementC1ERKS1_"),
+        ],
+        "qResult": [
+            ("0x0031F1E8", "_ZN2nn3nex7qResultaSERKS1_"),
+            ("0x0031F1F4", "_ZN2nn3nex7qResultC1Ev"),
+            ("0x0031F204", "_ZN2nn3nex7qResultC1ERKS1_"),
+            ("0x0031F210", "_ZNK2nn3nex7qResult8getValueEv"),
         ]
     }
 
