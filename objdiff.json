@@ -757,6 +757,23 @@
       }
     },
     {
+      "name": "ctr/StationConnectionInfo",
+      "target_path": "expected/StationConnectionInfo.o",
+      "base_path": "build/src/ctr/nn/nex/StationConnectionInfo.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/nex/StationConnectionInfo.cpp",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
       "name": "undecompiled_text_segment",
       "target_path": "expected/undecompiled.o",
       "metadata": {

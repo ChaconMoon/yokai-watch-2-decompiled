@@ -10,8 +10,12 @@ namespace nn
 
         namespace nex
         {
+                class StationConnectionInfo;
+
                 class NexElement
                 {
+                        friend class StationConnectionInfo;
+
                 public:
                         /* nn::nex leaf functions */
 
@@ -58,6 +62,27 @@ namespace nn
 
                 private:
                         ResultData m_data;
+                };
+
+                class StationConnectionInfo
+                {
+                public:
+                        // Function 00340ECC (Resest connection and sets all values at zero)
+                        void reset();
+
+                        // Function 00340EAC
+                        u32 setPort(u16 port);
+
+                        // Function 00340EB8
+                        u32 setElement(const NexElement &element);
+
+                        // Function 00340E5C
+
+                        // Function 00340EE8
+                private:
+                        s32 unk_00;
+                        NexElement m_element;
+                        u16 m_port;
                 };
         }
 }

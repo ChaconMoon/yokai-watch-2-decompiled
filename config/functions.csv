@@ -51,3 +51,6 @@ address,symbol,size,layer,subsystem,level,status,description
 0x00340D08,_ZN2nn3nex10NexElementC1Ev,16,ctr,nn_nex,2_accessor,matched,"nn::nex::NexElement::NexElement()"
 0x00340D18,_ZN2nn3nex10NexElementD1Ev,4,ctr,nn_nex,1_leaf_stub,matched,"nn::nex::NexElement::~NexElement()"
 0x00340D1C,_ZN2nn3nex10NexElementC1ERKS1_,20,ctr,nn_nex,2_accessor,matched,"nn::nex::NexElement::NexElement(const NexElement&)"
+0x00340EAC,_ZN2nn3nex21StationConnectionInfo7setPortEt,12,ctr,nn_nex,2_accessor,matched,"nn::nex::StationConnectionInfo::setPort(u16)"
+0x00340EB8,_ZN2nn3nex21StationConnectionInfo10setElementERKNS0_10NexElementE,20,ctr,nn_nex,2_accessor,matched,"nn::nex::StationConnectionInfo::setElement(const NexElement&)"
+0x00340ECC,_ZN2nn3nex21StationConnectionInfo5resetEv,20,ctr,nn_nex,2_accessor,matched,"nn::nex::StationConnectionInfo::reset()"

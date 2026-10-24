@@ -85,6 +85,11 @@ def main():
             ("0x00340D18", "_ZN2nn3nex10NexElementD1Ev"),
             ("0x00340D1C", "_ZN2nn3nex10NexElementC1ERKS1_"),
         ],
+        "StationConnectionInfo": [
+            ("0x00340ECC", "_ZN2nn3nex21StationConnectionInfo5resetEv"),
+            ("0x00340EAC", "_ZN2nn3nex21StationConnectionInfo7setPortEt"),
+            ("0x00340EB8", "_ZN2nn3nex21StationConnectionInfo10setElementERKNS0_10NexElementE"),
+        ],
         "qResult": [
             ("0x0031F1E8", "_ZN2nn3nex7qResultaSERKS1_"),
             ("0x0031F1F4", "_ZN2nn3nex7qResultC1Ev"),
