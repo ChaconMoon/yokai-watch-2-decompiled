@@ -228,8 +228,9 @@ def main():
                     ):
                         exp_word = struct.unpack_from("<I", expected_slice, rel_off)[0]
                         act_word = struct.unpack_from("<I", actual_slice, rel_off)[0]
-                        # Verify branch condition and opcode prefix match (top 8 bits)
-                        if (exp_word & 0xFF000000) == (act_word & 0xFF000000):
+                        # Verify branch condition and opcode prefix match (top 8 bits, or top 7 bits for BLX with H bit)
+                        if (exp_word & 0xFF000000) == (act_word & 0xFF000000) or \
+                           ((exp_word & 0xFE000000) == 0xFA000000 and (act_word & 0xFE000000) == 0xFA000000):
                             for b in range(4):
                                 reloc_byte_indices.add(rel_off + b)
                             imm24 = exp_word & 0x00FFFFFF

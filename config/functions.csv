@@ -11,6 +11,9 @@ address,symbol,size,layer,subsystem,level,status,description
 0x0010B6D0,func_0010B6D0,8,engine,lfw,1_leaf_stub,matched,"lfwCLoopEmpty virtual method (returns constant 0, table 0x00107488)"
 0x0010B6D8,func_0010B6D8,12,engine,lfw,2_accessor,matched,lfwCLoopEmpty::GetClassName getter via literal pool (0x008602F8)
 0x0010B6E4,func_0010B6E4,280,engine,lfw,4_cpp_vtable,wip,"lfwCLoop C++ class method (partially decompiled, ~82% match in decomp.me)"
+0x0010B7FC,func_0010B7FC,140,engine,lfw,6_moderate_caller,matched,lfwCLoop hardware profile switch dispatch table
+0x0010B888,func_0010B888,48,engine,lfw,3_arithmetic_logic,matched,lfwCLoop state and channel reset sequence
+0x0010B8B8,func_0010B8B8,156,engine,lfw,7_complex_caller,matched,lfwCLoop UTF-8 string stream decoding and registration buffer
 0x0010C894,func_0010C894,12,game,loops,2_accessor,matched,Game loop subsystem pointer getter via literal pool (0x0086C8CC)
 0x0011054C,func_0011054C,24,game,loops,3_arithmetic_logic,matched,"Struct header reset (zeros 8 bytes, sets byte 0 to 0xFF)"
 0x001128F8,func_001128F8,148,ctr,nn_y2r,7_complex_caller,matched,Y2R virtual dispatch for image conversion parameters
@@ -57,6 +60,16 @@ address,symbol,size,layer,subsystem,level,status,description
 0x00127EEC,func_00127EEC,12,ctr,nn_ndm,2_accessor,matched,nn::ndm global state pointer getter via literal pool (0x00865F10)
 0x001280A8,func_001280A8,24,ctr,nn_ndm,3_arithmetic_logic,matched,"nn::ndm bounds-checked struct array element indexer (stride 8, offset +0x0C)"
 0x001284E4,func_001284E4,28,ctr,nn_applet,2_accessor,matched,nn::applet::CTR::IsApplication attribute check via literal pool (0x00814E00)
+0x00128544,func_00128544,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetCallback2C
+0x00128558,func_00128558,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState10
+0x00128568,func_00128568,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::GetState0C
+0x00128578,func_00128578,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState0C
+0x00128588,func_00128588,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetCallback20
+0x0012859C,func_0012859C,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState08_1
+0x001285B0,func_001285B0,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::GetState08
+0x001285C0,func_001285C0,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetCallback24
+0x001285D4,func_001285D4,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState08_0
+0x001285E8,func_001285E8,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::GetState0B
 0x0012CB00,func_0012CB00,12,engine,lxp,2_accessor,matched,Level-5 engine global singleton getter via literal pool (0x00868A9C)
 0x0012F190,svcExitThread,8,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x09)
 0x0012F198,svcCreateResourceLimit,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x35)

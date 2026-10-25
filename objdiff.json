@@ -213,6 +213,57 @@
       }
     },
     {
+      "name": "engine/lfw/func_0010B7FC",
+      "target_path": "expected/func_0010B7FC.o",
+      "base_path": "build/src/engine/lfw/func_0010B7FC.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/engine/lfw/func_0010B7FC.s",
+        "progress_categories": [
+          "engine"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "engine/lfw/func_0010B888",
+      "target_path": "expected/func_0010B888.o",
+      "base_path": "build/src/engine/lfw/func_0010B888.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/engine/lfw/func_0010B888.s",
+        "progress_categories": [
+          "engine"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "engine/lfw/func_0010B8B8",
+      "target_path": "expected/func_0010B8B8.o",
+      "base_path": "build/src/engine/lfw/func_0010B8B8.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/engine/lfw/func_0010B8B8.s",
+        "progress_categories": [
+          "engine"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
       "name": "game/loops/func_0010C894",
       "target_path": "expected/func_0010C894.o",
       "base_path": "build/src/game/loops/func_0010C894.o",
@@ -950,6 +1001,176 @@
       "metadata": {
         "complete": true,
         "source_path": "src/ctr/nn/applet/func_001284E4.c",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_applet/func_00128544",
+      "target_path": "expected/func_00128544.o",
+      "base_path": "build/src/ctr/nn/applet/func_00128544.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/applet/func_00128544.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_applet/func_00128558",
+      "target_path": "expected/func_00128558.o",
+      "base_path": "build/src/ctr/nn/applet/func_00128558.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/applet/func_00128558.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_applet/func_00128568",
+      "target_path": "expected/func_00128568.o",
+      "base_path": "build/src/ctr/nn/applet/func_00128568.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/applet/func_00128568.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_applet/func_00128578",
+      "target_path": "expected/func_00128578.o",
+      "base_path": "build/src/ctr/nn/applet/func_00128578.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/applet/func_00128578.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_applet/func_00128588",
+      "target_path": "expected/func_00128588.o",
+      "base_path": "build/src/ctr/nn/applet/func_00128588.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/applet/func_00128588.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_applet/func_0012859C",
+      "target_path": "expected/func_0012859C.o",
+      "base_path": "build/src/ctr/nn/applet/func_0012859C.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/applet/func_0012859C.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_applet/func_001285B0",
+      "target_path": "expected/func_001285B0.o",
+      "base_path": "build/src/ctr/nn/applet/func_001285B0.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/applet/func_001285B0.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_applet/func_001285C0",
+      "target_path": "expected/func_001285C0.o",
+      "base_path": "build/src/ctr/nn/applet/func_001285C0.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/applet/func_001285C0.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_applet/func_001285D4",
+      "target_path": "expected/func_001285D4.o",
+      "base_path": "build/src/ctr/nn/applet/func_001285D4.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/applet/func_001285D4.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_applet/func_001285E8",
+      "target_path": "expected/func_001285E8.o",
+      "base_path": "build/src/ctr/nn/applet/func_001285E8.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/applet/func_001285E8.s",
         "progress_categories": [
           "ctr"
         ]

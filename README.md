@@ -44,12 +44,12 @@ Progress is split into categories so that assembly is never counted as C decompi
 | Category | Count | Meaning |
 | :--- | :---: | :--- |
 | **Real C-decompiled matched functions** | **73** / 18,225 (0.40%) | Functions implemented in C and verified byte-exact |
-| **Complete functions (C + verified original library assembly)** | **116** / 18,225 (0.64%) | Real C (73) + CRT/SDK assembly routines (43: `clear_bss`, etc.) |
-| **Real C-decompiled matched bytes** | **1404** / 6,238,892 bytes (0.0225%) | Real-C-only byte progress (5012 B including CRT assembly) |
-| **Layer 1: Nintendo CTR-SDK & Runtime (`src/ctr/`)** | **105** matched (4888 B) | CRT startup, `svc` syscalls, `nn::os`, `nn::ndm`, `nn::nex` |
-| **Layer 2: Level-5 Engine (`src/engine/`)** | **7** matched (72 B) | `lfw` (Framework), `lxp` (Cross-Platform), `gds` (Scripts) |
+| **Complete functions (C + verified original library assembly)** | **129** / 18,225 (0.71%) | Real C (73) + CRT/SDK assembly routines (56: `clear_bss`, etc.) |
+| **Real C-decompiled matched bytes** | **1404** / 6,238,892 bytes (0.0225%) | Real-C-only byte progress (5536 B including CRT assembly) |
+| **Layer 1: Nintendo CTR-SDK & Runtime (`src/ctr/`)** | **115** matched (5068 B) | CRT startup, `svc` syscalls, `nn::os`, `nn::ndm`, `nn::nex` |
+| **Layer 2: Level-5 Engine (`src/engine/`)** | **10** matched (416 B) | `lfw` (Framework), `lxp` (Cross-Platform), `gds` (Scripts) |
 | **Layer 3: Yo-kai Watch 2 Game (`src/game/`)** | **4** matched (52 B) | `ywCLoop*` states, battle, RPG, menus, and entities |
-| **Named / mapped candidates in manifest** | **120** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
+| **Named / mapped candidates in manifest** | **133** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
 | **Memory Map (`.text` / `.rodata` / `.data` / `.bss`)** | Verified | Exact ExHeader boundaries mapped in `config/memory_map.json` |
 | **Total `.text` functions** | 18,225 | Verified function count in `0x00100000`–`0x006F32AC` (EU v1.0) |
 | **Region** | EU (`00040000001B2900`) | Multi-5 (PAL v1.0, `CTR-P-BYPP`) |
@@ -84,6 +84,9 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x0010B6D0` | `func_0010B6D0` | `engine/lfw` | 8 B | `1_leaf_stub` | 🟢 Matched | lfwCLoopEmpty virtual method (returns constant 0, table 0x00107488) |
 | `0x0010B6D8` | `func_0010B6D8` | `engine/lfw` | 12 B | `2_accessor` | 🟢 Matched | lfwCLoopEmpty::GetClassName getter via literal pool (0x008602F8) |
 | `0x0010B6E4` | `func_0010B6E4` | `engine/lfw` | 280 B | `4_cpp_vtable` | 🟡 In Review | lfwCLoop C++ class method (partially decompiled, ~82% match in decomp.me) |
+| `0x0010B7FC` | `func_0010B7FC` | `engine/lfw` | 140 B | `6_moderate_caller` | 🟢 Matched | lfwCLoop hardware profile switch dispatch table |
+| `0x0010B888` | `func_0010B888` | `engine/lfw` | 48 B | `3_arithmetic_logic` | 🟢 Matched | lfwCLoop state and channel reset sequence |
+| `0x0010B8B8` | `func_0010B8B8` | `engine/lfw` | 156 B | `7_complex_caller` | 🟢 Matched | lfwCLoop UTF-8 string stream decoding and registration buffer |
 | `0x0010C894` | `func_0010C894` | `game/loops` | 12 B | `2_accessor` | 🟢 Matched | Game loop subsystem pointer getter via literal pool (0x0086C8CC) |
 | `0x0011054C` | `func_0011054C` | `game/loops` | 24 B | `3_arithmetic_logic` | 🟢 Matched | Struct header reset (zeros 8 bytes, sets byte 0 to 0xFF) |
 | `0x001128F8` | `func_001128F8` | `ctr/nn_y2r` | 148 B | `7_complex_caller` | 🟢 Matched | Y2R virtual dispatch for image conversion parameters |
@@ -130,6 +133,16 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x00127EEC` | `func_00127EEC` | `ctr/nn_ndm` | 12 B | `2_accessor` | 🟢 Matched | nn::ndm global state pointer getter via literal pool (0x00865F10) |
 | `0x001280A8` | `func_001280A8` | `ctr/nn_ndm` | 24 B | `3_arithmetic_logic` | 🟢 Matched | nn::ndm bounds-checked struct array element indexer (stride 8, offset +0x0C) |
 | `0x001284E4` | `func_001284E4` | `ctr/nn_applet` | 28 B | `2_accessor` | 🟢 Matched | nn::applet::CTR::IsApplication attribute check via literal pool (0x00814E00) |
+| `0x00128544` | `func_00128544` | `ctr/nn_applet` | 20 B | `2_simple_accessor` | 🟢 Matched | nn::applet::detail::SetCallback2C |
+| `0x00128558` | `func_00128558` | `ctr/nn_applet` | 16 B | `2_simple_accessor` | 🟢 Matched | nn::applet::detail::SetState10 |
+| `0x00128568` | `func_00128568` | `ctr/nn_applet` | 16 B | `2_simple_accessor` | 🟢 Matched | nn::applet::detail::GetState0C |
+| `0x00128578` | `func_00128578` | `ctr/nn_applet` | 16 B | `2_simple_accessor` | 🟢 Matched | nn::applet::detail::SetState0C |
+| `0x00128588` | `func_00128588` | `ctr/nn_applet` | 20 B | `2_simple_accessor` | 🟢 Matched | nn::applet::detail::SetCallback20 |
+| `0x0012859C` | `func_0012859C` | `ctr/nn_applet` | 20 B | `2_simple_accessor` | 🟢 Matched | nn::applet::detail::SetState08_1 |
+| `0x001285B0` | `func_001285B0` | `ctr/nn_applet` | 16 B | `2_simple_accessor` | 🟢 Matched | nn::applet::detail::GetState08 |
+| `0x001285C0` | `func_001285C0` | `ctr/nn_applet` | 20 B | `2_simple_accessor` | 🟢 Matched | nn::applet::detail::SetCallback24 |
+| `0x001285D4` | `func_001285D4` | `ctr/nn_applet` | 20 B | `2_simple_accessor` | 🟢 Matched | nn::applet::detail::SetState08_0 |
+| `0x001285E8` | `func_001285E8` | `ctr/nn_applet` | 16 B | `2_simple_accessor` | 🟢 Matched | nn::applet::detail::GetState0B |
 | `0x0012CB00` | `func_0012CB00` | `engine/lxp` | 12 B | `2_accessor` | 🟢 Matched | Level-5 engine global singleton getter via literal pool (0x00868A9C) |
 | `0x0012F190` | `svcExitThread` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x09) |
 | `0x0012F198` | `svcCreateResourceLimit` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x35) |

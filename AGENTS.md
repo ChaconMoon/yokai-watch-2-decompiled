@@ -4,17 +4,26 @@ This repository is dedicated to the **matching decompilation** of *Yo-kai Watch 
 
 ---
 
-## ⚠️ Strict User Rule (CRITICAL)
+## ⚠️ Política de Uso de IA y Metodología "Split & Replace" (CRÍTICO)
 
-> **DO NOT return decompiled code (C / C++) to the user unless explicitly requested.**
-> 
-> - Do not write C reconstructions or pseudocode in responses unless the user expressly requests it (e.g., *"give me the C code for function X"*).
-> - The agent's role must focus on:
->   - Explaining concepts and guiding workflows with a **didactic, progressive approach**.
->   - Inspecting assembly, instructions, registers, XREFs, vtables, and function calls via Ghidra / binutils.
->   - Dumping assembly (`tools/dump_asm.py`) formatted for `decomp.me`.
->   - Classifying functions into their architectural layer (`ctr`, `engine`, `game`), managing metrics, manifests (`config/functions.csv`, `config/functions_candidates.csv`, `config/functions_classified.csv`), and repository tools.
->   - Assisting with compiler configurations, options, and flags (ARMCC / RVCT 4.0 b821 vs GCC).
+### 🤖 Rol de la IA y del Desarrollador (Pacto de Trabajo en Pareja)
+- **La IA asume la carga técnica de ingeniería inversa, matching y extracción:**
+  - Extraer stubs en ensamblador (`.s`) organizados por clases y subsistemas modulares.
+  - Generar el matching byte-exact 100% en C/C++ contra `code.raw.bin` configurando compiladores (`armcc` RVCT 4.0 b821 / GCC).
+  - Proponer estructuras de datos y prototipos limpios en `include/`.
+  - Explicar didácticamente el flujo de control, registros y arquitectura.
+- **El Desarrollador (Carlos) asume la dirección de arquitectura, curaduría y documentación:**
+  - Sustituir nombres provisionales o crudos (`field_524`, `unk_00814F28`) por nombres semánticos con significado en el juego/motor.
+  - Redactar y enriquecer la documentación Doxygen (`@brief`, `@param`, `@return`, notas técnicas).
+  - Cuidar la máxima legibilidad, formato y elegancia del código fuente.
+
+### 🔄 Metodología "Split & Replace" (Inspirada en khdays-decomp y Splat)
+1. **Extracción por Módulos:** Cada subsistema o clase en desarrollo se desglosa primero en funciones modulares en ensamblador (`.s`) para asegurar compilabilidad y verificación 100% byte-exact desde el inicio.
+2. **Sustitución Progresiva a C/C++:** Siempre que se pueda decompilar en C/C++, se reemplaza el archivo `.s` por su equivalente `.c` / `.cpp`.
+3. **Cero Regresiones:** Cada paso se valida inmediatamente con `make check`.
+4. **Distinción por Capas:**
+   - **Capa 1 (CTR-SDK / `src/ctr/`):** Decompilación asistida pragmática para resolver la infraestructura estándar del sistema basándose en proyectos de referencia (ACNL, libctru) y documentación oficial.
+   - **Capas 2 y 3 (Engine / `src/engine/` y Game / `src/game/`):** Análisis profundo y guiado; el código de la lógica del juego y del motor de Level-5 se estudia, documenta y comprende a fondo.
 
 ### 🛡️ Estándares de Sintaxis y Calidad en Decompilación (OBLIGATORIO)
 
