@@ -26,6 +26,8 @@ def main():
         return 1
 
     EXPECTED_DIR.mkdir(parents=True, exist_ok=True)
+    raw_bin_path = PROJECT_ROOT / "extracted" / "code.raw.bin"
+    raw_bytes = raw_bin_path.read_bytes() if raw_bin_path.exists() else b""
 
     print("============================================================")
     print("  Yo-kai Watch 2 (3DS) — Expected Objects Generator")
@@ -68,8 +70,29 @@ def main():
                 as_cmd = ["arm-none-eabi-as", "-mcpu=mpcore", "-mfpu=vfpv2", temp_s, "-o", str(out_o)]
                 as_res = subprocess.run(as_cmd, capture_output=True, text=True)
                 if as_res.returncode != 0:
-                    print(f"  ❌ Failed to assemble {sym}: {as_res.stderr.strip()}")
-                    errors += 1
+                    # Fallback to byte-exact raw emission
+                    raw_off = int(addr, 16) - 0x00100000
+                    raw_slice = raw_bytes[raw_off : raw_off + int(row["size"])]
+                    byte_lines = ", ".join(f"0x{b:02x}" for b in raw_slice)
+                    fallback_s = f""".arm
+.section .text, "ax", %progbits
+.global {sym}
+.type {sym}, %function
+{sym}:
+    .byte {byte_lines}
+.size {sym}, . - {sym}
+"""
+                    with tempfile.NamedTemporaryFile("w", suffix=".s", delete=False) as tf2:
+                        tf2.write(fallback_s)
+                        temp_s2 = tf2.name
+                    as_res2 = subprocess.run(["arm-none-eabi-as", "-mcpu=mpcore", temp_s2, "-o", str(out_o)], capture_output=True, text=True)
+                    Path(temp_s2).unlink(missing_ok=True)
+                    if as_res2.returncode == 0:
+                        generated += 1
+                        print(f"  ✓ Generated (raw bytes): expected/{sym}.o")
+                    else:
+                        print(f"  ❌ Failed to assemble {sym}: {as_res.stderr.strip()}")
+                        errors += 1
                 else:
                     generated += 1
                     print(f"  ✓ Generated: expected/{sym}.o")

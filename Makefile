@@ -94,6 +94,7 @@ dump:
 
 build/src/ctr/nn/os/func_00104D18.o: CFLAGS += -ffixed-r3 -ffixed-r2
 build/src/ctr/nn/os/func_001063F4.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
+build/src/ctr/nn/os/func_0010655C.o: CFLAGS += -ffixed-r3 -ffixed-r2
 build/src/ctr/nn/os/func_0010678C.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
 build/src/ctr/nn/os/func_0012788C.o: CFLAGS += -ffixed-r3 -ffixed-r2
 build/src/ctr/nn/applet/func_001284E4.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
