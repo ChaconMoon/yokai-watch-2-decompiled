@@ -555,29 +555,29 @@ Standard Nintendo 3DS system libraries (`1.2.7.f-NINTENDO-CTR-SDK-v1`), kernel s
 
 | Didactic Level | Virtual Address | Symbol | Module | Size | Status | Description |
 | :--- | :--- | :--- | :---: | :---: | :---: | :--- |
-| **L1: Syscall Stub** | `0x00104778` | `svcExitProcess` | `ctr/svc` | 8 B | 🟢 Matched | Kernel syscall wrapper (`svc 0x03`) |
-| **L1: Syscall Stub** | `0x00151FBC` | `svcSleepThread` | `ctr/svc` | 8 B | 🟢 Matched | Kernel syscall wrapper (`svc 0x28`) |
-| **L1: Leaf Stub** | `0x00301248` | `func_00301248` | `ctr/nn_nex` | 4 B | 🟢 Matched | Empty void stub (`bx lr`) in `nn::nex` |
-| **L2: OS Accessor** | `0x00104D18` | `func_00104D18` | `ctr/nn_os` | 16 B | 🟢 Matched | Global 8-bit flag setter (`0x00814E54`) |
-| **L2: MMIO Reader** | `0x001063F4` | `func_001063F4` | `ctr/nn_os` | 16 B | 🟢 Matched | Reads CTR `SystemConfig` page (`0x1FF80040`) |
-| **L2: OS Accessor** | `0x0010678C` | `func_0010678C` | `ctr/nn_os` | 16 B | 🟢 Matched | Signed byte reader (`0x00814E00`) |
-| **L2: CRT Loop** | `0x00100024` | `clear_bss` | `ctr/crt` | 36 B | 🟢 Matched | Startup `.bss` zeroing loop (`0x00860934`–`0x0091B9BC`) |
-| **L3: Synchronization** | `0x001274A0` | `func_001274A0` | `ctr/nn_os` | 24 B | 🟡 In Review | Atomic spinlock acquire loop (`ldrex`/`strex`) |
-| **L3: Syscall + Stack** | `0x0010AAA8` | `svcCreateEvent` | `ctr/svc` | 24 B | 🟢 Matched | Kernel syscall wrapper with output pointer (`svc 0x21`) |
-| **L3: Syscall + Stack** | `0x0010AAC0` | `svcDuplicateHandle` | `ctr/svc` | 24 B | 🟢 Matched | Kernel syscall wrapper (`svc 0x38`) |
-| **L3: Array Indexer** | `0x001280A8` | `func_001280A8` | `ctr/nn_ndm` | 24 B | 🟢 Matched | Bounds-checked array element indexer (stride 8) |
+| **L1: Syscall Stub** | `0x00104778` | `svcExitProcess` | `ctr/svc` | 8 B | 🟢 Matched (C/C++) | Kernel syscall wrapper (`svc 0x03`) |
+| **L1: Syscall Stub** | `0x00151FBC` | `svcSleepThread` | `ctr/svc` | 8 B | 🟢 Matched (C/C++) | Kernel syscall wrapper (`svc 0x28`) |
+| **L1: Leaf Stub** | `0x00301248` | `func_00301248` | `ctr/nn_nex` | 4 B | 🟢 Matched (C/C++) | Empty void stub (`bx lr`) in `nn::nex` |
+| **L2: OS Accessor** | `0x00104D18` | `func_00104D18` | `ctr/nn_os` | 16 B | 🟢 Matched (C/C++) | Global 8-bit flag setter (`0x00814E54`) |
+| **L2: MMIO Reader** | `0x001063F4` | `func_001063F4` | `ctr/nn_os` | 16 B | 🟢 Matched (C/C++) | Reads CTR `SystemConfig` page (`0x1FF80040`) |
+| **L2: OS Accessor** | `0x0010678C` | `func_0010678C` | `ctr/nn_os` | 16 B | 🟢 Matched (C/C++) | Signed byte reader (`0x00814E00`) |
+| **L2: CRT Loop** | `0x00100024` | `clear_bss` | `ctr/crt` | 36 B | ⚪ ASM Stub (Verified) | Startup `.bss` zeroing loop (`0x00860934`–`0x0091B9BC`) |
+| **L3: Synchronization** | `0x001274A0` | `func_001274A0` | `ctr/nn_os` | 24 B | ⚪ ASM Stub (Verified) | Atomic spinlock acquire loop (`ldrex`/`strex`) |
+| **L3: Syscall + Stack** | `0x0010AAA8` | `svcCreateEvent` | `ctr/svc` | 24 B | 🟢 Matched (C/C++) | Kernel syscall wrapper with output pointer (`svc 0x21`) |
+| **L3: Syscall + Stack** | `0x0010AAC0` | `svcDuplicateHandle` | `ctr/svc` | 24 B | 🟢 Matched (C/C++) | Kernel syscall wrapper (`svc 0x38`) |
+| **L3: Array Indexer** | `0x001280A8` | `func_001280A8` | `ctr/nn_ndm` | 24 B | 🟢 Matched (C/C++) | Bounds-checked array element indexer (stride 8) |
 
 ### Layer 2: Level-5 Proprietary Engine (`src/engine/`)
 Shared Level-5 middleware used across 3DS titles: **LFW** (*Level-5 Framework*: `lfwCObject`, `lfwCLoop`, `lfwCObj2DManager`, `lfwCObj3DManager`, `lfwCCameraManager`), **LXP** (*Level-5 Cross-Platform*: `lxpCMemory`, `lxpCStack`, `.fa` / `XPCK` archives), and **GDS** (*Generic Data Script*: `GDSFix`, `GDSSwitch`, `.cfg.bin` parsers).
 
 | Didactic Level | Virtual Address | Symbol | Module | Size | Status | Description |
 | :--- | :--- | :--- | :---: | :---: | :---: | :--- |
-| **L1: Virtual Stub** | `0x0010B6D0` | `func_0010B6D0` | `engine/lfw` | 8 B | 🟢 Matched | `lfwCLoopEmpty` virtual method (returns `0`, table `0x00107488`) |
-| **L1: Virtual Stub** | `0x0012FEC0` | `func_0012FEC0` | `engine/lxp` | 8 B | 🟢 Matched | `lxpCMemory` boolean stub (returns `1`) |
-| **L1: Virtual Stub** | `0x00130018` | `func_00130018` | `engine/lxp` | 8 B | 🟢 Matched | `lxpCMemory` virtual method (returns `1`, in 3 `.rodata` vtables) |
-| **L2: RTTI Getter** | `0x0010B6D8` | `func_0010B6D8` | `engine/lfw` | 12 B | 🟢 Matched | `lfwCLoopEmpty::GetClassName` (`"lfwCLoopEmpty"` at `0x008602F8`) |
-| **L2: Singleton Getter** | `0x0012CB00` | `func_0012CB00` | `engine/lxp` | 12 B | 🟢 Matched | Engine singleton getter (`0x00868A9C`, 10 callers) |
-| **L2: Manager Getter** | `0x001300B0` | `func_001300B0` | `engine/lxp` | 12 B | 🟢 Matched | `lxpCMemory` manager pointer getter (`0x00868F10`) |
+| **L1: Virtual Stub** | `0x0010B6D0` | `func_0010B6D0` | `engine/lfw` | 8 B | 🟢 Matched (C/C++) | `lfwCLoopEmpty` virtual method (returns `0`, table `0x00107488`) |
+| **L1: Virtual Stub** | `0x0012FEC0` | `func_0012FEC0` | `engine/lxp` | 8 B | 🟢 Matched (C/C++) | `lxpCMemory` boolean stub (returns `1`) |
+| **L1: Virtual Stub** | `0x00130018` | `func_00130018` | `engine/lxp` | 8 B | 🟢 Matched (C/C++) | `lxpCMemory` virtual method (returns `1`, in 3 `.rodata` vtables) |
+| **L2: RTTI Getter** | `0x0010B6D8` | `func_0010B6D8` | `engine/lfw` | 12 B | 🟢 Matched (C/C++) | `lfwCLoopEmpty::GetClassName` (`"lfwCLoopEmpty"` at `0x008602F8`) |
+| **L2: Singleton Getter** | `0x0012CB00` | `func_0012CB00` | `engine/lxp` | 12 B | 🟢 Matched (C/C++) | Engine singleton getter (`0x00868A9C`, 10 callers) |
+| **L2: Manager Getter** | `0x001300B0` | `func_001300B0` | `engine/lxp` | 12 B | 🟢 Matched (C/C++) | `lxpCMemory` manager pointer getter (`0x00868F10`) |
 | **L3: Forwarding Thunk** | `0x00130D38` | `func_00130D38` | `engine/lxp` | 16 B | ⏳ Candidate | Null-checked method forwarding tail-call wrapper |
 | **L4: C++ Class Method** | `0x0010B5D8` | `func_0010B5D8` | `engine/lfw` | 248 B | ⏳ Candidate | `lfwCLoopEmpty` factory / constructor (`0x00107484`) |
 | **L4: C++ Class Method** | `0x0010B6E4` | `func_0010B6E4` | `engine/lfw` | 280 B | 🟡 In Review | `lfwCLoop` state update method with vtable dispatch |
@@ -587,14 +587,14 @@ Game-specific state machines (`ywCLoopMain`, `ywCLoopRPG`, `ywCLoopBattle`, `ywC
 
 | Didactic Level | Virtual Address | Symbol | Module | Size | Status | Description |
 | :--- | :--- | :--- | :---: | :---: | :---: | :--- |
-| **L1: Leaf Stub** | `0x0017656C` | `func_0017656C` | `game/core` | 4 B | 🟢 Matched | Empty void stub (`bx lr`) |
+| **L1: Leaf Stub** | `0x0017656C` | `func_0017656C` | `game/core` | 4 B | 🟢 Matched (C/C++) | Empty void stub (`bx lr`) |
 | **L1: Virtual Stub** | `0x0010CEE8` | `func_0010CEE8` | `game/loops` | 8 B | ⏳ Candidate | `ywCLoopRPG` virtual method (returns `0`, table `0x001074A0`) |
 | **L1: Virtual Stub** | `0x0010CFF4` | `func_0010CFF4` | `game/loops` | 8 B | ⏳ Candidate | `ywCLoopMain` virtual method (returns `0`, table `0x00107494`) |
 | **L2: RTTI Getter** | `0x0010CEF0` | `func_0010CEF0` | `game/loops` | 12 B | ⏳ Candidate | `ywCLoopRPG::GetClassName` (`"ywCLoopRPG"` at `0x0086048C`) |
 | **L2: RTTI Getter** | `0x0010CFFC` | `func_0010CFFC` | `game/loops` | 12 B | ⏳ Candidate | `ywCLoopMain::GetClassName` (`"ywCLoopMain"` at `0x00860497`) |
-| **L2: Pointer Getter** | `0x0010C894` | `func_0010C894` | `game/loops` | 12 B | 🟢 Matched | Game loop state pointer getter (`0x0086C8CC`) |
-| **L2: Pointer Getter** | `0x00171C78` | `func_00171C78` | `game/core` | 12 B | 🟢 Matched | Global `.bss` state pointer getter (`0x0091B7B8`) |
-| **L3: Struct Init** | `0x0011054C` | `func_0011054C` | `game/loops` | 24 B | 🟢 Matched | Struct header reset (zeros 8 bytes, sets byte 0 to `0xFF`) |
+| **L2: Pointer Getter** | `0x0010C894` | `func_0010C894` | `game/loops` | 12 B | 🟢 Matched (C/C++) | Game loop state pointer getter (`0x0086C8CC`) |
+| **L2: Pointer Getter** | `0x00171C78` | `func_00171C78` | `game/core` | 12 B | 🟢 Matched (C/C++) | Global `.bss` state pointer getter (`0x0091B7B8`) |
+| **L3: Struct Init** | `0x0011054C` | `func_0011054C` | `game/loops` | 24 B | 🟢 Matched (C/C++) | Struct header reset (zeros 8 bytes, sets byte 0 to `0xFF`) |
 
 ---
 
@@ -806,10 +806,17 @@ arm-none-eabi-objdump -b binary -m arm -D --adjust-vma=0x00100000 \
 ### 3. Compiling and verifying
 
 ```bash
-make check            # Compiles and byte-compares candidate functions
+make check            # Compiles and byte-compares candidate functions and stubs
+make progress         # Audits progress metrics and synchronizes README.md
+make report           # Generates reference objects and build/report.json via objdiff-cli
+make classes          # Synchronizes config/classes_identified.csv from binary RTTI
 ```
 
-A green `>>> MATCH <<<` means your C reproduces the original binary exactly, instruction for instruction.
+The verification tool reports each routine with explicit status tags:
+- `>>> MATCH (C) <<<`: Real decompiled C/C++ function compiling byte-for-byte identical to the retail binary.
+- `>>> ASM STUB <<<`: Modular assembly stub (`.s`) verified bit-for-bit to guarantee zero regressions during the "Split & Replace" workflow.
+- `>>> MATCH (COMMUNITY ACCEPTED) <<<`: Equivalent C implementation with acceptable compiler register allocation difference.
+- `>>> REGRESSION / MISMATCH <<<`: Indicates a divergence against `extracted/code.raw.bin` that blocks matching.
 
 ---
 
