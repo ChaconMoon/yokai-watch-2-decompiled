@@ -1,5 +1,10 @@
 #include <ctr/svc.h>
 
+/**
+ * @brief svcCreateTimer
+ * @address 0x00112FF0
+ * CTR kernel syscall wrapper stub (svc 0x2D)
+ */
 __attribute__((naked))
 Result
 svcCreateTimer(Handle *timer, u32 resetType)

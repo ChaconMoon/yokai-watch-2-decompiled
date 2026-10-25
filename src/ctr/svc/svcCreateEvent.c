@@ -1,5 +1,10 @@
 #include <ctr/svc.h>
 
+/**
+ * @brief svcCreateEvent
+ * @address 0x0010AAA8
+ * CTR kernel syscall wrapper stub (svc 0x21)
+ */
 __attribute__((naked))
 Result
 svcCreateEvent(Handle *event, u32 resetType)

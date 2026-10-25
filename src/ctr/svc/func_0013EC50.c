@@ -1,4 +1,9 @@
 #include <ctr/svc.h>
+/**
+ * @brief func_0013EC50
+ * @address 0x0013EC50
+ * Thread yield stub via svc 0x0A (svcSleepThread(0))
+ */
 __attribute__((naked)) void func_0013EC50(void)
 {
         __asm__ volatile(

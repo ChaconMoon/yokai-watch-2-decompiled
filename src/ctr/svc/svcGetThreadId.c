@@ -1,5 +1,10 @@
 #include <ctr/svc.h>
 
+/**
+ * @brief svcGetThreadId
+ * @address 0x00151FC4
+ * CTR kernel syscall wrapper stub (svc 0x37)
+ */
 __attribute__((naked))
 Result
 svcGetThreadId(u32 *threadId, Handle thread)

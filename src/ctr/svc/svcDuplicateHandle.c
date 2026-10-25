@@ -1,5 +1,10 @@
 #include <ctr/svc.h>
 
+/**
+ * @brief svcDuplicateHandle
+ * @address 0x0010AAC0
+ * CTR kernel syscall wrapper stub (svc 0x38)
+ */
 __attribute__((naked))
 Result
 svcDuplicateHandle(Handle *handle, Handle original)

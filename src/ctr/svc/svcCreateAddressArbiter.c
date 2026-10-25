@@ -1,5 +1,10 @@
 #include <ctr/svc.h>
 
+/**
+ * @brief svcCreateAddressArbiter
+ * @address 0x00151FA0
+ * CTR kernel syscall wrapper stub (svc 0x17)
+ */
 __attribute__((naked))
 Result
 svcCreateAddressArbiter(Handle *arbiter)

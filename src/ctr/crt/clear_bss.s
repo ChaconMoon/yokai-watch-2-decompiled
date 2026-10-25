@@ -1,3 +1,12 @@
+@ =============================================================================
+@ Function: clear_bss
+@ Address:  0x00100024
+@ Size:     36 bytes
+@ Layer:    ctr/crt
+@ Purpose:  CRT startup zeroing loop for the uninitialized data (.bss) section.
+@           Iterates from 0x00860934 to 0x0091B9BC, clearing 4 bytes per iteration.
+@ =============================================================================
+
 .arm
 .section .text, "ax", %progbits
 .global clear_bss
@@ -16,4 +25,3 @@ clear_bss:
     .word 0x0091B9BC
 
 .size clear_bss, . - clear_bss
-
