@@ -1,10 +1,159 @@
 address,symbol,size,layer,subsystem,level,status,description
+0x00100000,func_00100000,4,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00100004,func_00100004,4,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00100008,func_00100008,4,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x0010000C,func_0010000C,4,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00100010,func_00100010,4,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00100014,func_00100014,4,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00100018,func_00100018,4,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x0010001C,func_0010001C,16,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (3 subcalls)
 0x00100024,clear_bss,36,ctr,crt,2_control_flow,asm_stub,CRT startup zeroing loop for .bss section (0x00860934 - 0x0091B9BC)
+0x00100048,func_00100048,18,ctr,crt,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x0010005A,func_0010005A,36,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00100080,func_00100080,112,ctr,crt,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
+0x001000F8,func_001000F8,8,ctr,crt,1_trivial,asm_stub,Constant return stub or leaf identity
+0x00100100,func_00100100,40,ctr,crt,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
+0x0010012C,func_0010012C,44,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00100158,func_00100158,78,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (3 subcalls)
+0x001001A6,func_001001A6,116,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x0010021C,thunk_FUN_00100224,8,ctr,crt,1_trivial,asm_stub,Constant return stub or leaf identity
+0x00100224,func_00100224,18,ctr,crt,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x0010026E,func_0010026E,66,ctr,crt,4_complex_leaf,asm_stub,Large leaf algorithm
+0x001002C4,func_001002C4,34,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x001002E8,thunk_FUN_001002f0,8,ctr,crt,1_trivial,asm_stub,Constant return stub or leaf identity
+0x001002F0,func_001002F0,18,ctr,crt,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
+0x00100302,func_00100302,24,ctr,crt,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x00100324,func_00100324,22,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x0010063C,func_0010063C,22,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x0010066A,func_0010066A,82,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (3 subcalls)
+0x00100738,func_00100738,34,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x0010075A,func_0010075A,24,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00100784,func_00100784,114,ctr,crt,7_complex_caller,asm_stub,Complex caller (10 calls)
+0x0010080C,func_0010080C,16,ctr,crt,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00100850,func_00100850,182,ctr,crt,7_complex_caller,asm_stub,Complex caller (6 calls)
+0x00100A24,thunk_FUN_00100a36,8,ctr,crt,1_trivial,asm_stub,Constant return stub or leaf identity
+0x00100A36,func_00100A36,12,ctr,crt,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00100A44,func_00100A44,330,ctr,crt,7_complex_caller,asm_stub,Complex caller (11 calls)
+0x00100BB4,func_00100BB4,36,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00100BD8,func_00100BD8,54,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00100C18,func_00100C18,24,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00100C30,func_00100C30,50,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00100C74,func_00100C74,28,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00100CDC,func_00100CDC,330,ctr,crt,7_complex_caller,asm_stub,Complex caller (6 calls)
+0x00100E26,func_00100E26,330,ctr,crt,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x00100F70,func_00100F70,232,ctr,crt,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
+0x00101058,func_00101058,288,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (3 subcalls)
+0x00101178,func_00101178,232,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00101260,func_00101260,208,ctr,crt,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x00101330,func_00101330,50,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x001013EC,func_001013EC,532,ctr,crt,7_complex_caller,asm_stub,Complex caller (8 calls)
+0x001018D8,func_001018D8,906,ctr,crt,7_complex_caller,asm_stub,Complex caller (9 calls)
+0x00101C70,func_00101C70,8,ctr,crt,1_trivial,asm_stub,Constant return stub or leaf identity
+0x00101C78,func_00101C78,8,ctr,crt,1_trivial,asm_stub,Constant return stub or leaf identity
+0x00101C80,func_00101C80,74,ctr,crt,4_complex_leaf,asm_stub,Large leaf algorithm
+0x00101CE4,func_00101CE4,18,ctr,crt,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
+0x00101CF6,func_00101CF6,14,ctr,crt,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00102180,func_00102180,18,ctr,crt,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00102198,func_00102198,104,ctr,crt,4_complex_leaf,asm_stub,Large leaf algorithm
+0x0010223C,func_0010223C,372,ctr,crt,7_complex_caller,asm_stub,Complex caller (11 calls)
+0x001023D2,func_001023D2,30,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x001023F0,func_001023F0,54,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (3 subcalls)
+0x0010242C,func_0010242C,50,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00102464,func_00102464,68,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x001024AC,func_001024AC,54,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (3 subcalls)
+0x001024E8,func_001024E8,72,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (3 subcalls)
+0x00102534,func_00102534,140,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (3 subcalls)
+0x001025C4,func_001025C4,86,ctr,crt,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x0010261A,func_0010261A,26,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00102634,func_00102634,108,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (3 subcalls)
+0x001026A4,func_001026A4,8,ctr,crt,1_trivial,asm_stub,Constant return stub or leaf identity
+0x001026AC,func_001026AC,116,ctr,crt,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x00102720,func_00102720,80,ctr,crt,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
+0x00102770,func_00102770,534,ctr,crt,7_complex_caller,asm_stub,Complex caller (21 calls)
+0x00102986,func_00102986,138,ctr,crt,7_complex_caller,asm_stub,Complex caller (6 calls)
+0x00102A10,func_00102A10,40,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00102A40,func_00102A40,18,ctr,crt,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
+0x00102A5C,func_00102A5C,28,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00102A78,func_00102A78,10,ctr,crt,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
+0x00102A82,func_00102A82,10,ctr,crt,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00102A8C,func_00102A8C,28,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00102AAE,func_00102AAE,26,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00102AC4,func_00102AC4,40,ctr,crt,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
+0x00102AEC,func_00102AEC,44,ctr,crt,7_complex_caller,asm_stub,Complex caller (5 calls)
+0x00102B18,func_00102B18,126,ctr,crt,7_complex_caller,asm_stub,Complex caller (5 calls)
+0x00102B98,func_00102B98,26,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00102BBC,func_00102BBC,12,ctr,crt,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00102BC8,func_00102BC8,168,ctr,crt,4_complex_leaf,asm_stub,Large leaf algorithm
+0x00102C70,func_00102C70,124,ctr,crt,4_complex_leaf,asm_stub,Large leaf algorithm
+0x00102CEC,func_00102CEC,168,ctr,crt,4_complex_leaf,asm_stub,Large leaf algorithm
+0x00102D94,func_00102D94,8,ctr,crt,1_trivial,asm_stub,Constant return stub or leaf identity
+0x00102ED8,func_00102ED8,12,ctr,crt,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00102EE4,func_00102EE4,112,ctr,crt,4_complex_leaf,asm_stub,Large leaf algorithm
+0x00102F54,func_00102F54,34,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00102F7C,func_00102F7C,216,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (3 subcalls)
+0x00103054,func_00103054,200,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (3 subcalls)
+0x00103162,func_00103162,22,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00103178,func_00103178,18,ctr,crt,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00103254,func_00103254,48,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00103390,func_00103390,10,ctr,crt,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x001033AC,func_001033AC,10,ctr,crt,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x001033BA,func_001033BA,10,ctr,crt,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x0010342A,func_0010342A,12,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00103454,func_00103454,184,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x0010351C,func_0010351C,310,ctr,crt,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
+0x001037F0,func_001037F0,738,ctr,crt,7_complex_caller,asm_stub,Complex caller (17 calls)
+0x00103BBC,func_00103BBC,14,ctr,crt,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00103BCC,func_00103BCC,12,ctr,crt,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00103BDC,func_00103BDC,8,ctr,crt,1_trivial,asm_stub,Constant return stub or leaf identity
+0x00103BF0,func_00103BF0,106,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00103C60,func_00103C60,152,ctr,crt,4_complex_leaf,asm_stub,Large leaf algorithm
+0x001040D4,func_001040D4,110,ctr,crt,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x001043E8,func_001043E8,110,ctr,crt,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x001045D2,func_001045D2,22,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x001045FA,func_001045FA,12,ctr,crt,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x0010463E,func_0010463E,22,ctr,crt,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00104666,func_00104666,18,ctr,crt,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x001046AC,func_001046AC,8,ctr,crt,1_trivial,asm_stub,Constant return stub or leaf identity
+0x001046B4,func_001046B4,288,ctr,crt,7_complex_caller,asm_stub,Complex caller (30 calls)
 0x00104778,svcExitProcess,8,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x03)
+0x00104780,func_00104780,96,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (12 calls)
+0x001047E0,func_001047E0,44,ctr,nn_os,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
+0x00104814,func_00104814,76,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (6 calls)
+0x00104868,func_00104868,32,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (8 calls)
+0x00104888,func_00104888,44,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x001048B4,func_001048B4,104,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (12 calls)
+0x00104924,func_00104924,464,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (44 calls)
+0x00104B1C,func_00104B1C,160,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (14 calls)
+0x00104BC0,func_00104BC0,332,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (36 calls)
 0x00104D18,func_00104D18,16,ctr,nn_os,2_accessor,matched,nn::os startup global 8-bit flag setter (0x00814E54)
+0x00104D28,func_00104D28,32,ctr,nn_os,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00104D4C,func_00104D4C,1992,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (127 calls)
+0x00105598,func_00105598,2040,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (91 calls)
+0x001060B8,func_001060B8,396,ctr,nn_os,7_complex_caller,asm_stub,"Complex caller (30 calls, vtable)"
+0x00106244,func_00106244,172,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (19 calls)
+0x00106300,func_00106300,40,ctr,nn_os,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00106328,func_00106328,80,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x0010637C,func_0010637C,52,ctr,nn_os,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x001063B8,func_001063B8,56,ctr,nn_os,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
 0x001063F4,func_001063F4,16,ctr,nn_os,2_accessor,matched,CTR OS SystemConfig block field reader (0x1FF80000 + 0x40)
+0x00106404,func_00106404,80,ctr,nn_os,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00106458,func_00106458,184,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (9 calls)
+0x00106504,func_00106504,16,ctr,nn_os,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
+0x00106518,func_00106518,16,ctr,nn_os,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
+0x0010652C,func_0010652C,48,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (13 calls)
 0x0010655C,func_0010655C,20,ctr,nn_os,2_accessor,matched,nn::os::detail TLS pointer store to global offset via literal pool (0x00815DE0)
+0x00106570,func_00106570,296,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (18 calls)
+0x00106588,func_00106588,120,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (13 calls)
+0x001065CC,func_001065CC,172,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (6 calls)
+0x00106694,func_00106694,140,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x00106724,func_00106724,52,ctr,nn_os,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00106760,func_00106760,200,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (13 calls)
 0x0010678C,func_0010678C,16,ctr,nn_os,2_accessor,matched,nn::os startup global signed byte reader via literal pool (0x00814E00)
+0x0010679C,func_0010679C,348,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (42 calls)
+0x00106900,func_00106900,52,ctr,nn_os,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x0010693C,func_0010693C,168,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (30 calls)
+0x001069E8,func_001069E8,1704,ctr,nn_os,7_complex_caller,asm_stub,"Complex caller (122 calls, vtable)"
+0x00106B64,func_00106B64,14272,ctr,nn_os,7_complex_caller,asm_stub,"Complex caller (806 calls, vtable)"
 0x0010AA84,func_0010AA84,36,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x01 ControlMemory)
 0x0010AAA8,svcCreateEvent,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x21)
 0x0010AAC0,svcDuplicateHandle,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x38)
@@ -53,13 +202,53 @@ address,symbol,size,layer,subsystem,level,status,description
 0x00113F58,func_00113F58,20,ctr,nn_y2r,2_accessor,matched,Y2R global bit 3 flag getter via literal pool (0x008661EC)
 0x00113F70,func_00113F70,12,ctr,nn_y2r,2_accessor,matched,Y2R global float field getter via literal pool (0x00815090)
 0x00113F80,func_00113F80,152,ctr,nn_y2r,7_complex_caller,asm_stub,Y2R hardware mode dispatch and channel reset sequence
+0x00127170,func_00127170,152,ctr,nn_os,6_moderate_caller,asm_stub,Moderate caller (3 subcalls)
+0x00127200,func_00127200,204,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (12 calls)
+0x001272E8,func_001272E8,220,ctr,nn_os,4_complex_leaf,asm_stub,Large leaf algorithm
+0x001273CC,func_001273CC,156,ctr,nn_os,4_complex_leaf,asm_stub,Large leaf algorithm
+0x0012746C,func_0012746C,40,ctr,nn_os,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
 0x001274A0,func_001274A0,24,ctr,nn_os,3_arithmetic_logic,wip,nn::os atomic spinlock acquire loop (ldrex/strex synchronization)
+0x001274B8,func_001274B8,92,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (4 calls)
 0x00127520,func_00127520,12,ctr,nn_os,2_accessor,matched,CTR-SDK .text size / limit getter via literal pool (0x005F32AC)
+0x0012752C,func_0012752C,156,ctr,nn_os,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
 0x001275D8,func_001275D8,12,ctr,nn_os,2_accessor,matched,CTR-SDK .text base VMA getter via literal pool (0x00100000)
+0x001275E4,func_001275E4,36,ctr,nn_os,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x0012760C,func_0012760C,40,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x00127638,func_00127638,124,ctr,nn_os,7_complex_caller,asm_stub,"Complex caller (4 calls, vtable)"
+0x001276B4,func_001276B4,96,ctr,nn_os,4_complex_leaf,asm_stub,Large leaf algorithm
+0x00127718,func_00127718,372,ctr,nn_os,4_complex_leaf,asm_stub,Large leaf algorithm
 0x0012788C,func_0012788C,16,ctr,nn_os,2_accessor,matched,nn::os global flag setter via literal pool (0x00828EEC)
+0x0012789C,func_0012789C,184,ctr,nn_os,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00127958,func_00127958,52,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x00127994,func_00127994,56,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x001279CC,func_001279CC,40,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x00127ABC,func_00127ABC,104,ctr,nn_os,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00127B38,func_00127B38,104,ctr,nn_os,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00127BB8,func_00127BB8,72,ctr,nn_os,4_complex_leaf,asm_stub,Large leaf algorithm
+0x00127C24,func_00127C24,64,ctr,nn_os,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
+0x00127C6C,func_00127C6C,40,ctr,nn_os,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
+0x00127C9C,func_00127C9C,264,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (18 calls)
+0x00127DB8,func_00127DB8,100,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (8 calls)
+0x00127E1C,func_00127E1C,140,ctr,nn_os,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00127EB0,func_00127EB0,48,ctr,nn_os,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
 0x00127EE0,func_00127EE0,12,ctr,nn_ndm,2_accessor,matched,nn::ndm global state offset reader via literal pool (0x00865F18)
 0x00127EEC,func_00127EEC,12,ctr,nn_ndm,2_accessor,matched,nn::ndm global state pointer getter via literal pool (0x00865F10)
+0x00127EF8,func_00127EF8,52,ctr,nn_os,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00127F2C,func_00127F2C,124,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (12 calls)
+0x00127FB8,func_00127FB8,80,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (6 calls)
+0x0012806C,func_0012806C,224,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (13 calls)
 0x001280A8,func_001280A8,24,ctr,nn_ndm,3_arithmetic_logic,matched,"nn::ndm bounds-checked struct array element indexer (stride 8, offset +0x0C)"
+0x001280C0,func_001280C0,36,ctr,nn_os,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x001280EC,func_001280EC,108,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (10 calls)
+0x00128158,func_00128158,128,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (12 calls)
+0x001281D8,func_001281D8,164,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (16 calls)
+0x0012827C,func_0012827C,96,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (10 calls)
+0x001282DC,func_001282DC,140,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (14 calls)
+0x00128368,func_00128368,32,ctr,nn_os,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x0012838C,func_0012838C,124,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (16 calls)
+0x001283BC,func_001283BC,96,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (12 calls)
+0x00128424,func_00128424,80,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (12 calls)
+0x001284AC,func_001284AC,52,ctr,nn_os,6_moderate_caller,asm_stub,Moderate caller (3 subcalls)
 0x001284E4,func_001284E4,28,ctr,nn_applet,2_accessor,matched,nn::applet::CTR::IsApplication attribute check via literal pool (0x00814E00)
 0x00128544,func_00128544,20,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::SetCallback2C
 0x00128558,func_00128558,16,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::SetState10
@@ -77,14 +266,134 @@ address,symbol,size,layer,subsystem,level,status,description
 0x0012FEC0,func_0012FEC0,8,engine,lxp,1_leaf_stub,matched,lxpCMemory boolean true stub (returns constant 1)
 0x00130018,func_00130018,8,engine,lxp,1_leaf_stub,matched,lxpCMemory virtual boolean true stub (returns constant 1)
 0x001300B0,func_001300B0,12,engine,lxp,2_accessor,matched,lxpCMemory manager pointer getter via literal pool (0x00868F10)
+0x00136154,func_00136154,176,ctr,nn_dsp,7_complex_caller,asm_stub,"Complex caller (27 calls, vtable)"
+0x00136204,func_00136204,136,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (8 calls)
+0x0013628C,thunk_FUN_0013457c,4,ctr,nn_dsp,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
+0x00136290,func_00136290,136,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (11 calls)
+0x00136318,func_00136318,20,ctr,nn_dsp,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00136330,func_00136330,60,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x0013636C,func_0013636C,32,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x0013638C,func_0013638C,144,ctr,nn_dsp,7_complex_caller,asm_stub,"Complex caller (5 calls, vtable)"
+0x00136420,func_00136420,24,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00136438,func_00136438,264,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (5 calls)
+0x00136594,func_00136594,80,ctr,nn_dsp,4_complex_leaf,asm_stub,Large leaf algorithm with loop
+0x001365E4,func_001365E4,180,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x0013669C,func_0013669C,224,ctr,nn_dsp,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00136780,func_00136780,16,ctr,nn_dsp,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00136790,func_00136790,108,ctr,nn_dsp,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00136804,func_00136804,48,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00136838,func_00136838,216,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x00136920,func_00136920,52,ctr,nn_dsp,6_moderate_caller,asm_stub,Moderate caller (3 subcalls)
+0x00136958,func_00136958,48,ctr,nn_dsp,6_moderate_caller,asm_stub,Moderate caller (3 subcalls)
+0x0013698C,func_0013698C,952,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (14 calls)
+0x00136D58,func_00136D58,360,ctr,nn_dsp,7_complex_caller,asm_stub,"Complex caller (30 calls, vtable)"
+0x00136EC4,func_00136EC4,256,ctr,nn_dsp,7_complex_caller,asm_stub,"Complex caller (18 calls, vtable)"
+0x00136FC4,func_00136FC4,60,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00137054,func_00137054,12,ctr,nn_dsp,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00137064,func_00137064,156,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (8 calls)
+0x00137114,func_00137114,60,ctr,nn_dsp,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00137158,func_00137158,84,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (8 calls)
+0x001371B4,func_001371B4,32,ctr,nn_dsp,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x001371D4,func_001371D4,84,ctr,nn_dsp,7_complex_caller,asm_stub,"Complex caller (2 calls, vtable)"
+0x0013722C,func_0013722C,184,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (8 calls)
+0x001372F8,func_001372F8,96,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (6 calls)
+0x00137360,func_00137360,124,ctr,nn_dsp,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x001373F0,func_001373F0,96,ctr,nn_dsp,7_complex_caller,asm_stub,"Complex caller (3 calls, vtable)"
+0x00137458,func_00137458,240,ctr,nn_dsp,7_complex_caller,asm_stub,"Complex caller (9 calls, vtable)"
+0x00137524,func_00137524,108,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (6 calls)
+0x001375A4,func_001375A4,56,ctr,nn_dsp,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x001375DC,func_001375DC,32,ctr,nn_dsp,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x001375FC,func_001375FC,160,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (6 calls)
+0x0013769C,func_0013769C,312,ctr,nn_dsp,4_complex_leaf,asm_stub,Large leaf algorithm with loop
+0x001377D8,func_001377D8,328,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x00137920,func_00137920,16,ctr,nn_dsp,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00137930,func_00137930,32,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00137950,func_00137950,284,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (13 calls)
+0x00137A0C,func_00137A0C,16,ctr,nn_dsp,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00137A1C,func_00137A1C,88,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x00137A7C,func_00137A7C,88,ctr,nn_dsp,4_complex_leaf,asm_stub,Large leaf algorithm
+0x00137AE0,func_00137AE0,140,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (8 calls)
+0x00137B7C,func_00137B7C,592,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (28 calls)
+0x00137DD0,func_00137DD0,72,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x00137E20,func_00137E20,56,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00137E60,func_00137E60,148,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (16 calls)
+0x00137F18,func_00137F18,52,ctr,nn_dsp,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
+0x00137F28,func_00137F28,24,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00137F40,func_00137F40,28,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00137F5C,func_00137F5C,280,ctr,nn_dsp,4_complex_leaf,asm_stub,Large leaf algorithm
+0x0013808C,func_0013808C,100,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (12 calls)
+0x0013810C,func_0013810C,24,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00138124,func_00138124,160,ctr,nn_dsp,4_complex_leaf,asm_stub,Large leaf algorithm
+0x001381D0,func_001381D0,368,ctr,nn_dsp,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00138344,func_00138344,16,ctr,nn_dsp,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00138354,func_00138354,264,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (16 calls)
+0x00138478,func_00138478,124,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (5 calls)
+0x001384AC,func_001384AC,56,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x001384E8,func_001384E8,160,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (14 calls)
+0x00138590,func_00138590,64,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x001385D0,func_001385D0,28,ctr,nn_dsp,6_moderate_caller,asm_stub,Moderate caller (3 subcalls)
+0x001385EC,func_001385EC,60,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x0013862C,func_0013862C,52,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00138660,func_00138660,40,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00138688,func_00138688,72,ctr,nn_dsp,4_complex_leaf,asm_stub,Large leaf algorithm
+0x001386D4,func_001386D4,24,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x001386EC,func_001386EC,52,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x0013873C,func_0013873C,48,ctr,nn_dsp,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00138770,func_00138770,60,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x001387B0,func_001387B0,48,ctr,nn_dsp,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x001387E4,func_001387E4,60,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00138824,func_00138824,52,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00138858,func_00138858,40,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00138880,func_00138880,72,ctr,nn_dsp,4_complex_leaf,asm_stub,Large leaf algorithm
+0x001388CC,func_001388CC,32,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x001388EC,func_001388EC,192,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (8 calls)
+0x001389BC,func_001389BC,12,ctr,nn_dsp,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x001389CC,func_001389CC,76,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (6 calls)
+0x001389F4,func_001389F4,60,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00138A30,func_00138A30,40,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00138A80,func_00138A80,12,ctr,nn_dsp,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00138A90,func_00138A90,12,ctr,nn_dsp,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00138AA0,func_00138AA0,8,ctr,nn_dsp,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
+0x00138AAC,func_00138AAC,8,ctr,nn_dsp,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
+0x00138AB8,func_00138AB8,148,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (6 calls)
+0x00138B58,func_00138B58,8,ctr,nn_dsp,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
+0x00138B64,func_00138B64,188,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (14 calls)
+0x00138C30,func_00138C30,480,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (14 calls)
+0x00138E24,func_00138E24,60,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00138E68,func_00138E68,116,ctr,nn_dsp,4_complex_leaf,asm_stub,Large leaf algorithm
+0x00138EE4,func_00138EE4,80,ctr,nn_dsp,4_complex_leaf,asm_stub,Large leaf algorithm
+0x00138F3C,func_00138F3C,76,ctr,nn_dsp,4_complex_leaf,asm_stub,Large leaf algorithm
+0x00138F90,func_00138F90,84,ctr,nn_dsp,4_complex_leaf,asm_stub,Large leaf algorithm
+0x00138FEC,func_00138FEC,132,ctr,nn_dsp,4_complex_leaf,asm_stub,Large leaf algorithm
 0x0013EC38,func_0013EC38,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x3C panic reason 4)
 0x0013EC48,svcBreak,8,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x3C)
 0x0013EC50,func_0013EC50,20,ctr,svc,1_leaf_stub,matched,Thread yield stub via svc 0x0A (svcSleepThread(0))
 0x0013EC5C,func_0013EC5C,8,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x0A)
 0x0013EC64,svcWaitSynchronizationN,36,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x25 WaitSynchronizationN)
 0x0013F29C,func_0013F29C,12,engine,core,2_accessor,matched,Level-5 engine subsystem pointer getter via literal pool (0x00867DA8)
+0x00151140,func_00151140,1004,ctr,svc,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x0015152C,func_0015152C,252,ctr,svc,7_complex_caller,asm_stub,"Complex caller (4 calls, vtable)"
 0x00151628,func_00151628,28,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math 2D vector element-wise multiplication (VEC2Mul)
 0x00151644,func_00151644,28,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math 2D vector element-wise addition (VEC2Add)
+0x00151660,func_00151660,8,ctr,svc,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
+0x00151668,func_00151668,88,ctr,svc,4_complex_leaf,asm_stub,Large leaf algorithm
+0x001516C0,func_001516C0,20,ctr,svc,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x001516D4,func_001516D4,136,ctr,svc,4_complex_leaf,asm_stub,Large leaf algorithm
+0x00151790,func_00151790,140,ctr,svc,4_complex_leaf,asm_stub,Large leaf algorithm
+0x0015181C,func_0015181C,52,ctr,svc,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00151850,func_00151850,20,ctr,svc,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00151864,func_00151864,88,ctr,svc,4_complex_leaf,asm_stub,Large leaf algorithm
+0x00151914,func_00151914,60,ctr,svc,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00151950,func_00151950,56,ctr,svc,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00151988,func_00151988,44,ctr,svc,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00151A00,func_00151A00,184,ctr,svc,4_complex_leaf,asm_stub,Large leaf algorithm
+0x00151AB8,func_00151AB8,80,ctr,svc,4_complex_leaf,asm_stub,Large leaf algorithm
+0x00151B08,func_00151B08,52,ctr,svc,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00151B3C,func_00151B3C,68,ctr,svc,4_complex_leaf,asm_stub,Large leaf algorithm
+0x00151B80,func_00151B80,20,ctr,svc,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00151B94,func_00151B94,56,ctr,svc,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x00151CA8,func_00151CA8,20,ctr,svc,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00151CBC,func_00151CBC,72,ctr,svc,4_complex_leaf,asm_stub,Large leaf algorithm
 0x00151D04,func_00151D04,32,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math 2D vector linear interpolation (VEC2Lerp)
 0x00151D24,func_00151D24,28,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math::ARMv6::VEC3AddAsm vector-vector addition
 0x00151D40,func_00151D40,28,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math::ARMv6::VEC3SubAsm vector-vector subtraction
@@ -105,10 +414,32 @@ address,symbol,size,layer,subsystem,level,status,description
 0x00151F20,func_00151F20,48,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math 4D vector linear interpolation (VEC4Lerp)
 0x00151F50,func_00151F50,80,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math Quaternion Hamilton multiplication (QUATMul)
 0x00151FA0,svcCreateAddressArbiter,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x17)
+0x00151FB8,func_00151FB8,4,ctr,svc,1_trivial,asm_stub,Constant return stub or leaf identity
 0x00151FBC,svcSleepThread,8,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x28)
 0x00151FC4,svcGetThreadId,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x37)
+0x00151FE0,func_00151FE0,80,ctr,svc,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00152104,func_00152104,116,ctr,svc,4_complex_leaf,asm_stub,Large leaf algorithm with loop
+0x001521B0,func_001521B0,384,ctr,svc,7_complex_caller,asm_stub,Complex caller (20 calls)
+0x00152330,func_00152330,1044,ctr,svc,4_complex_leaf,asm_stub,Large leaf algorithm with loop
+0x00152748,func_00152748,68,ctr,svc,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x0015278C,func_0015278C,24,ctr,svc,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
+0x001527A4,func_001527A4,428,ctr,svc,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00152950,func_00152950,292,ctr,svc,7_complex_caller,asm_stub,Complex caller (6 calls)
+0x00152A74,func_00152A74,172,ctr,svc,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00152B24,func_00152B24,172,ctr,svc,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
+0x00152BD4,func_00152BD4,168,ctr,svc,4_complex_leaf,asm_stub,Large leaf algorithm with loop
+0x00152C7C,func_00152C7C,204,ctr,svc,7_complex_caller,asm_stub,Complex caller (4 calls)
+0x00152C98,func_00152C98,16,ctr,svc,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00152CAC,func_00152CAC,1468,ctr,svc,7_complex_caller,asm_stub,"Complex caller (29 calls, vtable)"
+0x00152E2C,func_00152E2C,20,ctr,svc,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00152E44,func_00152E44,12,ctr,svc,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00152E50,func_00152E50,20,ctr,svc,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00152E68,func_00152E68,20,ctr,svc,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00152E98,func_00152E98,336,ctr,svc,7_complex_caller,asm_stub,"Complex caller (13 calls, vtable)"
+0x0015BD4C,func_0015BD4C,20,ctr,svc,2_simple_accessor,asm_stub,Single field getter/setter or global read
 0x00166948,svcArbitrateAddress,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x22 ArbitrateAddress)
 0x00171C78,func_00171C78,12,game,core,2_accessor,matched,Game subsystem global pointer getter via literal pool (0x0091B7B8)
+0x00175574,func_00175574,32,ctr,svc,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
 0x0017656C,func_0017656C,4,game,core,1_leaf_stub,matched,Game subsystem leaf empty void stub function (bx lr)
 0x0018A714,svcCloseHandle,8,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x23)
 0x0018A71C,func_0018A71C,28,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x1E CreateMemoryBlock)
@@ -117,11 +448,13 @@ address,symbol,size,layer,subsystem,level,status,description
 0x0018A768,svcGetHandleInfo,28,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x29 GetHandleInfo)
 0x0018A784,svcControlMemory,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x0B)
 0x0018A868,svcWaitSynchronization1,8,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x24)
+0x002C0DD4,func_002C0DD4,36,ctr,svc,3_arithmetic_logic,asm_stub,CTR kernel syscall wrapper
 0x00301248,func_00301248,4,ctr,nn_nex,1_leaf_stub,matched,nn::nex leaf empty void stub function (bx lr)
 0x0031F1E8,_ZN2nn3nex7qResultaSERKS1_,12,ctr,nn_nex,2_accessor,matched,nn::nex::qResult::operator=(const qResult&)
 0x0031F1F4,_ZN2nn3nex7qResultC1Ev,16,ctr,nn_nex,2_accessor,community_matched,nn::nex::qResult::qResult()
 0x0031F204,_ZN2nn3nex7qResultC1ERKS1_,12,ctr,nn_nex,2_accessor,matched,nn::nex::qResult::qResult(const qResult&)
 0x0031F210,_ZNK2nn3nex7qResult8getValueEv,16,ctr,nn_nex,2_accessor,matched,nn::nex::qResult::getValue() const
+0x0033B508,func_0033B508,28,ctr,svc,3_arithmetic_logic,asm_stub,CTR kernel syscall wrapper
 0x00340CE8,_ZN2nn3nex10NexElementaSERKS1_,20,ctr,nn_nex,2_accessor,matched,nn::nex::NexElement::operator=(const NexElement&)
 0x00340CFC,_ZN2nn3nex10NexElementC1Eis,12,ctr,nn_nex,2_accessor,matched,"nn::nex::NexElement::NexElement(s32, s16)"
 0x00340D08,_ZN2nn3nex10NexElementC1Ev,16,ctr,nn_nex,2_accessor,matched,nn::nex::NexElement::NexElement()
@@ -132,4 +465,5 @@ address,symbol,size,layer,subsystem,level,status,description
 0x00340EB8,_ZN2nn3nex21StationConnectionInfo10setElementERKNS0_10NexElementE,20,ctr,nn_nex,2_accessor,matched,nn::nex::StationConnectionInfo::setElement(const NexElement&)
 0x00340ECC,_ZN2nn3nex21StationConnectionInfo5resetEv,20,ctr,nn_nex,2_accessor,matched,nn::nex::StationConnectionInfo::reset()
 0x00340EE8,_ZNK2nn3nex21StationConnectionInfo7compareERKS1_,136,ctr,nn_nex,3_control_flow,staged,nn::nex::StationConnectionInfo::compare(const StationConnectionInfo&) const
+0x005EE674,func_005EE674,32,ctr,svc,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
 0x005F015C,func_005F015C,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x28 GetSystemTick to pointer)

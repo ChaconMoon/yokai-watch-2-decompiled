@@ -114,15 +114,6 @@ build/src/game/loops/func_0011054C.o: src/game/loops/func_0011054C.c
 		$(CC) $(CFLAGS) $< -o $@; \
 	fi
 
-build/src/ctr/nn/os/func_001274A0.o: src/ctr/nn/os/func_001274A0.c
-	@mkdir -p $(dir $@)
-	@if [ -f "tools/armcc/4.0/b821/bin/armcc.exe" ]; then \
-		$(ARMCC) $(ARMFLAGS) $< -o $@; \
-	else \
-		echo "⚠️ Warning: ARMCC not found, compiling with GCC fallback..."; \
-		$(CC) $(CFLAGS) $< -o $@; \
-	fi
-
 build/src/ctr/nn/y2r/%.o: src/ctr/nn/y2r/%.c
 	@mkdir -p $(dir $@)
 	@if [ -f "tools/armcc/4.0/b821/bin/armcc.exe" ]; then \

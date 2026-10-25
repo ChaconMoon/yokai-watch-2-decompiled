@@ -44,12 +44,12 @@ Progress is split into categories so that assembly is never counted as C decompi
 | Category | Count | Meaning |
 | :--- | :---: | :--- |
 | **Decompiled C/C++ (Byte-Exact Match)** | **72** / 18,225 (0.40%) | Real C/C++ code verified byte-exact (1,392 B / 0.0223%) |
-| **Assembly Stubs (`.s` extracted)** | **58** / 18,225 (0.32%) | Split stubs for building & progressive replacement (5,292 B / 0.0848%) |
-| **Total Binary Code Covered** | **130** / 18,225 (0.71%) | Combined C/C++ and extracted assembly (6,684 B / 0.1071%) |
-| **Layer 1: Nintendo CTR-SDK (`src/ctr/`)** | **61** C matched + **55** stubs | CRT startup, `svc`, `nn::os`, `nn::y2r`, `nn::nex` |
+| **Assembly Stubs (`.s` extracted)** | **392** / 18,225 (2.15%) | Split stubs for building & progressive replacement (63,816 B / 1.0229%) |
+| **Total Binary Code Covered** | **464** / 18,225 (2.55%) | Combined C/C++ and extracted assembly (65,208 B / 1.0452%) |
+| **Layer 1: Nintendo CTR-SDK (`src/ctr/`)** | **61** C matched + **389** stubs | CRT startup, `svc`, `nn::os`, `nn::y2r`, `nn::nex` |
 | **Layer 2: Level-5 Engine (`src/engine/`)** | **7** C matched + **3** stubs | `lfw` base classes, `lfwCLoop`, `lxp`, `gds` |
 | **Layer 3: Yo-kai Watch 2 Game (`src/game/`)** | **4** C matched + **0** stubs | `ywCLoop*` state machines, battle, RPG entities |
-| **Cataloged in Manifest** | **134** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
+| **Cataloged in Manifest** | **468** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
 | **Executable Size (`.text`)** | 6,238,892 B | Exact size from NCCH ExHeader (EU `00040000001B2900`) |
 | **Architecture** | ARM11 MPCore (ARMv6K) | 32-bit Little Endian, VMA `0x00100000` |
 | **Compiler** | ARMCC / RVCT 4.0 b821 | CTR-SDK 1.2.7 (`1.2.7.f-NINTENDO-CTR-SDK-v1`) |
@@ -70,12 +70,161 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 
 | Virtual Address | Symbol / Name | Layer / Module | Size | Level | Status | Description / Notes |
 | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
+| `0x00100000` | `func_00100000` | `ctr/crt` | 4 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00100004` | `func_00100004` | `ctr/crt` | 4 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00100008` | `func_00100008` | `ctr/crt` | 4 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x0010000C` | `func_0010000C` | `ctr/crt` | 4 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00100010` | `func_00100010` | `ctr/crt` | 4 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00100014` | `func_00100014` | `ctr/crt` | 4 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00100018` | `func_00100018` | `ctr/crt` | 4 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x0010001C` | `func_0010001C` | `ctr/crt` | 16 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (3 subcalls) |
 | `0x00100024` | `clear_bss` | `ctr/crt` | 36 B | `2_control_flow` | ⚪ ASM Stub (Verified) | CRT startup zeroing loop for .bss section (0x00860934 - 0x0091B9BC) |
+| `0x00100048` | `func_00100048` | `ctr/crt` | 18 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x0010005A` | `func_0010005A` | `ctr/crt` | 36 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00100080` | `func_00100080` | `ctr/crt` | 112 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
+| `0x001000F8` | `func_001000F8` | `ctr/crt` | 8 B | `1_trivial` | ⚪ ASM Stub (Verified) | Constant return stub or leaf identity |
+| `0x00100100` | `func_00100100` | `ctr/crt` | 40 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
+| `0x0010012C` | `func_0010012C` | `ctr/crt` | 44 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00100158` | `func_00100158` | `ctr/crt` | 78 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (3 subcalls) |
+| `0x001001A6` | `func_001001A6` | `ctr/crt` | 116 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x0010021C` | `thunk_FUN_00100224` | `ctr/crt` | 8 B | `1_trivial` | ⚪ ASM Stub (Verified) | Constant return stub or leaf identity |
+| `0x00100224` | `func_00100224` | `ctr/crt` | 18 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x0010026E` | `func_0010026E` | `ctr/crt` | 66 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x001002C4` | `func_001002C4` | `ctr/crt` | 34 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x001002E8` | `thunk_FUN_001002f0` | `ctr/crt` | 8 B | `1_trivial` | ⚪ ASM Stub (Verified) | Constant return stub or leaf identity |
+| `0x001002F0` | `func_001002F0` | `ctr/crt` | 18 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
+| `0x00100302` | `func_00100302` | `ctr/crt` | 24 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x00100324` | `func_00100324` | `ctr/crt` | 22 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x0010063C` | `func_0010063C` | `ctr/crt` | 22 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x0010066A` | `func_0010066A` | `ctr/crt` | 82 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (3 subcalls) |
+| `0x00100738` | `func_00100738` | `ctr/crt` | 34 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x0010075A` | `func_0010075A` | `ctr/crt` | 24 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00100784` | `func_00100784` | `ctr/crt` | 114 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (10 calls) |
+| `0x0010080C` | `func_0010080C` | `ctr/crt` | 16 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00100850` | `func_00100850` | `ctr/crt` | 182 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (6 calls) |
+| `0x00100A24` | `thunk_FUN_00100a36` | `ctr/crt` | 8 B | `1_trivial` | ⚪ ASM Stub (Verified) | Constant return stub or leaf identity |
+| `0x00100A36` | `func_00100A36` | `ctr/crt` | 12 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00100A44` | `func_00100A44` | `ctr/crt` | 330 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (11 calls) |
+| `0x00100BB4` | `func_00100BB4` | `ctr/crt` | 36 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00100BD8` | `func_00100BD8` | `ctr/crt` | 54 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00100C18` | `func_00100C18` | `ctr/crt` | 24 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00100C30` | `func_00100C30` | `ctr/crt` | 50 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00100C74` | `func_00100C74` | `ctr/crt` | 28 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00100CDC` | `func_00100CDC` | `ctr/crt` | 330 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (6 calls) |
+| `0x00100E26` | `func_00100E26` | `ctr/crt` | 330 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x00100F70` | `func_00100F70` | `ctr/crt` | 232 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
+| `0x00101058` | `func_00101058` | `ctr/crt` | 288 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (3 subcalls) |
+| `0x00101178` | `func_00101178` | `ctr/crt` | 232 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00101260` | `func_00101260` | `ctr/crt` | 208 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x00101330` | `func_00101330` | `ctr/crt` | 50 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x001013EC` | `func_001013EC` | `ctr/crt` | 532 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (8 calls) |
+| `0x001018D8` | `func_001018D8` | `ctr/crt` | 906 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (9 calls) |
+| `0x00101C70` | `func_00101C70` | `ctr/crt` | 8 B | `1_trivial` | ⚪ ASM Stub (Verified) | Constant return stub or leaf identity |
+| `0x00101C78` | `func_00101C78` | `ctr/crt` | 8 B | `1_trivial` | ⚪ ASM Stub (Verified) | Constant return stub or leaf identity |
+| `0x00101C80` | `func_00101C80` | `ctr/crt` | 74 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x00101CE4` | `func_00101CE4` | `ctr/crt` | 18 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
+| `0x00101CF6` | `func_00101CF6` | `ctr/crt` | 14 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00102180` | `func_00102180` | `ctr/crt` | 18 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00102198` | `func_00102198` | `ctr/crt` | 104 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x0010223C` | `func_0010223C` | `ctr/crt` | 372 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (11 calls) |
+| `0x001023D2` | `func_001023D2` | `ctr/crt` | 30 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x001023F0` | `func_001023F0` | `ctr/crt` | 54 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (3 subcalls) |
+| `0x0010242C` | `func_0010242C` | `ctr/crt` | 50 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00102464` | `func_00102464` | `ctr/crt` | 68 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x001024AC` | `func_001024AC` | `ctr/crt` | 54 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (3 subcalls) |
+| `0x001024E8` | `func_001024E8` | `ctr/crt` | 72 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (3 subcalls) |
+| `0x00102534` | `func_00102534` | `ctr/crt` | 140 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (3 subcalls) |
+| `0x001025C4` | `func_001025C4` | `ctr/crt` | 86 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x0010261A` | `func_0010261A` | `ctr/crt` | 26 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00102634` | `func_00102634` | `ctr/crt` | 108 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (3 subcalls) |
+| `0x001026A4` | `func_001026A4` | `ctr/crt` | 8 B | `1_trivial` | ⚪ ASM Stub (Verified) | Constant return stub or leaf identity |
+| `0x001026AC` | `func_001026AC` | `ctr/crt` | 116 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x00102720` | `func_00102720` | `ctr/crt` | 80 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
+| `0x00102770` | `func_00102770` | `ctr/crt` | 534 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (21 calls) |
+| `0x00102986` | `func_00102986` | `ctr/crt` | 138 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (6 calls) |
+| `0x00102A10` | `func_00102A10` | `ctr/crt` | 40 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00102A40` | `func_00102A40` | `ctr/crt` | 18 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
+| `0x00102A5C` | `func_00102A5C` | `ctr/crt` | 28 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00102A78` | `func_00102A78` | `ctr/crt` | 10 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
+| `0x00102A82` | `func_00102A82` | `ctr/crt` | 10 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00102A8C` | `func_00102A8C` | `ctr/crt` | 28 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00102AAE` | `func_00102AAE` | `ctr/crt` | 26 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00102AC4` | `func_00102AC4` | `ctr/crt` | 40 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
+| `0x00102AEC` | `func_00102AEC` | `ctr/crt` | 44 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (5 calls) |
+| `0x00102B18` | `func_00102B18` | `ctr/crt` | 126 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (5 calls) |
+| `0x00102B98` | `func_00102B98` | `ctr/crt` | 26 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00102BBC` | `func_00102BBC` | `ctr/crt` | 12 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00102BC8` | `func_00102BC8` | `ctr/crt` | 168 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x00102C70` | `func_00102C70` | `ctr/crt` | 124 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x00102CEC` | `func_00102CEC` | `ctr/crt` | 168 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x00102D94` | `func_00102D94` | `ctr/crt` | 8 B | `1_trivial` | ⚪ ASM Stub (Verified) | Constant return stub or leaf identity |
+| `0x00102ED8` | `func_00102ED8` | `ctr/crt` | 12 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00102EE4` | `func_00102EE4` | `ctr/crt` | 112 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x00102F54` | `func_00102F54` | `ctr/crt` | 34 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00102F7C` | `func_00102F7C` | `ctr/crt` | 216 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (3 subcalls) |
+| `0x00103054` | `func_00103054` | `ctr/crt` | 200 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (3 subcalls) |
+| `0x00103162` | `func_00103162` | `ctr/crt` | 22 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00103178` | `func_00103178` | `ctr/crt` | 18 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00103254` | `func_00103254` | `ctr/crt` | 48 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00103390` | `func_00103390` | `ctr/crt` | 10 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x001033AC` | `func_001033AC` | `ctr/crt` | 10 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x001033BA` | `func_001033BA` | `ctr/crt` | 10 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x0010342A` | `func_0010342A` | `ctr/crt` | 12 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00103454` | `func_00103454` | `ctr/crt` | 184 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x0010351C` | `func_0010351C` | `ctr/crt` | 310 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
+| `0x001037F0` | `func_001037F0` | `ctr/crt` | 738 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (17 calls) |
+| `0x00103BBC` | `func_00103BBC` | `ctr/crt` | 14 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00103BCC` | `func_00103BCC` | `ctr/crt` | 12 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00103BDC` | `func_00103BDC` | `ctr/crt` | 8 B | `1_trivial` | ⚪ ASM Stub (Verified) | Constant return stub or leaf identity |
+| `0x00103BF0` | `func_00103BF0` | `ctr/crt` | 106 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00103C60` | `func_00103C60` | `ctr/crt` | 152 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x001040D4` | `func_001040D4` | `ctr/crt` | 110 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x001043E8` | `func_001043E8` | `ctr/crt` | 110 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x001045D2` | `func_001045D2` | `ctr/crt` | 22 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x001045FA` | `func_001045FA` | `ctr/crt` | 12 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x0010463E` | `func_0010463E` | `ctr/crt` | 22 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00104666` | `func_00104666` | `ctr/crt` | 18 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x001046AC` | `func_001046AC` | `ctr/crt` | 8 B | `1_trivial` | ⚪ ASM Stub (Verified) | Constant return stub or leaf identity |
+| `0x001046B4` | `func_001046B4` | `ctr/crt` | 288 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (30 calls) |
 | `0x00104778` | `svcExitProcess` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x03) |
+| `0x00104780` | `func_00104780` | `ctr/nn_os` | 96 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (12 calls) |
+| `0x001047E0` | `func_001047E0` | `ctr/nn_os` | 44 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
+| `0x00104814` | `func_00104814` | `ctr/nn_os` | 76 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (6 calls) |
+| `0x00104868` | `func_00104868` | `ctr/nn_os` | 32 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (8 calls) |
+| `0x00104888` | `func_00104888` | `ctr/nn_os` | 44 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x001048B4` | `func_001048B4` | `ctr/nn_os` | 104 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (12 calls) |
+| `0x00104924` | `func_00104924` | `ctr/nn_os` | 464 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (44 calls) |
+| `0x00104B1C` | `func_00104B1C` | `ctr/nn_os` | 160 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (14 calls) |
+| `0x00104BC0` | `func_00104BC0` | `ctr/nn_os` | 332 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (36 calls) |
 | `0x00104D18` | `func_00104D18` | `ctr/nn_os` | 16 B | `2_accessor` | 🟢 Matched (C/C++) | nn::os startup global 8-bit flag setter (0x00814E54) |
+| `0x00104D28` | `func_00104D28` | `ctr/nn_os` | 32 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00104D4C` | `func_00104D4C` | `ctr/nn_os` | 1992 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (127 calls) |
+| `0x00105598` | `func_00105598` | `ctr/nn_os` | 2040 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (91 calls) |
+| `0x001060B8` | `func_001060B8` | `ctr/nn_os` | 396 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (30 calls, vtable) |
+| `0x00106244` | `func_00106244` | `ctr/nn_os` | 172 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (19 calls) |
+| `0x00106300` | `func_00106300` | `ctr/nn_os` | 40 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00106328` | `func_00106328` | `ctr/nn_os` | 80 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x0010637C` | `func_0010637C` | `ctr/nn_os` | 52 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x001063B8` | `func_001063B8` | `ctr/nn_os` | 56 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
 | `0x001063F4` | `func_001063F4` | `ctr/nn_os` | 16 B | `2_accessor` | 🟢 Matched (C/C++) | CTR OS SystemConfig block field reader (0x1FF80000 + 0x40) |
+| `0x00106404` | `func_00106404` | `ctr/nn_os` | 80 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00106458` | `func_00106458` | `ctr/nn_os` | 184 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (9 calls) |
+| `0x00106504` | `func_00106504` | `ctr/nn_os` | 16 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
+| `0x00106518` | `func_00106518` | `ctr/nn_os` | 16 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
+| `0x0010652C` | `func_0010652C` | `ctr/nn_os` | 48 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (13 calls) |
 | `0x0010655C` | `func_0010655C` | `ctr/nn_os` | 20 B | `2_accessor` | 🟢 Matched (C/C++) | nn::os::detail TLS pointer store to global offset via literal pool (0x00815DE0) |
+| `0x00106570` | `func_00106570` | `ctr/nn_os` | 296 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (18 calls) |
+| `0x00106588` | `func_00106588` | `ctr/nn_os` | 120 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (13 calls) |
+| `0x001065CC` | `func_001065CC` | `ctr/nn_os` | 172 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (6 calls) |
+| `0x00106694` | `func_00106694` | `ctr/nn_os` | 140 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x00106724` | `func_00106724` | `ctr/nn_os` | 52 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00106760` | `func_00106760` | `ctr/nn_os` | 200 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (13 calls) |
 | `0x0010678C` | `func_0010678C` | `ctr/nn_os` | 16 B | `2_accessor` | 🟢 Matched (C/C++) | nn::os startup global signed byte reader via literal pool (0x00814E00) |
+| `0x0010679C` | `func_0010679C` | `ctr/nn_os` | 348 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (42 calls) |
+| `0x00106900` | `func_00106900` | `ctr/nn_os` | 52 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x0010693C` | `func_0010693C` | `ctr/nn_os` | 168 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (30 calls) |
+| `0x001069E8` | `func_001069E8` | `ctr/nn_os` | 1704 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (122 calls, vtable) |
+| `0x00106B64` | `func_00106B64` | `ctr/nn_os` | 14272 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (806 calls, vtable) |
 | `0x0010AA84` | `func_0010AA84` | `ctr/svc` | 36 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x01 ControlMemory) |
 | `0x0010AAA8` | `svcCreateEvent` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x21) |
 | `0x0010AAC0` | `svcDuplicateHandle` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x38) |
@@ -124,13 +273,53 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x00113F58` | `func_00113F58` | `ctr/nn_y2r` | 20 B | `2_accessor` | 🟢 Matched (C/C++) | Y2R global bit 3 flag getter via literal pool (0x008661EC) |
 | `0x00113F70` | `func_00113F70` | `ctr/nn_y2r` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | Y2R global float field getter via literal pool (0x00815090) |
 | `0x00113F80` | `func_00113F80` | `ctr/nn_y2r` | 152 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Y2R hardware mode dispatch and channel reset sequence |
+| `0x00127170` | `func_00127170` | `ctr/nn_os` | 152 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (3 subcalls) |
+| `0x00127200` | `func_00127200` | `ctr/nn_os` | 204 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (12 calls) |
+| `0x001272E8` | `func_001272E8` | `ctr/nn_os` | 220 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x001273CC` | `func_001273CC` | `ctr/nn_os` | 156 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x0012746C` | `func_0012746C` | `ctr/nn_os` | 40 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
 | `0x001274A0` | `func_001274A0` | `ctr/nn_os` | 24 B | `3_arithmetic_logic` | 🟡 In Review | nn::os atomic spinlock acquire loop (ldrex/strex synchronization) |
+| `0x001274B8` | `func_001274B8` | `ctr/nn_os` | 92 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
 | `0x00127520` | `func_00127520` | `ctr/nn_os` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | CTR-SDK .text size / limit getter via literal pool (0x005F32AC) |
+| `0x0012752C` | `func_0012752C` | `ctr/nn_os` | 156 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
 | `0x001275D8` | `func_001275D8` | `ctr/nn_os` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | CTR-SDK .text base VMA getter via literal pool (0x00100000) |
+| `0x001275E4` | `func_001275E4` | `ctr/nn_os` | 36 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x0012760C` | `func_0012760C` | `ctr/nn_os` | 40 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x00127638` | `func_00127638` | `ctr/nn_os` | 124 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls, vtable) |
+| `0x001276B4` | `func_001276B4` | `ctr/nn_os` | 96 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x00127718` | `func_00127718` | `ctr/nn_os` | 372 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
 | `0x0012788C` | `func_0012788C` | `ctr/nn_os` | 16 B | `2_accessor` | 🟢 Matched (C/C++) | nn::os global flag setter via literal pool (0x00828EEC) |
+| `0x0012789C` | `func_0012789C` | `ctr/nn_os` | 184 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00127958` | `func_00127958` | `ctr/nn_os` | 52 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x00127994` | `func_00127994` | `ctr/nn_os` | 56 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x001279CC` | `func_001279CC` | `ctr/nn_os` | 40 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x00127ABC` | `func_00127ABC` | `ctr/nn_os` | 104 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00127B38` | `func_00127B38` | `ctr/nn_os` | 104 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00127BB8` | `func_00127BB8` | `ctr/nn_os` | 72 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x00127C24` | `func_00127C24` | `ctr/nn_os` | 64 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
+| `0x00127C6C` | `func_00127C6C` | `ctr/nn_os` | 40 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
+| `0x00127C9C` | `func_00127C9C` | `ctr/nn_os` | 264 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (18 calls) |
+| `0x00127DB8` | `func_00127DB8` | `ctr/nn_os` | 100 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (8 calls) |
+| `0x00127E1C` | `func_00127E1C` | `ctr/nn_os` | 140 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00127EB0` | `func_00127EB0` | `ctr/nn_os` | 48 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
 | `0x00127EE0` | `func_00127EE0` | `ctr/nn_ndm` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | nn::ndm global state offset reader via literal pool (0x00865F18) |
 | `0x00127EEC` | `func_00127EEC` | `ctr/nn_ndm` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | nn::ndm global state pointer getter via literal pool (0x00865F10) |
+| `0x00127EF8` | `func_00127EF8` | `ctr/nn_os` | 52 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00127F2C` | `func_00127F2C` | `ctr/nn_os` | 124 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (12 calls) |
+| `0x00127FB8` | `func_00127FB8` | `ctr/nn_os` | 80 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (6 calls) |
+| `0x0012806C` | `func_0012806C` | `ctr/nn_os` | 224 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (13 calls) |
 | `0x001280A8` | `func_001280A8` | `ctr/nn_ndm` | 24 B | `3_arithmetic_logic` | 🟢 Matched (C/C++) | nn::ndm bounds-checked struct array element indexer (stride 8, offset +0x0C) |
+| `0x001280C0` | `func_001280C0` | `ctr/nn_os` | 36 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x001280EC` | `func_001280EC` | `ctr/nn_os` | 108 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (10 calls) |
+| `0x00128158` | `func_00128158` | `ctr/nn_os` | 128 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (12 calls) |
+| `0x001281D8` | `func_001281D8` | `ctr/nn_os` | 164 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (16 calls) |
+| `0x0012827C` | `func_0012827C` | `ctr/nn_os` | 96 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (10 calls) |
+| `0x001282DC` | `func_001282DC` | `ctr/nn_os` | 140 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (14 calls) |
+| `0x00128368` | `func_00128368` | `ctr/nn_os` | 32 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x0012838C` | `func_0012838C` | `ctr/nn_os` | 124 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (16 calls) |
+| `0x001283BC` | `func_001283BC` | `ctr/nn_os` | 96 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (12 calls) |
+| `0x00128424` | `func_00128424` | `ctr/nn_os` | 80 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (12 calls) |
+| `0x001284AC` | `func_001284AC` | `ctr/nn_os` | 52 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (3 subcalls) |
 | `0x001284E4` | `func_001284E4` | `ctr/nn_applet` | 28 B | `2_accessor` | 🟢 Matched (C/C++) | nn::applet::CTR::IsApplication attribute check via literal pool (0x00814E00) |
 | `0x00128544` | `func_00128544` | `ctr/nn_applet` | 20 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | nn::applet::detail::SetCallback2C |
 | `0x00128558` | `func_00128558` | `ctr/nn_applet` | 16 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | nn::applet::detail::SetState10 |
@@ -148,14 +337,134 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x0012FEC0` | `func_0012FEC0` | `engine/lxp` | 8 B | `1_leaf_stub` | 🟢 Matched (C/C++) | lxpCMemory boolean true stub (returns constant 1) |
 | `0x00130018` | `func_00130018` | `engine/lxp` | 8 B | `1_leaf_stub` | 🟢 Matched (C/C++) | lxpCMemory virtual boolean true stub (returns constant 1) |
 | `0x001300B0` | `func_001300B0` | `engine/lxp` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | lxpCMemory manager pointer getter via literal pool (0x00868F10) |
+| `0x00136154` | `func_00136154` | `ctr/nn_dsp` | 176 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (27 calls, vtable) |
+| `0x00136204` | `func_00136204` | `ctr/nn_dsp` | 136 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (8 calls) |
+| `0x0013628C` | `thunk_FUN_0013457c` | `ctr/nn_dsp` | 4 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
+| `0x00136290` | `func_00136290` | `ctr/nn_dsp` | 136 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (11 calls) |
+| `0x00136318` | `func_00136318` | `ctr/nn_dsp` | 20 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00136330` | `func_00136330` | `ctr/nn_dsp` | 60 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x0013636C` | `func_0013636C` | `ctr/nn_dsp` | 32 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x0013638C` | `func_0013638C` | `ctr/nn_dsp` | 144 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (5 calls, vtable) |
+| `0x00136420` | `func_00136420` | `ctr/nn_dsp` | 24 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00136438` | `func_00136438` | `ctr/nn_dsp` | 264 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (5 calls) |
+| `0x00136594` | `func_00136594` | `ctr/nn_dsp` | 80 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm with loop |
+| `0x001365E4` | `func_001365E4` | `ctr/nn_dsp` | 180 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x0013669C` | `func_0013669C` | `ctr/nn_dsp` | 224 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00136780` | `func_00136780` | `ctr/nn_dsp` | 16 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00136790` | `func_00136790` | `ctr/nn_dsp` | 108 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00136804` | `func_00136804` | `ctr/nn_dsp` | 48 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00136838` | `func_00136838` | `ctr/nn_dsp` | 216 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x00136920` | `func_00136920` | `ctr/nn_dsp` | 52 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (3 subcalls) |
+| `0x00136958` | `func_00136958` | `ctr/nn_dsp` | 48 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (3 subcalls) |
+| `0x0013698C` | `func_0013698C` | `ctr/nn_dsp` | 952 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (14 calls) |
+| `0x00136D58` | `func_00136D58` | `ctr/nn_dsp` | 360 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (30 calls, vtable) |
+| `0x00136EC4` | `func_00136EC4` | `ctr/nn_dsp` | 256 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (18 calls, vtable) |
+| `0x00136FC4` | `func_00136FC4` | `ctr/nn_dsp` | 60 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00137054` | `func_00137054` | `ctr/nn_dsp` | 12 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00137064` | `func_00137064` | `ctr/nn_dsp` | 156 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (8 calls) |
+| `0x00137114` | `func_00137114` | `ctr/nn_dsp` | 60 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00137158` | `func_00137158` | `ctr/nn_dsp` | 84 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (8 calls) |
+| `0x001371B4` | `func_001371B4` | `ctr/nn_dsp` | 32 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x001371D4` | `func_001371D4` | `ctr/nn_dsp` | 84 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (2 calls, vtable) |
+| `0x0013722C` | `func_0013722C` | `ctr/nn_dsp` | 184 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (8 calls) |
+| `0x001372F8` | `func_001372F8` | `ctr/nn_dsp` | 96 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (6 calls) |
+| `0x00137360` | `func_00137360` | `ctr/nn_dsp` | 124 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x001373F0` | `func_001373F0` | `ctr/nn_dsp` | 96 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (3 calls, vtable) |
+| `0x00137458` | `func_00137458` | `ctr/nn_dsp` | 240 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (9 calls, vtable) |
+| `0x00137524` | `func_00137524` | `ctr/nn_dsp` | 108 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (6 calls) |
+| `0x001375A4` | `func_001375A4` | `ctr/nn_dsp` | 56 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x001375DC` | `func_001375DC` | `ctr/nn_dsp` | 32 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x001375FC` | `func_001375FC` | `ctr/nn_dsp` | 160 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (6 calls) |
+| `0x0013769C` | `func_0013769C` | `ctr/nn_dsp` | 312 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm with loop |
+| `0x001377D8` | `func_001377D8` | `ctr/nn_dsp` | 328 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x00137920` | `func_00137920` | `ctr/nn_dsp` | 16 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00137930` | `func_00137930` | `ctr/nn_dsp` | 32 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00137950` | `func_00137950` | `ctr/nn_dsp` | 284 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (13 calls) |
+| `0x00137A0C` | `func_00137A0C` | `ctr/nn_dsp` | 16 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00137A1C` | `func_00137A1C` | `ctr/nn_dsp` | 88 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x00137A7C` | `func_00137A7C` | `ctr/nn_dsp` | 88 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x00137AE0` | `func_00137AE0` | `ctr/nn_dsp` | 140 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (8 calls) |
+| `0x00137B7C` | `func_00137B7C` | `ctr/nn_dsp` | 592 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (28 calls) |
+| `0x00137DD0` | `func_00137DD0` | `ctr/nn_dsp` | 72 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x00137E20` | `func_00137E20` | `ctr/nn_dsp` | 56 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00137E60` | `func_00137E60` | `ctr/nn_dsp` | 148 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (16 calls) |
+| `0x00137F18` | `func_00137F18` | `ctr/nn_dsp` | 52 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
+| `0x00137F28` | `func_00137F28` | `ctr/nn_dsp` | 24 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00137F40` | `func_00137F40` | `ctr/nn_dsp` | 28 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00137F5C` | `func_00137F5C` | `ctr/nn_dsp` | 280 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x0013808C` | `func_0013808C` | `ctr/nn_dsp` | 100 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (12 calls) |
+| `0x0013810C` | `func_0013810C` | `ctr/nn_dsp` | 24 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00138124` | `func_00138124` | `ctr/nn_dsp` | 160 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x001381D0` | `func_001381D0` | `ctr/nn_dsp` | 368 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00138344` | `func_00138344` | `ctr/nn_dsp` | 16 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00138354` | `func_00138354` | `ctr/nn_dsp` | 264 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (16 calls) |
+| `0x00138478` | `func_00138478` | `ctr/nn_dsp` | 124 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (5 calls) |
+| `0x001384AC` | `func_001384AC` | `ctr/nn_dsp` | 56 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x001384E8` | `func_001384E8` | `ctr/nn_dsp` | 160 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (14 calls) |
+| `0x00138590` | `func_00138590` | `ctr/nn_dsp` | 64 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x001385D0` | `func_001385D0` | `ctr/nn_dsp` | 28 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (3 subcalls) |
+| `0x001385EC` | `func_001385EC` | `ctr/nn_dsp` | 60 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x0013862C` | `func_0013862C` | `ctr/nn_dsp` | 52 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00138660` | `func_00138660` | `ctr/nn_dsp` | 40 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00138688` | `func_00138688` | `ctr/nn_dsp` | 72 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x001386D4` | `func_001386D4` | `ctr/nn_dsp` | 24 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x001386EC` | `func_001386EC` | `ctr/nn_dsp` | 52 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x0013873C` | `func_0013873C` | `ctr/nn_dsp` | 48 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00138770` | `func_00138770` | `ctr/nn_dsp` | 60 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x001387B0` | `func_001387B0` | `ctr/nn_dsp` | 48 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x001387E4` | `func_001387E4` | `ctr/nn_dsp` | 60 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00138824` | `func_00138824` | `ctr/nn_dsp` | 52 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00138858` | `func_00138858` | `ctr/nn_dsp` | 40 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00138880` | `func_00138880` | `ctr/nn_dsp` | 72 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x001388CC` | `func_001388CC` | `ctr/nn_dsp` | 32 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x001388EC` | `func_001388EC` | `ctr/nn_dsp` | 192 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (8 calls) |
+| `0x001389BC` | `func_001389BC` | `ctr/nn_dsp` | 12 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x001389CC` | `func_001389CC` | `ctr/nn_dsp` | 76 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (6 calls) |
+| `0x001389F4` | `func_001389F4` | `ctr/nn_dsp` | 60 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00138A30` | `func_00138A30` | `ctr/nn_dsp` | 40 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00138A80` | `func_00138A80` | `ctr/nn_dsp` | 12 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00138A90` | `func_00138A90` | `ctr/nn_dsp` | 12 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00138AA0` | `func_00138AA0` | `ctr/nn_dsp` | 8 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
+| `0x00138AAC` | `func_00138AAC` | `ctr/nn_dsp` | 8 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
+| `0x00138AB8` | `func_00138AB8` | `ctr/nn_dsp` | 148 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (6 calls) |
+| `0x00138B58` | `func_00138B58` | `ctr/nn_dsp` | 8 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
+| `0x00138B64` | `func_00138B64` | `ctr/nn_dsp` | 188 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (14 calls) |
+| `0x00138C30` | `func_00138C30` | `ctr/nn_dsp` | 480 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (14 calls) |
+| `0x00138E24` | `func_00138E24` | `ctr/nn_dsp` | 60 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00138E68` | `func_00138E68` | `ctr/nn_dsp` | 116 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x00138EE4` | `func_00138EE4` | `ctr/nn_dsp` | 80 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x00138F3C` | `func_00138F3C` | `ctr/nn_dsp` | 76 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x00138F90` | `func_00138F90` | `ctr/nn_dsp` | 84 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x00138FEC` | `func_00138FEC` | `ctr/nn_dsp` | 132 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
 | `0x0013EC38` | `func_0013EC38` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x3C panic reason 4) |
 | `0x0013EC48` | `svcBreak` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x3C) |
 | `0x0013EC50` | `func_0013EC50` | `ctr/svc` | 20 B | `1_leaf_stub` | 🟢 Matched (C/C++) | Thread yield stub via svc 0x0A (svcSleepThread(0)) |
 | `0x0013EC5C` | `func_0013EC5C` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x0A) |
 | `0x0013EC64` | `svcWaitSynchronizationN` | `ctr/svc` | 36 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x25 WaitSynchronizationN) |
 | `0x0013F29C` | `func_0013F29C` | `engine/core` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | Level-5 engine subsystem pointer getter via literal pool (0x00867DA8) |
+| `0x00151140` | `func_00151140` | `ctr/svc` | 1004 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x0015152C` | `func_0015152C` | `ctr/svc` | 252 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls, vtable) |
 | `0x00151628` | `func_00151628` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math 2D vector element-wise multiplication (VEC2Mul) |
 | `0x00151644` | `func_00151644` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math 2D vector element-wise addition (VEC2Add) |
+| `0x00151660` | `func_00151660` | `ctr/svc` | 8 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
+| `0x00151668` | `func_00151668` | `ctr/svc` | 88 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x001516C0` | `func_001516C0` | `ctr/svc` | 20 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x001516D4` | `func_001516D4` | `ctr/svc` | 136 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x00151790` | `func_00151790` | `ctr/svc` | 140 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x0015181C` | `func_0015181C` | `ctr/svc` | 52 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00151850` | `func_00151850` | `ctr/svc` | 20 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00151864` | `func_00151864` | `ctr/svc` | 88 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x00151914` | `func_00151914` | `ctr/svc` | 60 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00151950` | `func_00151950` | `ctr/svc` | 56 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00151988` | `func_00151988` | `ctr/svc` | 44 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00151A00` | `func_00151A00` | `ctr/svc` | 184 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x00151AB8` | `func_00151AB8` | `ctr/svc` | 80 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x00151B08` | `func_00151B08` | `ctr/svc` | 52 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00151B3C` | `func_00151B3C` | `ctr/svc` | 68 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
+| `0x00151B80` | `func_00151B80` | `ctr/svc` | 20 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00151B94` | `func_00151B94` | `ctr/svc` | 56 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x00151CA8` | `func_00151CA8` | `ctr/svc` | 20 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00151CBC` | `func_00151CBC` | `ctr/svc` | 72 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
 | `0x00151D04` | `func_00151D04` | `ctr/nn_math` | 32 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math 2D vector linear interpolation (VEC2Lerp) |
 | `0x00151D24` | `func_00151D24` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math::ARMv6::VEC3AddAsm vector-vector addition |
 | `0x00151D40` | `func_00151D40` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math::ARMv6::VEC3SubAsm vector-vector subtraction |
@@ -176,10 +485,32 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x00151F20` | `func_00151F20` | `ctr/nn_math` | 48 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math 4D vector linear interpolation (VEC4Lerp) |
 | `0x00151F50` | `func_00151F50` | `ctr/nn_math` | 80 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math Quaternion Hamilton multiplication (QUATMul) |
 | `0x00151FA0` | `svcCreateAddressArbiter` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x17) |
+| `0x00151FB8` | `func_00151FB8` | `ctr/svc` | 4 B | `1_trivial` | ⚪ ASM Stub (Verified) | Constant return stub or leaf identity |
 | `0x00151FBC` | `svcSleepThread` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x28) |
 | `0x00151FC4` | `svcGetThreadId` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x37) |
+| `0x00151FE0` | `func_00151FE0` | `ctr/svc` | 80 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00152104` | `func_00152104` | `ctr/svc` | 116 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm with loop |
+| `0x001521B0` | `func_001521B0` | `ctr/svc` | 384 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (20 calls) |
+| `0x00152330` | `func_00152330` | `ctr/svc` | 1044 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm with loop |
+| `0x00152748` | `func_00152748` | `ctr/svc` | 68 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x0015278C` | `func_0015278C` | `ctr/svc` | 24 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Local arithmetic/bitwise computation |
+| `0x001527A4` | `func_001527A4` | `ctr/svc` | 428 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00152950` | `func_00152950` | `ctr/svc` | 292 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (6 calls) |
+| `0x00152A74` | `func_00152A74` | `ctr/svc` | 172 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00152B24` | `func_00152B24` | `ctr/svc` | 172 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
+| `0x00152BD4` | `func_00152BD4` | `ctr/svc` | 168 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm with loop |
+| `0x00152C7C` | `func_00152C7C` | `ctr/svc` | 204 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
+| `0x00152C98` | `func_00152C98` | `ctr/svc` | 16 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00152CAC` | `func_00152CAC` | `ctr/svc` | 1468 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (29 calls, vtable) |
+| `0x00152E2C` | `func_00152E2C` | `ctr/svc` | 20 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00152E44` | `func_00152E44` | `ctr/svc` | 12 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00152E50` | `func_00152E50` | `ctr/svc` | 20 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00152E68` | `func_00152E68` | `ctr/svc` | 20 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
+| `0x00152E98` | `func_00152E98` | `ctr/svc` | 336 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (13 calls, vtable) |
+| `0x0015BD4C` | `func_0015BD4C` | `ctr/svc` | 20 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Single field getter/setter or global read |
 | `0x00166948` | `svcArbitrateAddress` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x22 ArbitrateAddress) |
 | `0x00171C78` | `func_00171C78` | `game/core` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | Game subsystem global pointer getter via literal pool (0x0091B7B8) |
+| `0x00175574` | `func_00175574` | `ctr/svc` | 32 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
 | `0x0017656C` | `func_0017656C` | `game/core` | 4 B | `1_leaf_stub` | 🟢 Matched (C/C++) | Game subsystem leaf empty void stub function (bx lr) |
 | `0x0018A714` | `svcCloseHandle` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x23) |
 | `0x0018A71C` | `func_0018A71C` | `ctr/svc` | 28 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x1E CreateMemoryBlock) |
@@ -188,11 +519,13 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x0018A768` | `svcGetHandleInfo` | `ctr/svc` | 28 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x29 GetHandleInfo) |
 | `0x0018A784` | `svcControlMemory` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x0B) |
 | `0x0018A868` | `svcWaitSynchronization1` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x24) |
+| `0x002C0DD4` | `func_002C0DD4` | `ctr/svc` | 36 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | CTR kernel syscall wrapper |
 | `0x00301248` | `func_00301248` | `ctr/nn_nex` | 4 B | `1_leaf_stub` | 🟢 Matched (C/C++) | nn::nex leaf empty void stub function (bx lr) |
 | `0x0031F1E8` | `_ZN2nn3nex7qResultaSERKS1_` | `ctr/nn_nex` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | nn::nex::qResult::operator=(const qResult&) |
 | `0x0031F1F4` | `_ZN2nn3nex7qResultC1Ev` | `ctr/nn_nex` | 16 B | `2_accessor` | 🟢 Match (Community Accepted) | nn::nex::qResult::qResult() |
 | `0x0031F204` | `_ZN2nn3nex7qResultC1ERKS1_` | `ctr/nn_nex` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | nn::nex::qResult::qResult(const qResult&) |
 | `0x0031F210` | `_ZNK2nn3nex7qResult8getValueEv` | `ctr/nn_nex` | 16 B | `2_accessor` | 🟢 Matched (C/C++) | nn::nex::qResult::getValue() const |
+| `0x0033B508` | `func_0033B508` | `ctr/svc` | 28 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | CTR kernel syscall wrapper |
 | `0x00340CE8` | `_ZN2nn3nex10NexElementaSERKS1_` | `ctr/nn_nex` | 20 B | `2_accessor` | 🟢 Matched (C/C++) | nn::nex::NexElement::operator=(const NexElement&) |
 | `0x00340CFC` | `_ZN2nn3nex10NexElementC1Eis` | `ctr/nn_nex` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | nn::nex::NexElement::NexElement(s32, s16) |
 | `0x00340D08` | `_ZN2nn3nex10NexElementC1Ev` | `ctr/nn_nex` | 16 B | `2_accessor` | 🟢 Matched (C/C++) | nn::nex::NexElement::NexElement() |
@@ -203,6 +536,7 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x00340EB8` | `_ZN2nn3nex21StationConnectionInfo10setElementERKNS0_10NexElementE` | `ctr/nn_nex` | 20 B | `2_accessor` | 🟢 Matched (C/C++) | nn::nex::StationConnectionInfo::setElement(const NexElement&) |
 | `0x00340ECC` | `_ZN2nn3nex21StationConnectionInfo5resetEv` | `ctr/nn_nex` | 20 B | `2_accessor` | 🟢 Matched (C/C++) | nn::nex::StationConnectionInfo::reset() |
 | `0x00340EE8` | `_ZNK2nn3nex21StationConnectionInfo7compareERKS1_` | `ctr/nn_nex` | 136 B | `3_control_flow` | ⏳ Staged | nn::nex::StationConnectionInfo::compare(const StationConnectionInfo&) const |
+| `0x005EE674` | `func_005EE674` | `ctr/svc` | 32 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Single function call wrapper / thunk |
 | `0x005F015C` | `func_005F015C` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x28 GetSystemTick to pointer) |
 
 <!-- MANIFEST_TABLE_END -->
