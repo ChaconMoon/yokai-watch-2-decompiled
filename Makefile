@@ -95,6 +95,7 @@ dump:
 build/src/ctr/nn/os/func_00104D18.o: CFLAGS += -ffixed-r3 -ffixed-r2
 build/src/ctr/nn/os/func_001063F4.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
 build/src/ctr/nn/os/func_0010678C.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
+build/src/ctr/nn/os/func_0012788C.o: CFLAGS += -ffixed-r3 -ffixed-r2
 build/src/ctr/nn/ndm/func_001280A8.o: CFLAGS += -ffixed-r3
 
 WIBO     := tools/wibo

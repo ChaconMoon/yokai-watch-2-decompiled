@@ -13,7 +13,9 @@ extern "C"
          * ======================================================================== */
 
         extern s32 unk_00865F10;
+        extern s32 unk_00865F18;
 
+        void *func_00127EE0(void);
         void *func_00127EEC(void);
 
         typedef struct NdmElement8
