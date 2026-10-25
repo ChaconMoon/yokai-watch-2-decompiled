@@ -347,7 +347,8 @@ src/
 ├── engine/      Layer 2: Level-5 Engine (lfw/, lxp/, gds/, core/)
 └── game/        Layer 3: Yo-kai Watch 2 Game Logic (loops/, core/)
 include/
-├── ctr/         CTR-SDK headers (svc.h, os.h)
+├── nn/          Nintendo CTR-SDK official headers (Result.h, Handle.h, svc/, os/, fs/, srv/, ndm/)
+├── ctr/         CTR subsystem headers (nex.h)
 ├── engine/      Level-5 Framework & engine headers (lfw.h)
 └── game/        Yo-kai Watch 2 game headers (loops.h)
 config/          ExHeader memory map (memory_map.json), manifests (functions.csv, functions_classified.csv)
@@ -400,9 +401,11 @@ A green `>>> MATCH <<<` means your C reproduces the original binary exactly, ins
 
 ---
 
-## Credits
+## Credits & External References
 
 - **Level-5 Inc.**: Developers of *Yo-kai Watch 2*.
+- **[3dsdecomp/nnsdk](https://github.com/3dsdecomp/nnsdk)**: Community reverse-engineering and matching decompilation of the Nintendo 3DS SDK (`nnsdk`), providing the official `nn::` namespace definitions (`nn::Result`, `nn::Handle`, `nn::os`, `nn::svc`, `nn::fs`, `nn::srv`, `nn::ndm`) integrated in `include/nn/`.
+- **[devkitPro / libctru](https://github.com/devkitPro/libctru)**: Open-source Nintendo 3DS user-space library and hardware service reference documentation.
 - **Yokimitsuro ([khdays-decomp](https://github.com/Yokimitsuro/khdays-decomp))**: Decompilation guidance, repository design, and the progress reporting methodology that inspired this structure.
 - **Jack Price-Burns ([Decomp Academy](https://decomp-academy.dev/))**: Interactive matching decompilation foundations.
 - **[pyctr](https://github.com/ihaveamac/pyctr)**: 3DS container parsing and LZSS decompression tooling.
