@@ -43,13 +43,13 @@ Progress is split into categories so that assembly is never counted as C decompi
 
 | Category | Count | Meaning |
 | :--- | :---: | :--- |
-| **Real C-decompiled matched functions** | **55** / 18,225 (0.30%) | Functions implemented in C and verified byte-exact |
-| **Complete functions (C + verified original library assembly)** | **56** / 18,225 (0.31%) | Real C (55) + CRT/SDK assembly routines (1: `clear_bss`, etc.) |
-| **Real C-decompiled matched bytes** | **824** / 6,238,892 bytes (0.0132%) | Real-C-only byte progress (860 B including CRT assembly) |
-| **Layer 1: Nintendo CTR-SDK & Runtime (`src/ctr/`)** | **45** matched (736 B) | CRT startup, `svc` syscalls, `nn::os`, `nn::ndm`, `nn::nex` |
+| **Real C-decompiled matched functions** | **62** / 18,225 (0.34%) | Functions implemented in C and verified byte-exact |
+| **Complete functions (C + verified original library assembly)** | **63** / 18,225 (0.35%) | Real C (62) + CRT/SDK assembly routines (1: `clear_bss`, etc.) |
+| **Real C-decompiled matched bytes** | **1040** / 6,238,892 bytes (0.0167%) | Real-C-only byte progress (1076 B including CRT assembly) |
+| **Layer 1: Nintendo CTR-SDK & Runtime (`src/ctr/`)** | **52** matched (952 B) | CRT startup, `svc` syscalls, `nn::os`, `nn::ndm`, `nn::nex` |
 | **Layer 2: Level-5 Engine (`src/engine/`)** | **7** matched (72 B) | `lfw` (Framework), `lxp` (Cross-Platform), `gds` (Scripts) |
 | **Layer 3: Yo-kai Watch 2 Game (`src/game/`)** | **4** matched (52 B) | `ywCLoop*` states, battle, RPG, menus, and entities |
-| **Named / mapped candidates in manifest** | **60** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
+| **Named / mapped candidates in manifest** | **67** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
 | **Memory Map (`.text` / `.rodata` / `.data` / `.bss`)** | Verified | Exact ExHeader boundaries mapped in `config/memory_map.json` |
 | **Total `.text` functions** | 18,225 | Verified function count in `0x00100000`–`0x006F32AC` (EU v1.0) |
 | **Region** | EU (`00040000001B2900`) | Multi-5 (PAL v1.0, `CTR-P-BYPP`) |
@@ -77,6 +77,7 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x00104D18` | `func_00104D18` | `ctr/nn_os` | 16 B | `2_accessor` | 🟢 Matched | nn::os startup global 8-bit flag setter (0x00814E54) |
 | `0x001063F4` | `func_001063F4` | `ctr/nn_os` | 16 B | `2_accessor` | 🟢 Matched | CTR OS SystemConfig block field reader (0x1FF80000 + 0x40) |
 | `0x0010678C` | `func_0010678C` | `ctr/nn_os` | 16 B | `2_accessor` | 🟢 Matched | nn::os startup global signed byte reader via literal pool (0x00814E00) |
+| `0x0010AA84` | `func_0010AA84` | `ctr/svc` | 36 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x01 ControlMemory) |
 | `0x0010AAA8` | `svcCreateEvent` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x21) |
 | `0x0010AAC0` | `svcDuplicateHandle` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x38) |
 | `0x0010B6D0` | `func_0010B6D0` | `engine/lfw` | 8 B | `1_leaf_stub` | 🟢 Matched | lfwCLoopEmpty virtual method (returns constant 0, table 0x00107488) |
@@ -87,6 +88,7 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x00112D8C` | `func_00112D8C` | `ctr/nn_y2r` | 20 B | `6_moderate_caller` | 🟢 Matched | Method chaining wrapper invoking func_0014A06C |
 | `0x00112E60` | `func_00112E60` | `ctr/nn_y2r` | 16 B | `2_accessor` | 🟢 Matched | Y2R struct offset 8648 u16 reader |
 | `0x00112FF0` | `svcCreateTimer` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x2D) |
+| `0x00113008` | `func_00113008` | `ctr/svc` | 36 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x08 CreateThread) |
 | `0x001137C0` | `func_001137C0` | `ctr/nn_y2r` | 20 B | `6_moderate_caller` | 🟢 Matched | Helper invoking func_00136154(&unk_0086A0A4) |
 | `0x00113F58` | `func_00113F58` | `ctr/nn_y2r` | 20 B | `2_accessor` | 🟢 Matched | Y2R global bit 3 flag getter via literal pool (0x008661EC) |
 | `0x00113F70` | `func_00113F70` | `ctr/nn_y2r` | 12 B | `2_accessor` | 🟢 Matched | Y2R global float field getter via literal pool (0x00815090) |
@@ -97,6 +99,7 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x00127EE0` | `func_00127EE0` | `ctr/nn_ndm` | 12 B | `2_accessor` | 🟢 Matched | nn::ndm global state offset reader via literal pool (0x00865F18) |
 | `0x00127EEC` | `func_00127EEC` | `ctr/nn_ndm` | 12 B | `2_accessor` | 🟢 Matched | nn::ndm global state pointer getter via literal pool (0x00865F10) |
 | `0x001280A8` | `func_001280A8` | `ctr/nn_ndm` | 24 B | `3_arithmetic_logic` | 🟢 Matched | nn::ndm bounds-checked struct array element indexer (stride 8, offset +0x0C) |
+| `0x001284E4` | `func_001284E4` | `ctr/nn_applet` | 28 B | `2_accessor` | 🟢 Matched | nn::applet::CTR::IsApplication attribute check via literal pool (0x00814E00) |
 | `0x0012CB00` | `func_0012CB00` | `engine/lxp` | 12 B | `2_accessor` | 🟢 Matched | Level-5 engine global singleton getter via literal pool (0x00868A9C) |
 | `0x0012F190` | `svcExitThread` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x09) |
 | `0x0012F198` | `svcCreateResourceLimit` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x35) |
@@ -106,15 +109,19 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x0013EC48` | `svcBreak` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x3C) |
 | `0x0013EC50` | `func_0013EC50` | `ctr/svc` | 20 B | `1_leaf_stub` | 🟢 Matched | Thread yield stub via svc 0x0A (svcSleepThread(0)) |
 | `0x0013EC5C` | `func_0013EC5C` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x0A) |
+| `0x0013EC64` | `svcWaitSynchronizationN` | `ctr/svc` | 36 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x25 WaitSynchronizationN) |
 | `0x0013F29C` | `func_0013F29C` | `engine/core` | 12 B | `2_accessor` | 🟢 Matched | Level-5 engine subsystem pointer getter via literal pool (0x00867DA8) |
 | `0x00151FA0` | `svcCreateAddressArbiter` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x17) |
 | `0x00151FBC` | `svcSleepThread` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x28) |
 | `0x00151FC4` | `svcGetThreadId` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x37) |
+| `0x00166948` | `svcArbitrateAddress` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x22 ArbitrateAddress) |
 | `0x00171C78` | `func_00171C78` | `game/core` | 12 B | `2_accessor` | 🟢 Matched | Game subsystem global pointer getter via literal pool (0x0091B7B8) |
 | `0x0017656C` | `func_0017656C` | `game/core` | 4 B | `1_leaf_stub` | 🟢 Matched | Game subsystem leaf empty void stub function (bx lr) |
 | `0x0018A714` | `svcCloseHandle` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x23) |
+| `0x0018A71C` | `func_0018A71C` | `ctr/svc` | 28 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x1E CreateMemoryBlock) |
 | `0x0018A738` | `svcCreateMemoryBlock` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x13) |
 | `0x0018A750` | `svcCreateThread` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x27) |
+| `0x0018A768` | `svcGetHandleInfo` | `ctr/svc` | 28 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x29 GetHandleInfo) |
 | `0x0018A784` | `svcControlMemory` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x0B) |
 | `0x0018A868` | `svcWaitSynchronization1` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x24) |
 | `0x00301248` | `func_00301248` | `ctr/nn_nex` | 4 B | `1_leaf_stub` | 🟢 Matched | nn::nex leaf empty void stub function (bx lr) |

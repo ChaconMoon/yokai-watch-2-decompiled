@@ -111,6 +111,23 @@
       }
     },
     {
+      "name": "ctr/svc/func_0010AA84",
+      "target_path": "expected/func_0010AA84.o",
+      "base_path": "build/src/ctr/svc/func_0010AA84.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/svc/func_0010AA84.c",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
       "name": "ctr/svc/svcCreateEvent",
       "target_path": "expected/svcCreateEvent.o",
       "base_path": "build/src/ctr/svc/svcCreateEvent.o",
@@ -253,6 +270,23 @@
       "metadata": {
         "complete": true,
         "source_path": "src/ctr/svc/svcCreateTimer.c",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/svc/func_00113008",
+      "target_path": "expected/func_00113008.o",
+      "base_path": "build/src/ctr/svc/func_00113008.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/svc/func_00113008.c",
         "progress_categories": [
           "ctr"
         ]
@@ -417,6 +451,23 @@
       }
     },
     {
+      "name": "ctr/nn_applet/func_001284E4",
+      "target_path": "expected/func_001284E4.o",
+      "base_path": "build/src/ctr/nn/applet/func_001284E4.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/applet/func_001284E4.c",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
       "name": "engine/lxp/func_0012CB00",
       "target_path": "expected/func_0012CB00.o",
       "base_path": "build/src/engine/lxp/func_0012CB00.o",
@@ -570,6 +621,23 @@
       }
     },
     {
+      "name": "ctr/svc/svcWaitSynchronizationN",
+      "target_path": "expected/svcWaitSynchronizationN.o",
+      "base_path": "build/src/ctr/svc/svcWaitSynchronizationN.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/svc/svcWaitSynchronizationN.c",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
       "name": "engine/core/func_0013F29C",
       "target_path": "expected/func_0013F29C.o",
       "base_path": "build/src/engine/core/func_0013F29C.o",
@@ -638,6 +706,23 @@
       }
     },
     {
+      "name": "ctr/svc/svcArbitrateAddress",
+      "target_path": "expected/svcArbitrateAddress.o",
+      "base_path": "build/src/ctr/svc/svcArbitrateAddress.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/svc/svcArbitrateAddress.c",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
       "name": "game/core/func_00171C78",
       "target_path": "expected/func_00171C78.o",
       "base_path": "build/src/game/core/func_00171C78.o",
@@ -689,6 +774,23 @@
       }
     },
     {
+      "name": "ctr/svc/func_0018A71C",
+      "target_path": "expected/func_0018A71C.o",
+      "base_path": "build/src/ctr/svc/func_0018A71C.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/svc/func_0018A71C.c",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
       "name": "ctr/svc/svcCreateMemoryBlock",
       "target_path": "expected/svcCreateMemoryBlock.o",
       "base_path": "build/src/ctr/svc/svcCreateMemoryBlock.o",
@@ -712,6 +814,23 @@
       "metadata": {
         "complete": true,
         "source_path": "src/ctr/svc/svcCreateThread.c",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/svc/svcGetHandleInfo",
+      "target_path": "expected/svcGetHandleInfo.o",
+      "base_path": "build/src/ctr/svc/svcGetHandleInfo.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/svc/svcGetHandleInfo.c",
         "progress_categories": [
           "ctr"
         ]

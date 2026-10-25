@@ -1,61 +1,68 @@
 address,symbol,size,layer,subsystem,level,status,description
-0x00100024,clear_bss,36,ctr,crt,2_control_flow,matched,"CRT startup zeroing loop for .bss section (0x00860934 - 0x0091B9BC)"
-0x00104778,svcExitProcess,8,ctr,svc,1_leaf_stub,matched,"CTR kernel syscall wrapper stub (svc 0x03)"
-0x00104D18,func_00104D18,16,ctr,nn_os,2_accessor,matched,"nn::os startup global 8-bit flag setter (0x00814E54)"
-0x001063F4,func_001063F4,16,ctr,nn_os,2_accessor,matched,"CTR OS SystemConfig block field reader (0x1FF80000 + 0x40)"
-0x0010678C,func_0010678C,16,ctr,nn_os,2_accessor,matched,"nn::os startup global signed byte reader via literal pool (0x00814E00)"
-0x0010AAA8,svcCreateEvent,24,ctr,svc,1_leaf_stub,matched,"CTR kernel syscall wrapper stub (svc 0x21)"
-0x0010AAC0,svcDuplicateHandle,24,ctr,svc,1_leaf_stub,matched,"CTR kernel syscall wrapper stub (svc 0x38)"
+0x00100024,clear_bss,36,ctr,crt,2_control_flow,matched,CRT startup zeroing loop for .bss section (0x00860934 - 0x0091B9BC)
+0x00104778,svcExitProcess,8,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x03)
+0x00104D18,func_00104D18,16,ctr,nn_os,2_accessor,matched,nn::os startup global 8-bit flag setter (0x00814E54)
+0x001063F4,func_001063F4,16,ctr,nn_os,2_accessor,matched,CTR OS SystemConfig block field reader (0x1FF80000 + 0x40)
+0x0010678C,func_0010678C,16,ctr,nn_os,2_accessor,matched,nn::os startup global signed byte reader via literal pool (0x00814E00)
+0x0010AA84,func_0010AA84,36,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x01 ControlMemory)
+0x0010AAA8,svcCreateEvent,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x21)
+0x0010AAC0,svcDuplicateHandle,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x38)
 0x0010B6D0,func_0010B6D0,8,engine,lfw,1_leaf_stub,matched,"lfwCLoopEmpty virtual method (returns constant 0, table 0x00107488)"
-0x0010B6D8,func_0010B6D8,12,engine,lfw,2_accessor,matched,"lfwCLoopEmpty::GetClassName getter via literal pool (0x008602F8)"
+0x0010B6D8,func_0010B6D8,12,engine,lfw,2_accessor,matched,lfwCLoopEmpty::GetClassName getter via literal pool (0x008602F8)
 0x0010B6E4,func_0010B6E4,280,engine,lfw,4_cpp_vtable,wip,"lfwCLoop C++ class method (partially decompiled, ~82% match in decomp.me)"
-0x0010C894,func_0010C894,12,game,loops,2_accessor,matched,"Game loop subsystem pointer getter via literal pool (0x0086C8CC)"
+0x0010C894,func_0010C894,12,game,loops,2_accessor,matched,Game loop subsystem pointer getter via literal pool (0x0086C8CC)
 0x0011054C,func_0011054C,24,game,loops,3_arithmetic_logic,matched,"Struct header reset (zeros 8 bytes, sets byte 0 to 0xFF)"
-0x00112D8C,func_00112D8C,20,ctr,nn_y2r,6_moderate_caller,matched,"Method chaining wrapper invoking func_0014A06C"
-0x00112E60,func_00112E60,16,ctr,nn_y2r,2_accessor,matched,"Y2R struct offset 8648 u16 reader"
-0x00112FF0,svcCreateTimer,24,ctr,svc,1_leaf_stub,matched,"CTR kernel syscall wrapper stub (svc 0x2D)"
-0x001137C0,func_001137C0,20,ctr,nn_y2r,6_moderate_caller,matched,"Helper invoking func_00136154(&unk_0086A0A4)"
-0x00113F58,func_00113F58,20,ctr,nn_y2r,2_accessor,matched,"Y2R global bit 3 flag getter via literal pool (0x008661EC)"
-0x00113F70,func_00113F70,12,ctr,nn_y2r,2_accessor,matched,"Y2R global float field getter via literal pool (0x00815090)"
-0x001274A0,func_001274A0,24,ctr,nn_os,3_arithmetic_logic,wip,"nn::os atomic spinlock acquire loop (ldrex/strex synchronization)"
-0x00127520,func_00127520,12,ctr,nn_os,2_accessor,matched,"CTR-SDK .text size / limit getter via literal pool (0x005F32AC)"
-0x001275D8,func_001275D8,12,ctr,nn_os,2_accessor,matched,"CTR-SDK .text base VMA getter via literal pool (0x00100000)"
-0x0012788C,func_0012788C,16,ctr,nn_os,2_accessor,matched,"nn::os global flag setter via literal pool (0x00828EEC)"
-0x00127EE0,func_00127EE0,12,ctr,nn_ndm,2_accessor,matched,"nn::ndm global state offset reader via literal pool (0x00865F18)"
-0x00127EEC,func_00127EEC,12,ctr,nn_ndm,2_accessor,matched,"nn::ndm global state pointer getter via literal pool (0x00865F10)"
+0x00112D8C,func_00112D8C,20,ctr,nn_y2r,6_moderate_caller,matched,Method chaining wrapper invoking func_0014A06C
+0x00112E60,func_00112E60,16,ctr,nn_y2r,2_accessor,matched,Y2R struct offset 8648 u16 reader
+0x00112FF0,svcCreateTimer,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x2D)
+0x00113008,func_00113008,36,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x08 CreateThread)
+0x001137C0,func_001137C0,20,ctr,nn_y2r,6_moderate_caller,matched,Helper invoking func_00136154(&unk_0086A0A4)
+0x00113F58,func_00113F58,20,ctr,nn_y2r,2_accessor,matched,Y2R global bit 3 flag getter via literal pool (0x008661EC)
+0x00113F70,func_00113F70,12,ctr,nn_y2r,2_accessor,matched,Y2R global float field getter via literal pool (0x00815090)
+0x001274A0,func_001274A0,24,ctr,nn_os,3_arithmetic_logic,wip,nn::os atomic spinlock acquire loop (ldrex/strex synchronization)
+0x00127520,func_00127520,12,ctr,nn_os,2_accessor,matched,CTR-SDK .text size / limit getter via literal pool (0x005F32AC)
+0x001275D8,func_001275D8,12,ctr,nn_os,2_accessor,matched,CTR-SDK .text base VMA getter via literal pool (0x00100000)
+0x0012788C,func_0012788C,16,ctr,nn_os,2_accessor,matched,nn::os global flag setter via literal pool (0x00828EEC)
+0x00127EE0,func_00127EE0,12,ctr,nn_ndm,2_accessor,matched,nn::ndm global state offset reader via literal pool (0x00865F18)
+0x00127EEC,func_00127EEC,12,ctr,nn_ndm,2_accessor,matched,nn::ndm global state pointer getter via literal pool (0x00865F10)
 0x001280A8,func_001280A8,24,ctr,nn_ndm,3_arithmetic_logic,matched,"nn::ndm bounds-checked struct array element indexer (stride 8, offset +0x0C)"
-0x0012CB00,func_0012CB00,12,engine,lxp,2_accessor,matched,"Level-5 engine global singleton getter via literal pool (0x00868A9C)"
-0x0012F190,svcExitThread,8,ctr,svc,1_leaf_stub,matched,"CTR kernel syscall wrapper stub (svc 0x09)"
-0x0012F198,svcCreateResourceLimit,24,ctr,svc,1_leaf_stub,matched,"CTR kernel syscall wrapper stub (svc 0x35)"
-0x0012FEC0,func_0012FEC0,8,engine,lxp,1_leaf_stub,matched,"lxpCMemory boolean true stub (returns constant 1)"
-0x00130018,func_00130018,8,engine,lxp,1_leaf_stub,matched,"lxpCMemory virtual boolean true stub (returns constant 1)"
-0x001300B0,func_001300B0,12,engine,lxp,2_accessor,matched,"lxpCMemory manager pointer getter via literal pool (0x00868F10)"
-0x0013EC48,svcBreak,8,ctr,svc,1_leaf_stub,matched,"CTR kernel syscall wrapper stub (svc 0x3C)"
-0x0013EC50,func_0013EC50,20,ctr,svc,1_leaf_stub,matched,"Thread yield stub via svc 0x0A (svcSleepThread(0))"
-0x0013EC5C,func_0013EC5C,8,ctr,svc,1_leaf_stub,matched,"CTR kernel syscall wrapper stub (svc 0x0A)"
-0x0013F29C,func_0013F29C,12,engine,core,2_accessor,matched,"Level-5 engine subsystem pointer getter via literal pool (0x00867DA8)"
-0x00151FA0,svcCreateAddressArbiter,24,ctr,svc,1_leaf_stub,matched,"CTR kernel syscall wrapper stub (svc 0x17)"
-0x00151FBC,svcSleepThread,8,ctr,svc,1_leaf_stub,matched,"CTR kernel syscall wrapper stub (svc 0x28)"
-0x00151FC4,svcGetThreadId,24,ctr,svc,1_leaf_stub,matched,"CTR kernel syscall wrapper stub (svc 0x37)"
-0x00171C78,func_00171C78,12,game,core,2_accessor,matched,"Game subsystem global pointer getter via literal pool (0x0091B7B8)"
-0x0017656C,func_0017656C,4,game,core,1_leaf_stub,matched,"Game subsystem leaf empty void stub function (bx lr)"
-0x0018A714,svcCloseHandle,8,ctr,svc,1_leaf_stub,matched,"CTR kernel syscall wrapper stub (svc 0x23)"
-0x0018A738,svcCreateMemoryBlock,24,ctr,svc,1_leaf_stub,matched,"CTR kernel syscall wrapper stub (svc 0x13)"
-0x0018A750,svcCreateThread,24,ctr,svc,1_leaf_stub,matched,"CTR kernel syscall wrapper stub (svc 0x27)"
-0x0018A784,svcControlMemory,24,ctr,svc,1_leaf_stub,matched,"CTR kernel syscall wrapper stub (svc 0x0B)"
-0x0018A868,svcWaitSynchronization1,8,ctr,svc,1_leaf_stub,matched,"CTR kernel syscall wrapper stub (svc 0x24)"
-0x00301248,func_00301248,4,ctr,nn_nex,1_leaf_stub,matched,"nn::nex leaf empty void stub function (bx lr)"
-0x0031F1E8,_ZN2nn3nex7qResultaSERKS1_,12,ctr,nn_nex,2_accessor,matched,"nn::nex::qResult::operator=(const qResult&)"
-0x0031F1F4,_ZN2nn3nex7qResultC1Ev,16,ctr,nn_nex,2_accessor,community_matched,"nn::nex::qResult::qResult()"
-0x0031F204,_ZN2nn3nex7qResultC1ERKS1_,12,ctr,nn_nex,2_accessor,matched,"nn::nex::qResult::qResult(const qResult&)"
-0x0031F210,_ZNK2nn3nex7qResult8getValueEv,16,ctr,nn_nex,2_accessor,matched,"nn::nex::qResult::getValue() const"
-0x00340CE8,_ZN2nn3nex10NexElementaSERKS1_,20,ctr,nn_nex,2_accessor,matched,"nn::nex::NexElement::operator=(const NexElement&)"
+0x001284E4,func_001284E4,28,ctr,nn_applet,2_accessor,matched,nn::applet::CTR::IsApplication attribute check via literal pool (0x00814E00)
+0x0012CB00,func_0012CB00,12,engine,lxp,2_accessor,matched,Level-5 engine global singleton getter via literal pool (0x00868A9C)
+0x0012F190,svcExitThread,8,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x09)
+0x0012F198,svcCreateResourceLimit,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x35)
+0x0012FEC0,func_0012FEC0,8,engine,lxp,1_leaf_stub,matched,lxpCMemory boolean true stub (returns constant 1)
+0x00130018,func_00130018,8,engine,lxp,1_leaf_stub,matched,lxpCMemory virtual boolean true stub (returns constant 1)
+0x001300B0,func_001300B0,12,engine,lxp,2_accessor,matched,lxpCMemory manager pointer getter via literal pool (0x00868F10)
+0x0013EC48,svcBreak,8,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x3C)
+0x0013EC50,func_0013EC50,20,ctr,svc,1_leaf_stub,matched,Thread yield stub via svc 0x0A (svcSleepThread(0))
+0x0013EC5C,func_0013EC5C,8,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x0A)
+0x0013EC64,svcWaitSynchronizationN,36,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x25 WaitSynchronizationN)
+0x0013F29C,func_0013F29C,12,engine,core,2_accessor,matched,Level-5 engine subsystem pointer getter via literal pool (0x00867DA8)
+0x00151FA0,svcCreateAddressArbiter,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x17)
+0x00151FBC,svcSleepThread,8,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x28)
+0x00151FC4,svcGetThreadId,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x37)
+0x00166948,svcArbitrateAddress,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x22 ArbitrateAddress)
+0x00171C78,func_00171C78,12,game,core,2_accessor,matched,Game subsystem global pointer getter via literal pool (0x0091B7B8)
+0x0017656C,func_0017656C,4,game,core,1_leaf_stub,matched,Game subsystem leaf empty void stub function (bx lr)
+0x0018A714,svcCloseHandle,8,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x23)
+0x0018A71C,func_0018A71C,28,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x1E CreateMemoryBlock)
+0x0018A738,svcCreateMemoryBlock,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x13)
+0x0018A750,svcCreateThread,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x27)
+0x0018A768,svcGetHandleInfo,28,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x29 GetHandleInfo)
+0x0018A784,svcControlMemory,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x0B)
+0x0018A868,svcWaitSynchronization1,8,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x24)
+0x00301248,func_00301248,4,ctr,nn_nex,1_leaf_stub,matched,nn::nex leaf empty void stub function (bx lr)
+0x0031F1E8,_ZN2nn3nex7qResultaSERKS1_,12,ctr,nn_nex,2_accessor,matched,nn::nex::qResult::operator=(const qResult&)
+0x0031F1F4,_ZN2nn3nex7qResultC1Ev,16,ctr,nn_nex,2_accessor,community_matched,nn::nex::qResult::qResult()
+0x0031F204,_ZN2nn3nex7qResultC1ERKS1_,12,ctr,nn_nex,2_accessor,matched,nn::nex::qResult::qResult(const qResult&)
+0x0031F210,_ZNK2nn3nex7qResult8getValueEv,16,ctr,nn_nex,2_accessor,matched,nn::nex::qResult::getValue() const
+0x00340CE8,_ZN2nn3nex10NexElementaSERKS1_,20,ctr,nn_nex,2_accessor,matched,nn::nex::NexElement::operator=(const NexElement&)
 0x00340CFC,_ZN2nn3nex10NexElementC1Eis,12,ctr,nn_nex,2_accessor,matched,"nn::nex::NexElement::NexElement(s32, s16)"
-0x00340D08,_ZN2nn3nex10NexElementC1Ev,16,ctr,nn_nex,2_accessor,matched,"nn::nex::NexElement::NexElement()"
-0x00340D18,_ZN2nn3nex10NexElementD1Ev,4,ctr,nn_nex,1_leaf_stub,matched,"nn::nex::NexElement::~NexElement()"
-0x00340D1C,_ZN2nn3nex10NexElementC1ERKS1_,20,ctr,nn_nex,2_accessor,matched,"nn::nex::NexElement::NexElement(const NexElement&)"
-0x00340E5C,_ZN2nn3nex21StationConnectionInfo11deserializeEPKh,72,ctr,nn_nex,3_control_flow,staged,"nn::nex::StationConnectionInfo::deserialize(const u8*)"
-0x00340EAC,_ZN2nn3nex21StationConnectionInfo7setPortEt,12,ctr,nn_nex,2_accessor,matched,"nn::nex::StationConnectionInfo::setPort(u16)"
-0x00340EB8,_ZN2nn3nex21StationConnectionInfo10setElementERKNS0_10NexElementE,20,ctr,nn_nex,2_accessor,matched,"nn::nex::StationConnectionInfo::setElement(const NexElement&)"
-0x00340ECC,_ZN2nn3nex21StationConnectionInfo5resetEv,20,ctr,nn_nex,2_accessor,matched,"nn::nex::StationConnectionInfo::reset()"
-0x00340EE8,_ZNK2nn3nex21StationConnectionInfo7compareERKS1_,136,ctr,nn_nex,3_control_flow,staged,"nn::nex::StationConnectionInfo::compare(const StationConnectionInfo&) const"
+0x00340D08,_ZN2nn3nex10NexElementC1Ev,16,ctr,nn_nex,2_accessor,matched,nn::nex::NexElement::NexElement()
+0x00340D18,_ZN2nn3nex10NexElementD1Ev,4,ctr,nn_nex,1_leaf_stub,matched,nn::nex::NexElement::~NexElement()
+0x00340D1C,_ZN2nn3nex10NexElementC1ERKS1_,20,ctr,nn_nex,2_accessor,matched,nn::nex::NexElement::NexElement(const NexElement&)
+0x00340E5C,_ZN2nn3nex21StationConnectionInfo11deserializeEPKh,72,ctr,nn_nex,3_control_flow,staged,nn::nex::StationConnectionInfo::deserialize(const u8*)
+0x00340EAC,_ZN2nn3nex21StationConnectionInfo7setPortEt,12,ctr,nn_nex,2_accessor,matched,nn::nex::StationConnectionInfo::setPort(u16)
+0x00340EB8,_ZN2nn3nex21StationConnectionInfo10setElementERKNS0_10NexElementE,20,ctr,nn_nex,2_accessor,matched,nn::nex::StationConnectionInfo::setElement(const NexElement&)
+0x00340ECC,_ZN2nn3nex21StationConnectionInfo5resetEv,20,ctr,nn_nex,2_accessor,matched,nn::nex::StationConnectionInfo::reset()
+0x00340EE8,_ZNK2nn3nex21StationConnectionInfo7compareERKS1_,136,ctr,nn_nex,3_control_flow,staged,nn::nex::StationConnectionInfo::compare(const StationConnectionInfo&) const
