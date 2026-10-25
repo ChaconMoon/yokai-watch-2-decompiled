@@ -196,7 +196,10 @@ def main():
             expected_slice = raw_bytes[raw_offset : raw_offset + size]
 
             obj_off = sym_info["offset"]
-            obj_size = sym_info["size"]
+            effective_size = max(sym_info["size"], size)
+            if obj_off + effective_size > len(text_bytes):
+                effective_size = len(text_bytes) - obj_off
+            obj_size = effective_size
             actual_slice = text_bytes[obj_off : obj_off + obj_size]
 
             comp_len = min(len(expected_slice), len(actual_slice))

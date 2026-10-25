@@ -35,6 +35,39 @@ extern "C"
                 Y2rSubContext sub;
         } Y2rObject;
 
+        typedef struct
+        {
+                u32 field_524;
+                u32 field_528;
+                u32 unk_52C;
+                u32 field_530;
+                u32 field_534;
+                u32 field_538;
+                u32 field_53C;
+                u32 field_540;
+                u32 field_544;
+                u32 field_548;
+                u32 field_54C;
+                u32 field_550;
+                u32 field_554;
+                u32 field_558;
+                u32 field_55C;
+                u32 field_560;
+                u32 field_564;
+                u32 field_568;
+                u32 field_56C;
+                u8 flag_570;
+                u8 flag_571;
+                u8 flag_572;
+                u8 flag_573;
+        } Y2rChannelState;
+
+        typedef struct
+        {
+                u8 pad[0x524];
+                Y2rChannelState state;
+        } Y2rDevice;
+
         extern Y2rContext unk_008661EC;
 
         /* Method chaining wrapper invoking func_0014A06C */
