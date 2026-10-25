@@ -286,7 +286,7 @@
       "base_path": "build/src/ctr/nn/y2r/func_00112AA8.o",
       "metadata": {
         "complete": true,
-        "source_path": "src/ctr/nn/y2r/func_00112AA8.s",
+        "source_path": "src/ctr/nn/y2r/func_00112AA8.c",
         "progress_categories": [
           "ctr"
         ]
@@ -456,7 +456,7 @@
       "base_path": "build/src/ctr/nn/y2r/func_00112EC8.o",
       "metadata": {
         "complete": true,
-        "source_path": "src/ctr/nn/y2r/func_00112EC8.s",
+        "source_path": "src/ctr/nn/y2r/func_00112EC8.c",
         "progress_categories": [
           "ctr"
         ]
@@ -473,7 +473,7 @@
       "base_path": "build/src/ctr/nn/y2r/func_00112EE4.o",
       "metadata": {
         "complete": true,
-        "source_path": "src/ctr/nn/y2r/func_00112EE4.s",
+        "source_path": "src/ctr/nn/y2r/func_00112EE4.c",
         "progress_categories": [
           "ctr"
         ]
@@ -609,7 +609,7 @@
       "base_path": "build/src/ctr/nn/y2r/func_00113700.o",
       "metadata": {
         "complete": true,
-        "source_path": "src/ctr/nn/y2r/func_00113700.s",
+        "source_path": "src/ctr/nn/y2r/func_00113700.cpp",
         "progress_categories": [
           "ctr"
         ]
@@ -711,7 +711,7 @@
       "base_path": "build/src/ctr/nn/y2r/func_001138D0.o",
       "metadata": {
         "complete": true,
-        "source_path": "src/ctr/nn/y2r/func_001138D0.s",
+        "source_path": "src/ctr/nn/y2r/func_001138D0.c",
         "progress_categories": [
           "ctr"
         ]
@@ -745,7 +745,7 @@
       "base_path": "build/src/ctr/nn/y2r/func_00113F00.o",
       "metadata": {
         "complete": true,
-        "source_path": "src/ctr/nn/y2r/func_00113F00.s",
+        "source_path": "src/ctr/nn/y2r/func_00113F00.c",
         "progress_categories": [
           "ctr"
         ]
@@ -779,7 +779,7 @@
       "base_path": "build/src/ctr/nn/y2r/func_00113F4C.o",
       "metadata": {
         "complete": true,
-        "source_path": "src/ctr/nn/y2r/func_00113F4C.s",
+        "source_path": "src/ctr/nn/y2r/func_00113F4C.c",
         "progress_categories": [
           "ctr"
         ]

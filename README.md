@@ -43,9 +43,9 @@ Progress is split into categories so that assembly is never counted as C decompi
 
 | Category | Count | Meaning |
 | :--- | :---: | :--- |
-| **Real C-decompiled matched functions** | **66** / 18,225 (0.36%) | Functions implemented in C and verified byte-exact |
-| **Complete functions (C + verified original library assembly)** | **116** / 18,225 (0.64%) | Real C (66) + CRT/SDK assembly routines (50: `clear_bss`, etc.) |
-| **Real C-decompiled matched bytes** | **1120** / 6,238,892 bytes (0.0180%) | Real-C-only byte progress (5012 B including CRT assembly) |
+| **Real C-decompiled matched functions** | **73** / 18,225 (0.40%) | Functions implemented in C and verified byte-exact |
+| **Complete functions (C + verified original library assembly)** | **116** / 18,225 (0.64%) | Real C (73) + CRT/SDK assembly routines (43: `clear_bss`, etc.) |
+| **Real C-decompiled matched bytes** | **1404** / 6,238,892 bytes (0.0225%) | Real-C-only byte progress (5012 B including CRT assembly) |
 | **Layer 1: Nintendo CTR-SDK & Runtime (`src/ctr/`)** | **105** matched (4888 B) | CRT startup, `svc` syscalls, `nn::os`, `nn::ndm`, `nn::nex` |
 | **Layer 2: Level-5 Engine (`src/engine/`)** | **7** matched (72 B) | `lfw` (Framework), `lxp` (Cross-Platform), `gds` (Scripts) |
 | **Layer 3: Yo-kai Watch 2 Game (`src/game/`)** | **4** matched (52 B) | `ywCLoop*` states, battle, RPG, menus, and entities |
