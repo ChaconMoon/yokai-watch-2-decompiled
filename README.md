@@ -43,13 +43,13 @@ Progress is split into categories so that assembly is never counted as C decompi
 
 | Category | Count | Meaning |
 | :--- | :---: | :--- |
-| **Real C-decompiled matched functions** | **65** / 18,225 (0.36%) | Functions implemented in C and verified byte-exact |
-| **Complete functions (C + verified original library assembly)** | **87** / 18,225 (0.48%) | Real C (65) + CRT/SDK assembly routines (22: `clear_bss`, etc.) |
-| **Real C-decompiled matched bytes** | **1108** / 6,238,892 bytes (0.0178%) | Real-C-only byte progress (1868 B including CRT assembly) |
-| **Layer 1: Nintendo CTR-SDK & Runtime (`src/ctr/`)** | **76** matched (1744 B) | CRT startup, `svc` syscalls, `nn::os`, `nn::ndm`, `nn::nex` |
+| **Real C-decompiled matched functions** | **66** / 18,225 (0.36%) | Functions implemented in C and verified byte-exact |
+| **Complete functions (C + verified original library assembly)** | **116** / 18,225 (0.64%) | Real C (66) + CRT/SDK assembly routines (50: `clear_bss`, etc.) |
+| **Real C-decompiled matched bytes** | **1120** / 6,238,892 bytes (0.0180%) | Real-C-only byte progress (5012 B including CRT assembly) |
+| **Layer 1: Nintendo CTR-SDK & Runtime (`src/ctr/`)** | **105** matched (4888 B) | CRT startup, `svc` syscalls, `nn::os`, `nn::ndm`, `nn::nex` |
 | **Layer 2: Level-5 Engine (`src/engine/`)** | **7** matched (72 B) | `lfw` (Framework), `lxp` (Cross-Platform), `gds` (Scripts) |
 | **Layer 3: Yo-kai Watch 2 Game (`src/game/`)** | **4** matched (52 B) | `ywCLoop*` states, battle, RPG, menus, and entities |
-| **Named / mapped candidates in manifest** | **91** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
+| **Named / mapped candidates in manifest** | **120** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
 | **Memory Map (`.text` / `.rodata` / `.data` / `.bss`)** | Verified | Exact ExHeader boundaries mapped in `config/memory_map.json` |
 | **Total `.text` functions** | 18,225 | Verified function count in `0x00100000`–`0x006F32AC` (EU v1.0) |
 | **Region** | EU (`00040000001B2900`) | Multi-5 (PAL v1.0, `CTR-P-BYPP`) |
@@ -86,13 +86,42 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x0010B6E4` | `func_0010B6E4` | `engine/lfw` | 280 B | `4_cpp_vtable` | 🟡 In Review | lfwCLoop C++ class method (partially decompiled, ~82% match in decomp.me) |
 | `0x0010C894` | `func_0010C894` | `game/loops` | 12 B | `2_accessor` | 🟢 Matched | Game loop subsystem pointer getter via literal pool (0x0086C8CC) |
 | `0x0011054C` | `func_0011054C` | `game/loops` | 24 B | `3_arithmetic_logic` | 🟢 Matched | Struct header reset (zeros 8 bytes, sets byte 0 to 0xFF) |
+| `0x001128F8` | `func_001128F8` | `ctr/nn_y2r` | 148 B | `7_complex_caller` | 🟢 Matched | Y2R virtual dispatch for image conversion parameters |
+| `0x0011298C` | `func_0011298C` | `ctr/nn_y2r` | 284 B | `7_complex_caller` | 🟢 Matched | Y2R image transformation and coordinate scaling sequence |
+| `0x00112AA8` | `func_00112AA8` | `ctr/nn_y2r` | 96 B | `4_complex_leaf` | 🟢 Matched | Y2R channel state structure field zero-initialization |
+| `0x00112B08` | `func_00112B08` | `ctr/nn_y2r` | 124 B | `7_complex_caller` | 🟢 Matched | Y2R channel cleanup reset invoking func_00113F80 and dispatch |
+| `0x00112B84` | `func_00112B84` | `ctr/nn_y2r` | 236 B | `7_complex_caller` | 🟢 Matched | Y2R format handler and .xf stream processor |
+| `0x00112CB0` | `func_00112CB0` | `ctr/nn_y2r` | 32 B | `6_moderate_caller` | 🟢 Matched | Y2R slot configuration invoking func_0014A070 |
+| `0x00112CD0` | `func_00112CD0` | `ctr/nn_y2r` | 12 B | `2_simple_accessor` | 🟢 Matched | Y2R indexed slot calculation falling through to func_00112CDC |
+| `0x00112CDC` | `func_00112CDC` | `ctr/nn_y2r` | 44 B | `6_moderate_caller` | 🟢 Matched | Y2R slot configuration type 8 with NULL check invoking func_0014A070 |
+| `0x00112D58` | `func_00112D58` | `ctr/nn_y2r` | 36 B | `6_moderate_caller` | 🟢 Matched | Y2R slot configuration type 2 invoking func_0014A070 |
 | `0x00112D8C` | `func_00112D8C` | `ctr/nn_y2r` | 20 B | `6_moderate_caller` | 🟢 Matched | Method chaining wrapper invoking func_0014A06C |
+| `0x00112DA0` | `func_00112DA0` | `ctr/nn_y2r` | 192 B | `7_complex_caller` | 🟢 Matched | Y2R image conversion context setup and dispatch |
 | `0x00112E60` | `func_00112E60` | `ctr/nn_y2r` | 16 B | `2_accessor` | 🟢 Matched | Y2R struct offset 8648 u16 reader |
+| `0x00112E70` | `func_00112E70` | `ctr/nn_y2r` | 88 B | `6_moderate_caller` | 🟢 Matched | Y2R format query and dimension retrieval invoking func_00116CB4 |
+| `0x00112EC8` | `func_00112EC8` | `ctr/nn_y2r` | 28 B | `6_moderate_caller` | 🟢 Matched | Y2R mutex lock/unlock sequence on unk_00867CF8 |
+| `0x00112EE4` | `func_00112EE4` | `ctr/nn_y2r` | 16 B | `6_moderate_caller` | 🟢 Matched | Y2R stack buffer query invoking func_002FDAC4 |
+| `0x00112F58` | `func_00112F58` | `ctr/nn_y2r` | 120 B | `7_complex_caller` | 🟢 Matched | Y2R buffer structure initialization and alignment registration |
 | `0x00112FF0` | `svcCreateTimer` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x2D) |
 | `0x00113008` | `func_00113008` | `ctr/svc` | 36 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x08 CreateThread) |
+| `0x001130CC` | `func_001130CC` | `ctr/nn_y2r` | 396 B | `7_complex_caller` | 🟢 Matched | Y2R VFP register context saving and parameter batch processing |
+| `0x00113650` | `func_00113650` | `ctr/nn_y2r` | 52 B | `3_arithmetic_logic` | 🟢 Matched | Y2R global flag 0x008150AC disable toggle |
+| `0x00113684` | `func_00113684` | `ctr/nn_y2r` | 56 B | `3_arithmetic_logic` | 🟢 Matched | Y2R global flag 0x008150AC enable toggle |
+| `0x001136BC` | `func_001136BC` | `ctr/nn_y2r` | 68 B | `6_moderate_caller` | 🟢 Matched | Y2R initialization check and configuration helper |
+| `0x00113700` | `func_00113700` | `ctr/nn_y2r` | 64 B | `7_complex_caller` | 🟢 Matched | Y2R buffer deallocation sequence on unk_00814F28 |
+| `0x00113740` | `func_00113740` | `ctr/nn_y2r` | 128 B | `7_complex_caller` | 🟢 Matched | Y2R buffer allocation and initialization on unk_00814F28 |
 | `0x001137C0` | `func_001137C0` | `ctr/nn_y2r` | 20 B | `6_moderate_caller` | 🟢 Matched | Helper invoking func_00136154(&unk_0086A0A4) |
+| `0x001137D8` | `func_001137D8` | `ctr/nn_y2r` | 48 B | `6_moderate_caller` | 🟢 Matched | Y2R buffer validation sequence with unk_0086A0A4 |
+| `0x00113808` | `func_00113808` | `ctr/nn_y2r` | 112 B | `7_complex_caller` | 🟢 Matched | Y2R state update and event clearance sequence (svc 0x19) |
+| `0x00113878` | `func_00113878` | `ctr/nn_y2r` | 88 B | `5_simple_wrapper` | 🟢 Matched | Y2R microsecond conversion and dispatch invoking func_001468F0 |
+| `0x001138D0` | `func_001138D0` | `ctr/nn_y2r` | 44 B | `7_complex_caller` | 🟢 Matched | Y2R error reporting thunk invoking func_0011F51C |
+| `0x001138FC` | `func_001138FC` | `ctr/nn_y2r` | 392 B | `7_complex_caller` | 🟢 Matched | Y2R subsystem complete deinitialization and channel shutdown sequence |
+| `0x00113F00` | `func_00113F00` | `ctr/nn_y2r` | 24 B | `7_complex_caller` | 🟢 Matched | Y2R initialization sequence invoking func_0011F46C func_0011FA98 |
+| `0x00113F18` | `func_00113F18` | `ctr/nn_y2r` | 52 B | `7_complex_caller` | 🟢 Matched | Y2R finalize sequence invoking func_0011FABC func_0011FCFC |
+| `0x00113F4C` | `func_00113F4C` | `ctr/nn_y2r` | 12 B | `7_complex_caller` | 🟢 Matched | Y2R tail-call thunk to func_0011FDAC with unk_008661EC |
 | `0x00113F58` | `func_00113F58` | `ctr/nn_y2r` | 20 B | `2_accessor` | 🟢 Matched | Y2R global bit 3 flag getter via literal pool (0x008661EC) |
 | `0x00113F70` | `func_00113F70` | `ctr/nn_y2r` | 12 B | `2_accessor` | 🟢 Matched | Y2R global float field getter via literal pool (0x00815090) |
+| `0x00113F80` | `func_00113F80` | `ctr/nn_y2r` | 152 B | `7_complex_caller` | 🟢 Matched | Y2R hardware mode dispatch and channel reset sequence |
 | `0x001274A0` | `func_001274A0` | `ctr/nn_os` | 24 B | `3_arithmetic_logic` | 🟡 In Review | nn::os atomic spinlock acquire loop (ldrex/strex synchronization) |
 | `0x00127520` | `func_00127520` | `ctr/nn_os` | 12 B | `2_accessor` | 🟢 Matched | CTR-SDK .text size / limit getter via literal pool (0x005F32AC) |
 | `0x001275D8` | `func_001275D8` | `ctr/nn_os` | 12 B | `2_accessor` | 🟢 Matched | CTR-SDK .text base VMA getter via literal pool (0x00100000) |
