@@ -49,7 +49,7 @@ Progress is split into categories so that assembly is never counted as C decompi
 | **Layer 1: Nintendo CTR-SDK & Runtime (`src/ctr/`)** | **42** matched (696 B) | CRT startup, `svc` syscalls, `nn::os`, `nn::ndm`, `nn::nex` |
 | **Layer 2: Level-5 Engine (`src/engine/`)** | **7** matched (72 B) | `lfw` (Framework), `lxp` (Cross-Platform), `gds` (Scripts) |
 | **Layer 3: Yo-kai Watch 2 Game (`src/game/`)** | **4** matched (52 B) | `ywCLoop*` states, battle, RPG, menus, and entities |
-| **Named / mapped candidates in manifest** | **55** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
+| **Named / mapped candidates in manifest** | **57** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
 | **Memory Map (`.text` / `.rodata` / `.data` / `.bss`)** | Verified | Exact ExHeader boundaries mapped in `config/memory_map.json` |
 | **Total `.text` functions** | 18,225 | Verified function count in `0x00100000`–`0x006F32AC` (EU v1.0) |
 | **Region** | EU (`00040000001B2900`) | Multi-5 (PAL v1.0, `CTR-P-BYPP`) |
@@ -124,9 +124,11 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x00340D08` | `_ZN2nn3nex10NexElementC1Ev` | `ctr/nn_nex` | 16 B | `2_accessor` | 🟢 Matched | nn::nex::NexElement::NexElement() |
 | `0x00340D18` | `_ZN2nn3nex10NexElementD1Ev` | `ctr/nn_nex` | 4 B | `1_leaf_stub` | 🟢 Matched | nn::nex::NexElement::~NexElement() |
 | `0x00340D1C` | `_ZN2nn3nex10NexElementC1ERKS1_` | `ctr/nn_nex` | 20 B | `2_accessor` | 🟢 Matched | nn::nex::NexElement::NexElement(const NexElement&) |
+| `0x00340E5C` | `_ZN2nn3nex21StationConnectionInfo11deserializeEPKh` | `ctr/nn_nex` | 72 B | `3_control_flow` | ⏳ Staged | nn::nex::StationConnectionInfo::deserialize(const u8*) |
 | `0x00340EAC` | `_ZN2nn3nex21StationConnectionInfo7setPortEt` | `ctr/nn_nex` | 12 B | `2_accessor` | 🟢 Matched | nn::nex::StationConnectionInfo::setPort(u16) |
 | `0x00340EB8` | `_ZN2nn3nex21StationConnectionInfo10setElementERKNS0_10NexElementE` | `ctr/nn_nex` | 20 B | `2_accessor` | 🟢 Matched | nn::nex::StationConnectionInfo::setElement(const NexElement&) |
 | `0x00340ECC` | `_ZN2nn3nex21StationConnectionInfo5resetEv` | `ctr/nn_nex` | 20 B | `2_accessor` | 🟢 Matched | nn::nex::StationConnectionInfo::reset() |
+| `0x00340EE8` | `_ZNK2nn3nex21StationConnectionInfo7compareERKS1_` | `ctr/nn_nex` | 136 B | `3_control_flow` | ⏳ Staged | nn::nex::StationConnectionInfo::compare(const StationConnectionInfo&) const |
 
 <!-- MANIFEST_TABLE_END -->
 

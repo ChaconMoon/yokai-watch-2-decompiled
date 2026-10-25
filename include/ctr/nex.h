@@ -70,15 +70,18 @@ namespace nn
                         // Function 00340ECC (Resest connection and sets all values at zero)
                         void reset();
 
-                        // Function 00340EAC
+                        // Function 00340EAC (set Port)
                         u32 setPort(u16 port);
 
-                        // Function 00340EB8
+                        // Function 00340EB8 (set Element of the connection)
                         u32 setElement(const NexElement &element);
 
-                        // Function 00340E5C
+                        // Function 00340E5C (deserialize object)
+                        u32 deserialize(const u8 *buf);
 
-                        // Function 00340EE8
+                        // Function 00340EE8 (Three-way comparison returning -1, 0, or 1)
+                        s32 compare(const StationConnectionInfo &other) const;
+
                 private:
                         s32 unk_00;
                         NexElement m_element;
@@ -94,8 +97,39 @@ typedef struct NexElement
         s32 unk_01;
         s16 unk_02;
 } NexElement;
+
+typedef struct ResultData
+{
+        u32 unk_01;
+        u32 unk_02;
+} ResultData;
+
+typedef struct qResult
+{
+        ResultData m_data;
+} qResult;
+
+typedef struct StationConnectionInfo
+{
+        s32 unk_00;
+        NexElement m_element;
+        u16 m_port;
+} StationConnectionInfo;
 #endif
+#ifdef __cplusplus
         void func_00301248(void);
+        s32 func_00340C9C(nn::nex::NexElement *element, const void *buf);
+        u16 func_00341368(const void *buf);
+        u32 func_00341374(const void *buf);
+        s64 func_0063A6E8(const nn::nex::NexElement *element);
+#else
+        void func_00301248(void);
+        s32 func_00340C9C(NexElement *element, const void *buf);
+        u16 func_00341368(const void *buf);
+        u32 func_00341374(const void *buf);
+        s64 func_0063A6E8(const NexElement *element);
+#endif
+
 #ifdef __cplusplus
 }
 #endif
