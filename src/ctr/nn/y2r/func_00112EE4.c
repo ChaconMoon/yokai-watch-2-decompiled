@@ -14,3 +14,4 @@ void func_00112EE4(u32 arg0)
         u32 stackVar;
         func_002FDAC4(arg0, &stackVar);
 }
+

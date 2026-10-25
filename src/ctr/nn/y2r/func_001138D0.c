@@ -17,3 +17,4 @@ void func_001138D0(void *arg0)
         u32 err = func_0011F51C(arg0);
         func_00125BF0(arg0, unk_0086A420, 1078, err);
 }
+
