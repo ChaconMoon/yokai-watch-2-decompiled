@@ -302,3 +302,4 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         targets = sys.argv[1:]
     sys.exit(extract_subsystems(targets))
+
