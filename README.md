@@ -44,12 +44,12 @@ Progress is split into categories so that assembly is never counted as C decompi
 | Category | Count | Meaning |
 | :--- | :---: | :--- |
 | **Real C-decompiled matched functions** | **65** / 18,225 (0.36%) | Functions implemented in C and verified byte-exact |
-| **Complete functions (C + verified original library assembly)** | **74** / 18,225 (0.41%) | Real C (65) + CRT/SDK assembly routines (9: `clear_bss`, etc.) |
-| **Real C-decompiled matched bytes** | **1108** / 6,238,892 bytes (0.0178%) | Real-C-only byte progress (1356 B including CRT assembly) |
-| **Layer 1: Nintendo CTR-SDK & Runtime (`src/ctr/`)** | **63** matched (1232 B) | CRT startup, `svc` syscalls, `nn::os`, `nn::ndm`, `nn::nex` |
+| **Complete functions (C + verified original library assembly)** | **87** / 18,225 (0.48%) | Real C (65) + CRT/SDK assembly routines (22: `clear_bss`, etc.) |
+| **Real C-decompiled matched bytes** | **1108** / 6,238,892 bytes (0.0178%) | Real-C-only byte progress (1868 B including CRT assembly) |
+| **Layer 1: Nintendo CTR-SDK & Runtime (`src/ctr/`)** | **76** matched (1744 B) | CRT startup, `svc` syscalls, `nn::os`, `nn::ndm`, `nn::nex` |
 | **Layer 2: Level-5 Engine (`src/engine/`)** | **7** matched (72 B) | `lfw` (Framework), `lxp` (Cross-Platform), `gds` (Scripts) |
 | **Layer 3: Yo-kai Watch 2 Game (`src/game/`)** | **4** matched (52 B) | `ywCLoop*` states, battle, RPG, menus, and entities |
-| **Named / mapped candidates in manifest** | **78** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
+| **Named / mapped candidates in manifest** | **91** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
 | **Memory Map (`.text` / `.rodata` / `.data` / `.bss`)** | Verified | Exact ExHeader boundaries mapped in `config/memory_map.json` |
 | **Total `.text` functions** | 18,225 | Verified function count in `0x00100000`–`0x006F32AC` (EU v1.0) |
 | **Region** | EU (`00040000001B2900`) | Multi-5 (PAL v1.0, `CTR-P-BYPP`) |
@@ -115,12 +115,25 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x0013F29C` | `func_0013F29C` | `engine/core` | 12 B | `2_accessor` | 🟢 Matched | Level-5 engine subsystem pointer getter via literal pool (0x00867DA8) |
 | `0x00151628` | `func_00151628` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 2D vector element-wise multiplication (VEC2Mul) |
 | `0x00151644` | `func_00151644` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 2D vector element-wise addition (VEC2Add) |
+| `0x00151D04` | `func_00151D04` | `ctr/nn_math` | 32 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 2D vector linear interpolation (VEC2Lerp) |
 | `0x00151D24` | `func_00151D24` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | 🟢 Matched | nn::math::ARMv6::VEC3AddAsm vector-vector addition |
 | `0x00151D40` | `func_00151D40` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | 🟢 Matched | nn::math::ARMv6::VEC3SubAsm vector-vector subtraction |
 | `0x00151D5C` | `func_00151D5C` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | 🟢 Matched | nn::math::ARMv6::VEC3MulAsm vector-vector multiplication |
 | `0x00151D78` | `func_00151D78` | `ctr/nn_math` | 24 B | `3_arithmetic_logic` | 🟢 Matched | nn::math::ARMv6::VEC3AddAsm vector-scalar addition |
 | `0x00151D90` | `func_00151D90` | `ctr/nn_math` | 24 B | `3_arithmetic_logic` | 🟢 Matched | nn::math::ARMv6::VEC3SubAsm vector-scalar subtraction |
 | `0x00151DA8` | `func_00151DA8` | `ctr/nn_math` | 24 B | `3_arithmetic_logic` | 🟢 Matched | nn::math::ARMv6::VEC3MulAsm vector-scalar multiplication |
+| `0x00151DC0` | `func_00151DC0` | `ctr/nn_math` | 40 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 3D vector scalar triple product in registers (VEC3CrossDotReg) |
+| `0x00151DE8` | `func_00151DE8` | `ctr/nn_math` | 52 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 3D vector scalar triple product from pointers (VEC3CrossDot) |
+| `0x00151E1C` | `func_00151E1C` | `ctr/nn_math` | 40 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 3D vector linear interpolation (VEC3Lerp) |
+| `0x00151E44` | `func_00151E44` | `ctr/nn_math` | 40 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 3D vector cross product (VEC3Cross) |
+| `0x00151E6C` | `func_00151E6C` | `ctr/nn_math` | 32 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 4D vector addition (VEC4Add) |
+| `0x00151E8C` | `func_00151E8C` | `ctr/nn_math` | 32 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 4D vector subtraction (VEC4Sub) |
+| `0x00151EAC` | `func_00151EAC` | `ctr/nn_math` | 32 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 4D vector multiplication (VEC4Mul) |
+| `0x00151ECC` | `func_00151ECC` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 4D vector scalar addition (VEC4AddScalar) |
+| `0x00151EE8` | `func_00151EE8` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 4D vector scalar subtraction (VEC4SubScalar) |
+| `0x00151F04` | `func_00151F04` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 4D vector scalar multiplication (VEC4MulScalar) |
+| `0x00151F20` | `func_00151F20` | `ctr/nn_math` | 48 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 4D vector linear interpolation (VEC4Lerp) |
+| `0x00151F50` | `func_00151F50` | `ctr/nn_math` | 80 B | `3_arithmetic_logic` | 🟢 Matched | nn::math Quaternion Hamilton multiplication (QUATMul) |
 | `0x00151FA0` | `svcCreateAddressArbiter` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x17) |
 | `0x00151FBC` | `svcSleepThread` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x28) |
 | `0x00151FC4` | `svcGetThreadId` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x37) |

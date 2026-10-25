@@ -723,6 +723,23 @@
       }
     },
     {
+      "name": "ctr/nn_math/func_00151D04",
+      "target_path": "expected/func_00151D04.o",
+      "base_path": "build/src/ctr/nn/math/func_00151D04.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/math/func_00151D04.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
       "name": "ctr/nn_math/func_00151D24",
       "target_path": "expected/func_00151D24.o",
       "base_path": "build/src/ctr/nn/math/func_00151D24.o",
@@ -814,6 +831,210 @@
       "metadata": {
         "complete": true,
         "source_path": "src/ctr/nn/math/func_00151DA8.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_math/func_00151DC0",
+      "target_path": "expected/func_00151DC0.o",
+      "base_path": "build/src/ctr/nn/math/func_00151DC0.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/math/func_00151DC0.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_math/func_00151DE8",
+      "target_path": "expected/func_00151DE8.o",
+      "base_path": "build/src/ctr/nn/math/func_00151DE8.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/math/func_00151DE8.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_math/func_00151E1C",
+      "target_path": "expected/func_00151E1C.o",
+      "base_path": "build/src/ctr/nn/math/func_00151E1C.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/math/func_00151E1C.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_math/func_00151E44",
+      "target_path": "expected/func_00151E44.o",
+      "base_path": "build/src/ctr/nn/math/func_00151E44.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/math/func_00151E44.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_math/func_00151E6C",
+      "target_path": "expected/func_00151E6C.o",
+      "base_path": "build/src/ctr/nn/math/func_00151E6C.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/math/func_00151E6C.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_math/func_00151E8C",
+      "target_path": "expected/func_00151E8C.o",
+      "base_path": "build/src/ctr/nn/math/func_00151E8C.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/math/func_00151E8C.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_math/func_00151EAC",
+      "target_path": "expected/func_00151EAC.o",
+      "base_path": "build/src/ctr/nn/math/func_00151EAC.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/math/func_00151EAC.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_math/func_00151ECC",
+      "target_path": "expected/func_00151ECC.o",
+      "base_path": "build/src/ctr/nn/math/func_00151ECC.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/math/func_00151ECC.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_math/func_00151EE8",
+      "target_path": "expected/func_00151EE8.o",
+      "base_path": "build/src/ctr/nn/math/func_00151EE8.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/math/func_00151EE8.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_math/func_00151F04",
+      "target_path": "expected/func_00151F04.o",
+      "base_path": "build/src/ctr/nn/math/func_00151F04.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/math/func_00151F04.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_math/func_00151F20",
+      "target_path": "expected/func_00151F20.o",
+      "base_path": "build/src/ctr/nn/math/func_00151F20.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/math/func_00151F20.s",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "ctr/nn_math/func_00151F50",
+      "target_path": "expected/func_00151F50.o",
+      "base_path": "build/src/ctr/nn/math/func_00151F50.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/math/func_00151F50.s",
         "progress_categories": [
           "ctr"
         ]
