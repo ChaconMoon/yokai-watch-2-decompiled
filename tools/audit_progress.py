@@ -78,87 +78,85 @@ def categorize_function(func):
 
 
 def calculate_metrics(functions):
-    matched_functions = [
+    src_dir = PROJECT_ROOT / "src"
+    asm_stems = {sf.stem for sf in src_dir.rglob("*.s")}
+
+    c_matched = [
         f for f in functions
         if f["status"].lower() in ("matched", "community_matched", "matched_community")
+        and f["symbol"] not in asm_stems
+    ]
+    asm_stubs = [
+        f for f in functions
+        if f["status"].lower() == "asm_stub" or (f["symbol"] in asm_stems and f["status"].lower() not in ("wip", "staged"))
     ]
     wip_functions = [f for f in functions if f["status"].lower() in ("wip", "in review")]
     staged_functions = [f for f in functions if f["status"].lower() == "staged"]
 
-    # Separate C matched vs ASM (.s) matched
-    src_dir = PROJECT_ROOT / "src"
-    asm_stems = {sf.stem for sf in src_dir.rglob("*.s")}
+    c_by_layer = {"ctr": [], "engine": [], "game": []}
+    for f in c_matched:
+        c_by_layer[categorize_function(f)].append(f)
 
-    c_matched = [f for f in matched_functions if f["symbol"] not in asm_stems]
-    asm_matched = [f for f in matched_functions if f["symbol"] in asm_stems]
+    asm_by_layer = {"ctr": [], "engine": [], "game": []}
+    for f in asm_stubs:
+        asm_by_layer[categorize_function(f)].append(f)
 
-    by_layer = {"ctr": [], "engine": [], "game": []}
-    for f in matched_functions:
-        by_layer[categorize_function(f)].append(f)
-
-    matched_count = len(matched_functions)
     c_matched_count = len(c_matched)
-    asm_matched_count = len(asm_matched)
-    matched_bytes = sum(f["size"] for f in matched_functions)
+    asm_count = len(asm_stubs)
     c_matched_bytes = sum(f["size"] for f in c_matched)
+    asm_bytes = sum(f["size"] for f in asm_stubs)
     staged_count = len(functions)
 
-    func_percent = (matched_count / ESTIMATED_TOTAL_FUNCTIONS) * 100.0
     c_func_percent = (c_matched_count / ESTIMATED_TOTAL_FUNCTIONS) * 100.0
-    byte_percent = (matched_bytes / TOTAL_CODE_BYTES) * 100.0
+    asm_func_percent = (asm_count / ESTIMATED_TOTAL_FUNCTIONS) * 100.0
     c_byte_percent = (c_matched_bytes / TOTAL_CODE_BYTES) * 100.0
+    asm_byte_percent = (asm_bytes / TOTAL_CODE_BYTES) * 100.0
 
     return {
-        "matched_count": matched_count,
         "c_matched_count": c_matched_count,
-        "asm_matched_count": asm_matched_count,
-        "matched_bytes": matched_bytes,
+        "asm_count": asm_count,
         "c_matched_bytes": c_matched_bytes,
+        "asm_bytes": asm_bytes,
         "staged_count": staged_count,
-        "func_percent": func_percent,
         "c_func_percent": c_func_percent,
-        "byte_percent": byte_percent,
+        "asm_func_percent": asm_func_percent,
         "c_byte_percent": c_byte_percent,
-        "matched_functions": matched_functions,
+        "asm_byte_percent": asm_byte_percent,
+        "c_matched": c_matched,
+        "asm_stubs": asm_stubs,
         "wip_functions": wip_functions,
         "staged_functions": staged_functions,
-        "by_layer": by_layer,
+        "c_by_layer": c_by_layer,
+        "asm_by_layer": asm_by_layer,
         "total_functions": len(functions)
     }
 
 
 def format_progress_table(metrics):
-    mc = metrics["matched_count"]
     cmc = metrics["c_matched_count"]
-    amc = metrics["asm_matched_count"]
+    amc = metrics["asm_count"]
     cmb = metrics["c_matched_bytes"]
-    mb = metrics["matched_bytes"]
-    fp = metrics["func_percent"]
+    amb = metrics["asm_bytes"]
     cfp = metrics["c_func_percent"]
+    afp = metrics["asm_func_percent"]
     cbp = metrics["c_byte_percent"]
+    abp = metrics["asm_byte_percent"]
     staged = metrics["staged_count"]
 
-    ctr_list = metrics["by_layer"]["ctr"]
-    eng_list = metrics["by_layer"]["engine"]
-    game_list = metrics["by_layer"]["game"]
-
-    ctr_bytes = sum(f["size"] for f in ctr_list)
-    eng_bytes = sum(f["size"] for f in eng_list)
-    game_bytes = sum(f["size"] for f in game_list)
+    c_layer = metrics["c_by_layer"]
+    asm_layer = metrics["asm_by_layer"]
 
     lines = [
         "| Category | Count | Meaning |",
         "| :--- | :---: | :--- |",
-        f"| **Real C-decompiled matched functions** | **{cmc}** / {ESTIMATED_TOTAL_FUNCTIONS:,} ({cfp:.2f}%) | Functions implemented in C and verified byte-exact |",
-        f"| **Complete functions (C + verified original library assembly)** | **{mc}** / {ESTIMATED_TOTAL_FUNCTIONS:,} ({fp:.2f}%) | Real C ({cmc}) + CRT/SDK assembly routines ({amc}: `clear_bss`, etc.) |",
-        f"| **Real C-decompiled matched bytes** | **{cmb}** / {TOTAL_CODE_BYTES:,} bytes ({cbp:.4f}%) | Real-C-only byte progress ({mb} B including CRT assembly) |",
-        f"| **Layer 1: Nintendo CTR-SDK & Runtime (`src/ctr/`)** | **{len(ctr_list)}** matched ({ctr_bytes} B) | CRT startup, `svc` syscalls, `nn::os`, `nn::ndm`, `nn::nex` |",
-        f"| **Layer 2: Level-5 Engine (`src/engine/`)** | **{len(eng_list)}** matched ({eng_bytes} B) | `lfw` (Framework), `lxp` (Cross-Platform), `gds` (Scripts) |",
-        f"| **Layer 3: Yo-kai Watch 2 Game (`src/game/`)** | **{len(game_list)}** matched ({game_bytes} B) | `ywCLoop*` states, battle, RPG, menus, and entities |",
-        f"| **Named / mapped candidates in manifest** | **{staged}** / {ESTIMATED_TOTAL_FUNCTIONS:,} | Functions actively tracked across `src/` and `scratches/` |",
-        "| **Memory Map (`.text` / `.rodata` / `.data` / `.bss`)** | Verified | Exact ExHeader boundaries mapped in `config/memory_map.json` |",
-        f"| **Total `.text` functions** | {ESTIMATED_TOTAL_FUNCTIONS:,} | Verified function count in `0x00100000`–`0x006F32AC` (EU v1.0) |",
-        "| **Region** | EU (`00040000001B2900`) | Multi-5 (PAL v1.0, `CTR-P-BYPP`) |",
+        f"| **Decompiled C/C++ (Byte-Exact Match)** | **{cmc}** / {ESTIMATED_TOTAL_FUNCTIONS:,} ({cfp:.2f}%) | Real C/C++ code verified byte-exact ({cmb:,} B / {cbp:.4f}%) |",
+        f"| **Assembly Stubs (`.s` extracted)** | **{amc}** / {ESTIMATED_TOTAL_FUNCTIONS:,} ({afp:.2f}%) | Split stubs for building & progressive replacement ({amb:,} B / {abp:.4f}%) |",
+        f"| **Total Binary Code Covered** | **{cmc + amc}** / {ESTIMATED_TOTAL_FUNCTIONS:,} ({((cmc + amc) / ESTIMATED_TOTAL_FUNCTIONS) * 100:.2f}%) | Combined C/C++ and extracted assembly ({cmb + amb:,} B / {((cmb + amb) / TOTAL_CODE_BYTES) * 100:.4f}%) |",
+        f"| **Layer 1: Nintendo CTR-SDK (`src/ctr/`)** | **{len(c_layer['ctr'])}** C matched + **{len(asm_layer['ctr'])}** stubs | CRT startup, `svc`, `nn::os`, `nn::y2r`, `nn::nex` |",
+        f"| **Layer 2: Level-5 Engine (`src/engine/`)** | **{len(c_layer['engine'])}** C matched + **{len(asm_layer['engine'])}** stubs | `lfw` base classes, `lfwCLoop`, `lxp`, `gds` |",
+        f"| **Layer 3: Yo-kai Watch 2 Game (`src/game/`)** | **{len(c_layer['game'])}** C matched + **{len(asm_layer['game'])}** stubs | `ywCLoop*` state machines, battle, RPG entities |",
+        f"| **Cataloged in Manifest** | **{staged}** / {ESTIMATED_TOTAL_FUNCTIONS:,} | Functions actively tracked across `src/` and `scratches/` |",
+        "| **Executable Size (`.text`)** | 6,238,892 B | Exact size from NCCH ExHeader (EU `00040000001B2900`) |",
         "| **Architecture** | ARM11 MPCore (ARMv6K) | 32-bit Little Endian, VMA `0x00100000` |",
         "| **Compiler** | ARMCC / RVCT 4.0 b821 | CTR-SDK 1.2.7 (`1.2.7.f-NINTENDO-CTR-SDK-v1`) |"
     ]
@@ -167,9 +165,10 @@ def format_progress_table(metrics):
 
 def format_manifest_table(functions):
     status_badges = {
-        "matched": "🟢 Matched",
+        "matched": "🟢 Matched (C/C++)",
         "community_matched": "🟢 Match (Community Accepted)",
         "matched_community": "🟢 Match (Community Accepted)",
+        "asm_stub": "⚪ ASM Stub (Verified)",
         "wip": "🟡 In Review",
         "in review": "🟡 In Review",
         "staged": "⏳ Staged"
@@ -179,6 +178,19 @@ def format_manifest_table(functions):
         "| Virtual Address | Symbol / Name | Layer / Module | Size | Level | Status | Description / Notes |",
         "| :--- | :--- | :---: | :---: | :---: | :---: | :--- |"
     ]
+
+    for f in functions:
+        badge = status_badges.get(f["status"].lower(), f["status"])
+        addr = f["address"]
+        sym = f["symbol"]
+        layer = f.get("layer", categorize_function(f))
+        sub = f.get("subsystem", "core")
+        lvl = f.get("level", "-")
+        size = f"{f['size']} B"
+        desc = f["description"]
+        lines.append(f"| `{addr}` | `{sym}` | `{layer}/{sub}` | {size} | `{lvl}` | {badge} | {desc} |")
+
+    return "\n".join(lines)
 
     for f in functions:
         badge = status_badges.get(f["status"].lower(), f["status"])
@@ -299,7 +311,7 @@ def update_readme(readme_path: Path, progress_table: str, manifest_table: str, c
 
 def update_objdiff_config(functions):
     src_dir = PROJECT_ROOT / "src"
-    source_files = list(src_dir.rglob("*.c")) + list(src_dir.rglob("*.cpp")) + list(src_dir.rglob("*.s"))
+    source_files = list(src_dir.rglob("*.c")) + list(src_dir.rglob("*.cpp"))
     file_map = {sf.stem: sf.relative_to(PROJECT_ROOT) for sf in source_files}
 
     units = []
@@ -307,8 +319,11 @@ def update_objdiff_config(functions):
 
     for f in functions:
         sym = f["symbol"]
-        seen_symbols.add(sym)
         status = f["status"].lower()
+        if status == "asm_stub":
+            continue
+
+        seen_symbols.add(sym)
         is_matched = status in ("matched", "community_matched", "matched_community")
         category = categorize_function(f)
 
@@ -368,7 +383,6 @@ def update_objdiff_config(functions):
         "watch_patterns": [
             "src/**/*.c",
             "src/**/*.cpp",
-            "src/**/*.s",
             "include/**/*.h"
         ],
         "progress_categories": PROGRESS_CATEGORIES,
@@ -378,7 +392,7 @@ def update_objdiff_config(functions):
     with open(OBJDIFF_CONFIG, "w", encoding="utf-8") as f:
         json.dump(config, f, indent=2)
 
-    print("✅ objdiff.json automatically synchronized with 3 layers (ctr, engine, game).")
+    print("✅ objdiff.json automatically synchronized with C/C++ units across 3 layers.")
 
 
 def main():
@@ -392,11 +406,13 @@ def main():
     print("============================================================")
     print("  Yo-kai Watch 2 (3DS) — 3-Layer Matching Progress Auditor")
     print("============================================================")
-    print(f"  Complete functions : {metrics['matched_count']} / {ESTIMATED_TOTAL_FUNCTIONS:,} ({metrics['func_percent']:.2f}%)")
-    print(f"   ├─ Layer 1 (CTR)  : {len(metrics['by_layer']['ctr'])} matched")
-    print(f"   ├─ Layer 2 (Eng)  : {len(metrics['by_layer']['engine'])} matched")
-    print(f"   └─ Layer 3 (Game) : {len(metrics['by_layer']['game'])} matched")
-    print(f"  Matched .text bytes: {metrics['matched_bytes']} / {TOTAL_CODE_BYTES:,} bytes ({metrics['byte_percent']:.4f}%)")
+    print(f"  Decompiled C/C++   : {metrics['c_matched_count']} / {ESTIMATED_TOTAL_FUNCTIONS:,} ({metrics['c_func_percent']:.2f}%)")
+    print(f"   ├─ Layer 1 (CTR)  : {len(metrics['c_by_layer']['ctr'])} C matched")
+    print(f"   ├─ Layer 2 (Eng)  : {len(metrics['c_by_layer']['engine'])} C matched")
+    print(f"   └─ Layer 3 (Game) : {len(metrics['c_by_layer']['game'])} C matched")
+    print(f"  Matched C bytes    : {metrics['c_matched_bytes']} / {TOTAL_CODE_BYTES:,} bytes ({metrics['c_byte_percent']:.4f}%)")
+    print(f"  Assembly stubs (.s): {metrics['asm_count']} functions ({metrics['asm_bytes']:,} bytes)")
+    print(f"  Total code covered : {metrics['c_matched_count'] + metrics['asm_count']} / {ESTIMATED_TOTAL_FUNCTIONS:,} ({((metrics['c_matched_count'] + metrics['asm_count']) / ESTIMATED_TOTAL_FUNCTIONS) * 100:.2f}%)")
     print("============================================================")
 
     progress_table = format_progress_table(metrics)

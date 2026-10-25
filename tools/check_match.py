@@ -154,6 +154,7 @@ def main():
     print("============================================================")
 
     matched_count = 0
+    asm_stub_count = 0
     staged_count = 0
     mismatched_count = 0
     checked_symbols = set()
@@ -165,6 +166,13 @@ def main():
 
         relocs = get_relocations_from_elf(obj)
         text_bytes = extract_section_bytes(obj, ".text")
+
+        try:
+            rel_path = obj.relative_to(BUILD_DIR)
+            src_s = PROJECT_ROOT / rel_path.with_suffix(".s")
+            obj_is_asm = src_s.exists()
+        except ValueError:
+            obj_is_asm = False
 
         for sym, sym_info in symbols.items():
             if "$$" in sym or sym.startswith("__arm_cp") or sym_info["size"] == 0:
@@ -251,21 +259,28 @@ def main():
             is_match = length_match and (len(code_diffs) == 0)
             status = meta.get("status", "staged").lower() if meta else "staged"
             is_community = status in ("community_matched", "matched_community")
+            is_asm = obj_is_asm or (status == "asm_stub")
             is_staged = status in ("staged", "wip", "in_progress", "pending")
 
             if is_match:
-                matched_count += 1
                 detail_str = ""
                 if reloc_details:
                     detail_str = f" [reloc: {', '.join(reloc_details)}]"
-                staged_note = (
-                    " \033[96m(ready to promote to matched!)\033[0m"
-                    if is_staged
-                    else ""
-                )
-                print(
-                    f"  \033[92m>>> MATCH <<<\033[0m: {sym} (0x{addr:08X}) — {size} B identical{detail_str}{staged_note}"
-                )
+                if is_asm:
+                    asm_stub_count += 1
+                    print(
+                        f"  \033[90m>>> ASM STUB <<<\033[0m: {sym} (0x{addr:08X}) — {size} B verified (original assembly){detail_str}"
+                    )
+                else:
+                    matched_count += 1
+                    staged_note = (
+                        " \033[96m(ready to promote to matched!)\033[0m"
+                        if is_staged
+                        else ""
+                    )
+                    print(
+                        f"  \033[92m>>> MATCH (C) <<<\033[0m: {sym} (0x{addr:08X}) — {size} B identical{detail_str}{staged_note}"
+                    )
             elif is_community:
                 matched_count += 1
                 diff_count = len(code_diffs) + abs(
@@ -299,9 +314,12 @@ def main():
                 print(f"      Differences: {diff_count} byte(s)")
 
     print("============================================================")
-    summary_parts = [f"{matched_count} matched"]
+    summary_parts = [
+        f"\033[92m{matched_count} decompiled (C/C++)\033[0m",
+        f"\033[90m{asm_stub_count} assembly stubs verified\033[0m"
+    ]
     if staged_count > 0:
-        summary_parts.append(f"{staged_count} staged (WIP)")
+        summary_parts.append(f"\033[93m{staged_count} staged (WIP)\033[0m")
     summary_parts.append(f"{mismatched_count} regressed")
     print(f"  Results: {', '.join(summary_parts)}")
     print("============================================================")
@@ -309,7 +327,7 @@ def main():
     pending = [
         s
         for s, m in manifest.items()
-        if s not in checked_symbols and m["status"].lower() not in ("matched", "community_matched")
+        if s not in checked_symbols and m["status"].lower() not in ("matched", "community_matched", "asm_stub")
     ]
     if pending:
         print(f"  Pending candidates ({len(pending)}):")

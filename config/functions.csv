@@ -1,5 +1,5 @@
 address,symbol,size,layer,subsystem,level,status,description
-0x00100024,clear_bss,36,ctr,crt,2_control_flow,matched,CRT startup zeroing loop for .bss section (0x00860934 - 0x0091B9BC)
+0x00100024,clear_bss,36,ctr,crt,2_control_flow,asm_stub,CRT startup zeroing loop for .bss section (0x00860934 - 0x0091B9BC)
 0x00104778,svcExitProcess,8,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x03)
 0x00104D18,func_00104D18,16,ctr,nn_os,2_accessor,matched,nn::os startup global 8-bit flag setter (0x00814E54)
 0x001063F4,func_001063F4,16,ctr,nn_os,2_accessor,matched,CTR OS SystemConfig block field reader (0x1FF80000 + 0x40)
@@ -11,47 +11,48 @@ address,symbol,size,layer,subsystem,level,status,description
 0x0010B6D0,func_0010B6D0,8,engine,lfw,1_leaf_stub,matched,"lfwCLoopEmpty virtual method (returns constant 0, table 0x00107488)"
 0x0010B6D8,func_0010B6D8,12,engine,lfw,2_accessor,matched,lfwCLoopEmpty::GetClassName getter via literal pool (0x008602F8)
 0x0010B6E4,func_0010B6E4,280,engine,lfw,4_cpp_vtable,wip,"lfwCLoop C++ class method (partially decompiled, ~82% match in decomp.me)"
-0x0010B7FC,func_0010B7FC,140,engine,lfw,6_moderate_caller,matched,lfwCLoop hardware profile switch dispatch table
-0x0010B888,func_0010B888,48,engine,lfw,3_arithmetic_logic,matched,lfwCLoop state and channel reset sequence
-0x0010B8B8,func_0010B8B8,156,engine,lfw,7_complex_caller,matched,lfwCLoop UTF-8 string stream decoding and registration buffer
+0x0010B7FC,func_0010B7FC,140,engine,lfw,6_moderate_caller,asm_stub,lfwCLoop hardware profile switch dispatch table
+0x0010B888,func_0010B888,48,engine,lfw,3_arithmetic_logic,asm_stub,lfwCLoop state and channel reset sequence
+0x0010B8B8,func_0010B8B8,156,engine,lfw,7_complex_caller,asm_stub,lfwCLoop UTF-8 string stream decoding and registration buffer
 0x0010C894,func_0010C894,12,game,loops,2_accessor,matched,Game loop subsystem pointer getter via literal pool (0x0086C8CC)
 0x0011054C,func_0011054C,24,game,loops,3_arithmetic_logic,matched,"Struct header reset (zeros 8 bytes, sets byte 0 to 0xFF)"
-0x001128F8,func_001128F8,148,ctr,nn_y2r,7_complex_caller,matched,Y2R virtual dispatch for image conversion parameters
-0x0011298C,func_0011298C,284,ctr,nn_y2r,7_complex_caller,matched,Y2R image transformation and coordinate scaling sequence
+0x001128F8,func_001128F8,148,ctr,nn_y2r,7_complex_caller,asm_stub,Y2R virtual dispatch for image conversion parameters
+0x0011298C,func_0011298C,284,ctr,nn_y2r,7_complex_caller,asm_stub,Y2R image transformation and coordinate scaling sequence
 0x00112AA8,func_00112AA8,96,ctr,nn_y2r,4_complex_leaf,matched,Y2R channel state structure field zero-initialization
-0x00112B08,func_00112B08,124,ctr,nn_y2r,7_complex_caller,matched,Y2R channel cleanup reset invoking func_00113F80 and dispatch
-0x00112B84,func_00112B84,236,ctr,nn_y2r,7_complex_caller,matched,Y2R format handler and .xf stream processor
-0x00112CB0,func_00112CB0,32,ctr,nn_y2r,6_moderate_caller,matched,Y2R slot configuration invoking func_0014A070
-0x00112CD0,func_00112CD0,12,ctr,nn_y2r,2_simple_accessor,matched,Y2R indexed slot calculation falling through to func_00112CDC
-0x00112CDC,func_00112CDC,44,ctr,nn_y2r,6_moderate_caller,matched,Y2R slot configuration type 8 with NULL check invoking func_0014A070
-0x00112D58,func_00112D58,36,ctr,nn_y2r,6_moderate_caller,matched,Y2R slot configuration type 2 invoking func_0014A070
+0x00112B08,func_00112B08,124,ctr,nn_y2r,7_complex_caller,asm_stub,Y2R channel cleanup reset invoking func_00113F80 and dispatch
+0x00112B84,func_00112B84,236,ctr,nn_y2r,7_complex_caller,asm_stub,Y2R format handler and .xf stream processor
+0x00112CB0,func_00112CB0,32,ctr,nn_y2r,6_moderate_caller,asm_stub,Y2R slot configuration invoking func_0014A070
+0x00112CD0,func_00112CD0,12,ctr,nn_y2r,2_simple_accessor,asm_stub,Y2R indexed slot calculation falling through to func_00112CDC
+0x00112CDC,func_00112CDC,44,ctr,nn_y2r,6_moderate_caller,asm_stub,Y2R slot configuration type 8 with NULL check invoking func_0014A070
+0x00112D58,func_00112D58,36,ctr,nn_y2r,6_moderate_caller,asm_stub,Y2R slot configuration type 2 invoking func_0014A070
 0x00112D8C,func_00112D8C,20,ctr,nn_y2r,6_moderate_caller,matched,Method chaining wrapper invoking func_0014A06C
-0x00112DA0,func_00112DA0,192,ctr,nn_y2r,7_complex_caller,matched,Y2R image conversion context setup and dispatch
+0x00112DA0,func_00112DA0,192,ctr,nn_y2r,7_complex_caller,asm_stub,Y2R image conversion context setup and dispatch
 0x00112E60,func_00112E60,16,ctr,nn_y2r,2_accessor,matched,Y2R struct offset 8648 u16 reader
-0x00112E70,func_00112E70,88,ctr,nn_y2r,6_moderate_caller,matched,Y2R format query and dimension retrieval invoking func_00116CB4
+0x00112E70,func_00112E70,88,ctr,nn_y2r,6_moderate_caller,asm_stub,Y2R format query and dimension retrieval invoking func_00116CB4
 0x00112EC8,func_00112EC8,28,ctr,nn_y2r,6_moderate_caller,matched,Y2R mutex lock/unlock sequence on unk_00867CF8
 0x00112EE4,func_00112EE4,16,ctr,nn_y2r,6_moderate_caller,matched,Y2R stack buffer query invoking func_002FDAC4
-0x00112F58,func_00112F58,120,ctr,nn_y2r,7_complex_caller,matched,Y2R buffer structure initialization and alignment registration
+0x00112F58,func_00112F58,120,ctr,nn_y2r,7_complex_caller,asm_stub,Y2R buffer structure initialization and alignment registration
 0x00112FF0,svcCreateTimer,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x2D)
 0x00113008,func_00113008,36,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x08 CreateThread)
-0x001130CC,func_001130CC,396,ctr,nn_y2r,7_complex_caller,matched,Y2R VFP register context saving and parameter batch processing
-0x00113650,func_00113650,52,ctr,nn_y2r,3_arithmetic_logic,matched,Y2R global flag 0x008150AC disable toggle
-0x00113684,func_00113684,56,ctr,nn_y2r,3_arithmetic_logic,matched,Y2R global flag 0x008150AC enable toggle
-0x001136BC,func_001136BC,68,ctr,nn_y2r,6_moderate_caller,matched,Y2R initialization check and configuration helper
+0x001130CC,func_001130CC,396,ctr,nn_y2r,7_complex_caller,asm_stub,Y2R VFP register context saving and parameter batch processing
+0x00113650,func_00113650,52,ctr,nn_y2r,3_arithmetic_logic,asm_stub,Y2R global flag 0x008150AC disable toggle
+0x00113684,func_00113684,56,ctr,nn_y2r,3_arithmetic_logic,asm_stub,Y2R global flag 0x008150AC enable toggle
+0x001136BC,func_001136BC,68,ctr,nn_y2r,6_moderate_caller,asm_stub,Y2R initialization check and configuration helper
 0x00113700,func_00113700,64,ctr,nn_y2r,7_complex_caller,matched,Y2R buffer deallocation sequence on unk_00814F28
-0x00113740,func_00113740,128,ctr,nn_y2r,7_complex_caller,matched,Y2R buffer allocation and initialization on unk_00814F28
+0x00113740,func_00113740,128,ctr,nn_y2r,7_complex_caller,asm_stub,Y2R buffer allocation and initialization on unk_00814F28
 0x001137C0,func_001137C0,20,ctr,nn_y2r,6_moderate_caller,matched,Helper invoking func_00136154(&unk_0086A0A4)
-0x001137D8,func_001137D8,48,ctr,nn_y2r,6_moderate_caller,matched,Y2R buffer validation sequence with unk_0086A0A4
-0x00113808,func_00113808,112,ctr,nn_y2r,7_complex_caller,matched,Y2R state update and event clearance sequence (svc 0x19)
-0x00113878,func_00113878,88,ctr,nn_y2r,5_simple_wrapper,matched,Y2R microsecond conversion and dispatch invoking func_001468F0
+0x001137D8,func_001137D8,48,ctr,nn_y2r,6_moderate_caller,asm_stub,Y2R buffer validation sequence with unk_0086A0A4
+0x00113808,func_00113808,112,ctr,nn_y2r,7_complex_caller,asm_stub,Y2R state update and event clearance sequence (svc 0x19)
+0x00113878,func_00113878,88,ctr,nn_y2r,5_simple_wrapper,asm_stub,Y2R microsecond conversion and dispatch invoking func_001468F0
 0x001138D0,func_001138D0,44,ctr,nn_y2r,7_complex_caller,matched,Y2R error reporting thunk invoking func_0011F51C
-0x001138FC,func_001138FC,392,ctr,nn_y2r,7_complex_caller,matched,Y2R subsystem complete deinitialization and channel shutdown sequence
+0x001138FC,func_001138FC,392,ctr,nn_y2r,7_complex_caller,asm_stub,Y2R subsystem complete deinitialization and channel shutdown sequence
+0x00113A84,func_00113A84,1148,ctr,nn_y2r,7_complex_caller,asm_stub,Y2R subsystem initialization sequence and hardware channel configuration
 0x00113F00,func_00113F00,24,ctr,nn_y2r,7_complex_caller,matched,Y2R initialization sequence invoking func_0011F46C func_0011FA98
-0x00113F18,func_00113F18,52,ctr,nn_y2r,7_complex_caller,matched,Y2R finalize sequence invoking func_0011FABC func_0011FCFC
+0x00113F18,func_00113F18,52,ctr,nn_y2r,7_complex_caller,asm_stub,Y2R finalize sequence invoking func_0011FABC func_0011FCFC
 0x00113F4C,func_00113F4C,12,ctr,nn_y2r,7_complex_caller,matched,Y2R tail-call thunk to func_0011FDAC with unk_008661EC
 0x00113F58,func_00113F58,20,ctr,nn_y2r,2_accessor,matched,Y2R global bit 3 flag getter via literal pool (0x008661EC)
 0x00113F70,func_00113F70,12,ctr,nn_y2r,2_accessor,matched,Y2R global float field getter via literal pool (0x00815090)
-0x00113F80,func_00113F80,152,ctr,nn_y2r,7_complex_caller,matched,Y2R hardware mode dispatch and channel reset sequence
+0x00113F80,func_00113F80,152,ctr,nn_y2r,7_complex_caller,asm_stub,Y2R hardware mode dispatch and channel reset sequence
 0x001274A0,func_001274A0,24,ctr,nn_os,3_arithmetic_logic,wip,nn::os atomic spinlock acquire loop (ldrex/strex synchronization)
 0x00127520,func_00127520,12,ctr,nn_os,2_accessor,matched,CTR-SDK .text size / limit getter via literal pool (0x005F32AC)
 0x001275D8,func_001275D8,12,ctr,nn_os,2_accessor,matched,CTR-SDK .text base VMA getter via literal pool (0x00100000)
@@ -60,16 +61,16 @@ address,symbol,size,layer,subsystem,level,status,description
 0x00127EEC,func_00127EEC,12,ctr,nn_ndm,2_accessor,matched,nn::ndm global state pointer getter via literal pool (0x00865F10)
 0x001280A8,func_001280A8,24,ctr,nn_ndm,3_arithmetic_logic,matched,"nn::ndm bounds-checked struct array element indexer (stride 8, offset +0x0C)"
 0x001284E4,func_001284E4,28,ctr,nn_applet,2_accessor,matched,nn::applet::CTR::IsApplication attribute check via literal pool (0x00814E00)
-0x00128544,func_00128544,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetCallback2C
-0x00128558,func_00128558,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState10
-0x00128568,func_00128568,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::GetState0C
-0x00128578,func_00128578,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState0C
-0x00128588,func_00128588,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetCallback20
-0x0012859C,func_0012859C,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState08_1
-0x001285B0,func_001285B0,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::GetState08
-0x001285C0,func_001285C0,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetCallback24
-0x001285D4,func_001285D4,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState08_0
-0x001285E8,func_001285E8,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::GetState0B
+0x00128544,func_00128544,20,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::SetCallback2C
+0x00128558,func_00128558,16,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::SetState10
+0x00128568,func_00128568,16,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::GetState0C
+0x00128578,func_00128578,16,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::SetState0C
+0x00128588,func_00128588,20,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::SetCallback20
+0x0012859C,func_0012859C,20,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::SetState08_1
+0x001285B0,func_001285B0,16,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::GetState08
+0x001285C0,func_001285C0,20,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::SetCallback24
+0x001285D4,func_001285D4,20,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::SetState08_0
+0x001285E8,func_001285E8,16,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::GetState0B
 0x0012CB00,func_0012CB00,12,engine,lxp,2_accessor,matched,Level-5 engine global singleton getter via literal pool (0x00868A9C)
 0x0012F190,svcExitThread,8,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x09)
 0x0012F198,svcCreateResourceLimit,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x35)
@@ -82,27 +83,27 @@ address,symbol,size,layer,subsystem,level,status,description
 0x0013EC5C,func_0013EC5C,8,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x0A)
 0x0013EC64,svcWaitSynchronizationN,36,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x25 WaitSynchronizationN)
 0x0013F29C,func_0013F29C,12,engine,core,2_accessor,matched,Level-5 engine subsystem pointer getter via literal pool (0x00867DA8)
-0x00151628,func_00151628,28,ctr,nn_math,3_arithmetic_logic,matched,nn::math 2D vector element-wise multiplication (VEC2Mul)
-0x00151644,func_00151644,28,ctr,nn_math,3_arithmetic_logic,matched,nn::math 2D vector element-wise addition (VEC2Add)
-0x00151D04,func_00151D04,32,ctr,nn_math,3_arithmetic_logic,matched,nn::math 2D vector linear interpolation (VEC2Lerp)
-0x00151D24,func_00151D24,28,ctr,nn_math,3_arithmetic_logic,matched,nn::math::ARMv6::VEC3AddAsm vector-vector addition
-0x00151D40,func_00151D40,28,ctr,nn_math,3_arithmetic_logic,matched,nn::math::ARMv6::VEC3SubAsm vector-vector subtraction
-0x00151D5C,func_00151D5C,28,ctr,nn_math,3_arithmetic_logic,matched,nn::math::ARMv6::VEC3MulAsm vector-vector multiplication
-0x00151D78,func_00151D78,24,ctr,nn_math,3_arithmetic_logic,matched,nn::math::ARMv6::VEC3AddAsm vector-scalar addition
-0x00151D90,func_00151D90,24,ctr,nn_math,3_arithmetic_logic,matched,nn::math::ARMv6::VEC3SubAsm vector-scalar subtraction
-0x00151DA8,func_00151DA8,24,ctr,nn_math,3_arithmetic_logic,matched,nn::math::ARMv6::VEC3MulAsm vector-scalar multiplication
-0x00151DC0,func_00151DC0,40,ctr,nn_math,3_arithmetic_logic,matched,nn::math 3D vector scalar triple product in registers (VEC3CrossDotReg)
-0x00151DE8,func_00151DE8,52,ctr,nn_math,3_arithmetic_logic,matched,nn::math 3D vector scalar triple product from pointers (VEC3CrossDot)
-0x00151E1C,func_00151E1C,40,ctr,nn_math,3_arithmetic_logic,matched,nn::math 3D vector linear interpolation (VEC3Lerp)
-0x00151E44,func_00151E44,40,ctr,nn_math,3_arithmetic_logic,matched,nn::math 3D vector cross product (VEC3Cross)
-0x00151E6C,func_00151E6C,32,ctr,nn_math,3_arithmetic_logic,matched,nn::math 4D vector addition (VEC4Add)
-0x00151E8C,func_00151E8C,32,ctr,nn_math,3_arithmetic_logic,matched,nn::math 4D vector subtraction (VEC4Sub)
-0x00151EAC,func_00151EAC,32,ctr,nn_math,3_arithmetic_logic,matched,nn::math 4D vector multiplication (VEC4Mul)
-0x00151ECC,func_00151ECC,28,ctr,nn_math,3_arithmetic_logic,matched,nn::math 4D vector scalar addition (VEC4AddScalar)
-0x00151EE8,func_00151EE8,28,ctr,nn_math,3_arithmetic_logic,matched,nn::math 4D vector scalar subtraction (VEC4SubScalar)
-0x00151F04,func_00151F04,28,ctr,nn_math,3_arithmetic_logic,matched,nn::math 4D vector scalar multiplication (VEC4MulScalar)
-0x00151F20,func_00151F20,48,ctr,nn_math,3_arithmetic_logic,matched,nn::math 4D vector linear interpolation (VEC4Lerp)
-0x00151F50,func_00151F50,80,ctr,nn_math,3_arithmetic_logic,matched,nn::math Quaternion Hamilton multiplication (QUATMul)
+0x00151628,func_00151628,28,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math 2D vector element-wise multiplication (VEC2Mul)
+0x00151644,func_00151644,28,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math 2D vector element-wise addition (VEC2Add)
+0x00151D04,func_00151D04,32,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math 2D vector linear interpolation (VEC2Lerp)
+0x00151D24,func_00151D24,28,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math::ARMv6::VEC3AddAsm vector-vector addition
+0x00151D40,func_00151D40,28,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math::ARMv6::VEC3SubAsm vector-vector subtraction
+0x00151D5C,func_00151D5C,28,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math::ARMv6::VEC3MulAsm vector-vector multiplication
+0x00151D78,func_00151D78,24,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math::ARMv6::VEC3AddAsm vector-scalar addition
+0x00151D90,func_00151D90,24,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math::ARMv6::VEC3SubAsm vector-scalar subtraction
+0x00151DA8,func_00151DA8,24,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math::ARMv6::VEC3MulAsm vector-scalar multiplication
+0x00151DC0,func_00151DC0,40,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math 3D vector scalar triple product in registers (VEC3CrossDotReg)
+0x00151DE8,func_00151DE8,52,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math 3D vector scalar triple product from pointers (VEC3CrossDot)
+0x00151E1C,func_00151E1C,40,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math 3D vector linear interpolation (VEC3Lerp)
+0x00151E44,func_00151E44,40,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math 3D vector cross product (VEC3Cross)
+0x00151E6C,func_00151E6C,32,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math 4D vector addition (VEC4Add)
+0x00151E8C,func_00151E8C,32,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math 4D vector subtraction (VEC4Sub)
+0x00151EAC,func_00151EAC,32,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math 4D vector multiplication (VEC4Mul)
+0x00151ECC,func_00151ECC,28,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math 4D vector scalar addition (VEC4AddScalar)
+0x00151EE8,func_00151EE8,28,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math 4D vector scalar subtraction (VEC4SubScalar)
+0x00151F04,func_00151F04,28,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math 4D vector scalar multiplication (VEC4MulScalar)
+0x00151F20,func_00151F20,48,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math 4D vector linear interpolation (VEC4Lerp)
+0x00151F50,func_00151F50,80,ctr,nn_math,3_arithmetic_logic,asm_stub,nn::math Quaternion Hamilton multiplication (QUATMul)
 0x00151FA0,svcCreateAddressArbiter,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x17)
 0x00151FBC,svcSleepThread,8,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x28)
 0x00151FC4,svcGetThreadId,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x37)

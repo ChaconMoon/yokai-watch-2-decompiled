@@ -41,7 +41,8 @@ def main():
         for row in reader:
             sym = row.get("symbol", "").strip()
             addr = row.get("address", "").strip()
-            if not sym or not addr:
+            status = row.get("status", "").strip().lower()
+            if not sym or not addr or status == "asm_stub":
                 continue
 
             out_o = EXPECTED_DIR / f"{sym}.o"

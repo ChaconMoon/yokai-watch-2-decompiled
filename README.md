@@ -43,16 +43,14 @@ Progress is split into categories so that assembly is never counted as C decompi
 
 | Category | Count | Meaning |
 | :--- | :---: | :--- |
-| **Real C-decompiled matched functions** | **73** / 18,225 (0.40%) | Functions implemented in C and verified byte-exact |
-| **Complete functions (C + verified original library assembly)** | **129** / 18,225 (0.71%) | Real C (73) + CRT/SDK assembly routines (56: `clear_bss`, etc.) |
-| **Real C-decompiled matched bytes** | **1404** / 6,238,892 bytes (0.0225%) | Real-C-only byte progress (5536 B including CRT assembly) |
-| **Layer 1: Nintendo CTR-SDK & Runtime (`src/ctr/`)** | **115** matched (5068 B) | CRT startup, `svc` syscalls, `nn::os`, `nn::ndm`, `nn::nex` |
-| **Layer 2: Level-5 Engine (`src/engine/`)** | **10** matched (416 B) | `lfw` (Framework), `lxp` (Cross-Platform), `gds` (Scripts) |
-| **Layer 3: Yo-kai Watch 2 Game (`src/game/`)** | **4** matched (52 B) | `ywCLoop*` states, battle, RPG, menus, and entities |
-| **Named / mapped candidates in manifest** | **133** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
-| **Memory Map (`.text` / `.rodata` / `.data` / `.bss`)** | Verified | Exact ExHeader boundaries mapped in `config/memory_map.json` |
-| **Total `.text` functions** | 18,225 | Verified function count in `0x00100000`–`0x006F32AC` (EU v1.0) |
-| **Region** | EU (`00040000001B2900`) | Multi-5 (PAL v1.0, `CTR-P-BYPP`) |
+| **Decompiled C/C++ (Byte-Exact Match)** | **72** / 18,225 (0.40%) | Real C/C++ code verified byte-exact (1,392 B / 0.0223%) |
+| **Assembly Stubs (`.s` extracted)** | **58** / 18,225 (0.32%) | Split stubs for building & progressive replacement (5,292 B / 0.0848%) |
+| **Total Binary Code Covered** | **130** / 18,225 (0.71%) | Combined C/C++ and extracted assembly (6,684 B / 0.1071%) |
+| **Layer 1: Nintendo CTR-SDK (`src/ctr/`)** | **61** C matched + **55** stubs | CRT startup, `svc`, `nn::os`, `nn::y2r`, `nn::nex` |
+| **Layer 2: Level-5 Engine (`src/engine/`)** | **7** C matched + **3** stubs | `lfw` base classes, `lfwCLoop`, `lxp`, `gds` |
+| **Layer 3: Yo-kai Watch 2 Game (`src/game/`)** | **4** C matched + **0** stubs | `ywCLoop*` state machines, battle, RPG entities |
+| **Cataloged in Manifest** | **134** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
+| **Executable Size (`.text`)** | 6,238,892 B | Exact size from NCCH ExHeader (EU `00040000001B2900`) |
 | **Architecture** | ARM11 MPCore (ARMv6K) | 32-bit Little Endian, VMA `0x00100000` |
 | **Compiler** | ARMCC / RVCT 4.0 b821 | CTR-SDK 1.2.7 (`1.2.7.f-NINTENDO-CTR-SDK-v1`) |
 
@@ -72,139 +70,140 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 
 | Virtual Address | Symbol / Name | Layer / Module | Size | Level | Status | Description / Notes |
 | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
-| `0x00100024` | `clear_bss` | `ctr/crt` | 36 B | `2_control_flow` | 🟢 Matched | CRT startup zeroing loop for .bss section (0x00860934 - 0x0091B9BC) |
-| `0x00104778` | `svcExitProcess` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x03) |
-| `0x00104D18` | `func_00104D18` | `ctr/nn_os` | 16 B | `2_accessor` | 🟢 Matched | nn::os startup global 8-bit flag setter (0x00814E54) |
-| `0x001063F4` | `func_001063F4` | `ctr/nn_os` | 16 B | `2_accessor` | 🟢 Matched | CTR OS SystemConfig block field reader (0x1FF80000 + 0x40) |
-| `0x0010655C` | `func_0010655C` | `ctr/nn_os` | 20 B | `2_accessor` | 🟢 Matched | nn::os::detail TLS pointer store to global offset via literal pool (0x00815DE0) |
-| `0x0010678C` | `func_0010678C` | `ctr/nn_os` | 16 B | `2_accessor` | 🟢 Matched | nn::os startup global signed byte reader via literal pool (0x00814E00) |
-| `0x0010AA84` | `func_0010AA84` | `ctr/svc` | 36 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x01 ControlMemory) |
-| `0x0010AAA8` | `svcCreateEvent` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x21) |
-| `0x0010AAC0` | `svcDuplicateHandle` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x38) |
-| `0x0010B6D0` | `func_0010B6D0` | `engine/lfw` | 8 B | `1_leaf_stub` | 🟢 Matched | lfwCLoopEmpty virtual method (returns constant 0, table 0x00107488) |
-| `0x0010B6D8` | `func_0010B6D8` | `engine/lfw` | 12 B | `2_accessor` | 🟢 Matched | lfwCLoopEmpty::GetClassName getter via literal pool (0x008602F8) |
+| `0x00100024` | `clear_bss` | `ctr/crt` | 36 B | `2_control_flow` | ⚪ ASM Stub (Verified) | CRT startup zeroing loop for .bss section (0x00860934 - 0x0091B9BC) |
+| `0x00104778` | `svcExitProcess` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x03) |
+| `0x00104D18` | `func_00104D18` | `ctr/nn_os` | 16 B | `2_accessor` | 🟢 Matched (C/C++) | nn::os startup global 8-bit flag setter (0x00814E54) |
+| `0x001063F4` | `func_001063F4` | `ctr/nn_os` | 16 B | `2_accessor` | 🟢 Matched (C/C++) | CTR OS SystemConfig block field reader (0x1FF80000 + 0x40) |
+| `0x0010655C` | `func_0010655C` | `ctr/nn_os` | 20 B | `2_accessor` | 🟢 Matched (C/C++) | nn::os::detail TLS pointer store to global offset via literal pool (0x00815DE0) |
+| `0x0010678C` | `func_0010678C` | `ctr/nn_os` | 16 B | `2_accessor` | 🟢 Matched (C/C++) | nn::os startup global signed byte reader via literal pool (0x00814E00) |
+| `0x0010AA84` | `func_0010AA84` | `ctr/svc` | 36 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x01 ControlMemory) |
+| `0x0010AAA8` | `svcCreateEvent` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x21) |
+| `0x0010AAC0` | `svcDuplicateHandle` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x38) |
+| `0x0010B6D0` | `func_0010B6D0` | `engine/lfw` | 8 B | `1_leaf_stub` | 🟢 Matched (C/C++) | lfwCLoopEmpty virtual method (returns constant 0, table 0x00107488) |
+| `0x0010B6D8` | `func_0010B6D8` | `engine/lfw` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | lfwCLoopEmpty::GetClassName getter via literal pool (0x008602F8) |
 | `0x0010B6E4` | `func_0010B6E4` | `engine/lfw` | 280 B | `4_cpp_vtable` | 🟡 In Review | lfwCLoop C++ class method (partially decompiled, ~82% match in decomp.me) |
-| `0x0010B7FC` | `func_0010B7FC` | `engine/lfw` | 140 B | `6_moderate_caller` | 🟢 Matched | lfwCLoop hardware profile switch dispatch table |
-| `0x0010B888` | `func_0010B888` | `engine/lfw` | 48 B | `3_arithmetic_logic` | 🟢 Matched | lfwCLoop state and channel reset sequence |
-| `0x0010B8B8` | `func_0010B8B8` | `engine/lfw` | 156 B | `7_complex_caller` | 🟢 Matched | lfwCLoop UTF-8 string stream decoding and registration buffer |
-| `0x0010C894` | `func_0010C894` | `game/loops` | 12 B | `2_accessor` | 🟢 Matched | Game loop subsystem pointer getter via literal pool (0x0086C8CC) |
-| `0x0011054C` | `func_0011054C` | `game/loops` | 24 B | `3_arithmetic_logic` | 🟢 Matched | Struct header reset (zeros 8 bytes, sets byte 0 to 0xFF) |
-| `0x001128F8` | `func_001128F8` | `ctr/nn_y2r` | 148 B | `7_complex_caller` | 🟢 Matched | Y2R virtual dispatch for image conversion parameters |
-| `0x0011298C` | `func_0011298C` | `ctr/nn_y2r` | 284 B | `7_complex_caller` | 🟢 Matched | Y2R image transformation and coordinate scaling sequence |
-| `0x00112AA8` | `func_00112AA8` | `ctr/nn_y2r` | 96 B | `4_complex_leaf` | 🟢 Matched | Y2R channel state structure field zero-initialization |
-| `0x00112B08` | `func_00112B08` | `ctr/nn_y2r` | 124 B | `7_complex_caller` | 🟢 Matched | Y2R channel cleanup reset invoking func_00113F80 and dispatch |
-| `0x00112B84` | `func_00112B84` | `ctr/nn_y2r` | 236 B | `7_complex_caller` | 🟢 Matched | Y2R format handler and .xf stream processor |
-| `0x00112CB0` | `func_00112CB0` | `ctr/nn_y2r` | 32 B | `6_moderate_caller` | 🟢 Matched | Y2R slot configuration invoking func_0014A070 |
-| `0x00112CD0` | `func_00112CD0` | `ctr/nn_y2r` | 12 B | `2_simple_accessor` | 🟢 Matched | Y2R indexed slot calculation falling through to func_00112CDC |
-| `0x00112CDC` | `func_00112CDC` | `ctr/nn_y2r` | 44 B | `6_moderate_caller` | 🟢 Matched | Y2R slot configuration type 8 with NULL check invoking func_0014A070 |
-| `0x00112D58` | `func_00112D58` | `ctr/nn_y2r` | 36 B | `6_moderate_caller` | 🟢 Matched | Y2R slot configuration type 2 invoking func_0014A070 |
-| `0x00112D8C` | `func_00112D8C` | `ctr/nn_y2r` | 20 B | `6_moderate_caller` | 🟢 Matched | Method chaining wrapper invoking func_0014A06C |
-| `0x00112DA0` | `func_00112DA0` | `ctr/nn_y2r` | 192 B | `7_complex_caller` | 🟢 Matched | Y2R image conversion context setup and dispatch |
-| `0x00112E60` | `func_00112E60` | `ctr/nn_y2r` | 16 B | `2_accessor` | 🟢 Matched | Y2R struct offset 8648 u16 reader |
-| `0x00112E70` | `func_00112E70` | `ctr/nn_y2r` | 88 B | `6_moderate_caller` | 🟢 Matched | Y2R format query and dimension retrieval invoking func_00116CB4 |
-| `0x00112EC8` | `func_00112EC8` | `ctr/nn_y2r` | 28 B | `6_moderate_caller` | 🟢 Matched | Y2R mutex lock/unlock sequence on unk_00867CF8 |
-| `0x00112EE4` | `func_00112EE4` | `ctr/nn_y2r` | 16 B | `6_moderate_caller` | 🟢 Matched | Y2R stack buffer query invoking func_002FDAC4 |
-| `0x00112F58` | `func_00112F58` | `ctr/nn_y2r` | 120 B | `7_complex_caller` | 🟢 Matched | Y2R buffer structure initialization and alignment registration |
-| `0x00112FF0` | `svcCreateTimer` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x2D) |
-| `0x00113008` | `func_00113008` | `ctr/svc` | 36 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x08 CreateThread) |
-| `0x001130CC` | `func_001130CC` | `ctr/nn_y2r` | 396 B | `7_complex_caller` | 🟢 Matched | Y2R VFP register context saving and parameter batch processing |
-| `0x00113650` | `func_00113650` | `ctr/nn_y2r` | 52 B | `3_arithmetic_logic` | 🟢 Matched | Y2R global flag 0x008150AC disable toggle |
-| `0x00113684` | `func_00113684` | `ctr/nn_y2r` | 56 B | `3_arithmetic_logic` | 🟢 Matched | Y2R global flag 0x008150AC enable toggle |
-| `0x001136BC` | `func_001136BC` | `ctr/nn_y2r` | 68 B | `6_moderate_caller` | 🟢 Matched | Y2R initialization check and configuration helper |
-| `0x00113700` | `func_00113700` | `ctr/nn_y2r` | 64 B | `7_complex_caller` | 🟢 Matched | Y2R buffer deallocation sequence on unk_00814F28 |
-| `0x00113740` | `func_00113740` | `ctr/nn_y2r` | 128 B | `7_complex_caller` | 🟢 Matched | Y2R buffer allocation and initialization on unk_00814F28 |
-| `0x001137C0` | `func_001137C0` | `ctr/nn_y2r` | 20 B | `6_moderate_caller` | 🟢 Matched | Helper invoking func_00136154(&unk_0086A0A4) |
-| `0x001137D8` | `func_001137D8` | `ctr/nn_y2r` | 48 B | `6_moderate_caller` | 🟢 Matched | Y2R buffer validation sequence with unk_0086A0A4 |
-| `0x00113808` | `func_00113808` | `ctr/nn_y2r` | 112 B | `7_complex_caller` | 🟢 Matched | Y2R state update and event clearance sequence (svc 0x19) |
-| `0x00113878` | `func_00113878` | `ctr/nn_y2r` | 88 B | `5_simple_wrapper` | 🟢 Matched | Y2R microsecond conversion and dispatch invoking func_001468F0 |
-| `0x001138D0` | `func_001138D0` | `ctr/nn_y2r` | 44 B | `7_complex_caller` | 🟢 Matched | Y2R error reporting thunk invoking func_0011F51C |
-| `0x001138FC` | `func_001138FC` | `ctr/nn_y2r` | 392 B | `7_complex_caller` | 🟢 Matched | Y2R subsystem complete deinitialization and channel shutdown sequence |
-| `0x00113F00` | `func_00113F00` | `ctr/nn_y2r` | 24 B | `7_complex_caller` | 🟢 Matched | Y2R initialization sequence invoking func_0011F46C func_0011FA98 |
-| `0x00113F18` | `func_00113F18` | `ctr/nn_y2r` | 52 B | `7_complex_caller` | 🟢 Matched | Y2R finalize sequence invoking func_0011FABC func_0011FCFC |
-| `0x00113F4C` | `func_00113F4C` | `ctr/nn_y2r` | 12 B | `7_complex_caller` | 🟢 Matched | Y2R tail-call thunk to func_0011FDAC with unk_008661EC |
-| `0x00113F58` | `func_00113F58` | `ctr/nn_y2r` | 20 B | `2_accessor` | 🟢 Matched | Y2R global bit 3 flag getter via literal pool (0x008661EC) |
-| `0x00113F70` | `func_00113F70` | `ctr/nn_y2r` | 12 B | `2_accessor` | 🟢 Matched | Y2R global float field getter via literal pool (0x00815090) |
-| `0x00113F80` | `func_00113F80` | `ctr/nn_y2r` | 152 B | `7_complex_caller` | 🟢 Matched | Y2R hardware mode dispatch and channel reset sequence |
+| `0x0010B7FC` | `func_0010B7FC` | `engine/lfw` | 140 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | lfwCLoop hardware profile switch dispatch table |
+| `0x0010B888` | `func_0010B888` | `engine/lfw` | 48 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | lfwCLoop state and channel reset sequence |
+| `0x0010B8B8` | `func_0010B8B8` | `engine/lfw` | 156 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | lfwCLoop UTF-8 string stream decoding and registration buffer |
+| `0x0010C894` | `func_0010C894` | `game/loops` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | Game loop subsystem pointer getter via literal pool (0x0086C8CC) |
+| `0x0011054C` | `func_0011054C` | `game/loops` | 24 B | `3_arithmetic_logic` | 🟢 Matched (C/C++) | Struct header reset (zeros 8 bytes, sets byte 0 to 0xFF) |
+| `0x001128F8` | `func_001128F8` | `ctr/nn_y2r` | 148 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Y2R virtual dispatch for image conversion parameters |
+| `0x0011298C` | `func_0011298C` | `ctr/nn_y2r` | 284 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Y2R image transformation and coordinate scaling sequence |
+| `0x00112AA8` | `func_00112AA8` | `ctr/nn_y2r` | 96 B | `4_complex_leaf` | 🟢 Matched (C/C++) | Y2R channel state structure field zero-initialization |
+| `0x00112B08` | `func_00112B08` | `ctr/nn_y2r` | 124 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Y2R channel cleanup reset invoking func_00113F80 and dispatch |
+| `0x00112B84` | `func_00112B84` | `ctr/nn_y2r` | 236 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Y2R format handler and .xf stream processor |
+| `0x00112CB0` | `func_00112CB0` | `ctr/nn_y2r` | 32 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Y2R slot configuration invoking func_0014A070 |
+| `0x00112CD0` | `func_00112CD0` | `ctr/nn_y2r` | 12 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | Y2R indexed slot calculation falling through to func_00112CDC |
+| `0x00112CDC` | `func_00112CDC` | `ctr/nn_y2r` | 44 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Y2R slot configuration type 8 with NULL check invoking func_0014A070 |
+| `0x00112D58` | `func_00112D58` | `ctr/nn_y2r` | 36 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Y2R slot configuration type 2 invoking func_0014A070 |
+| `0x00112D8C` | `func_00112D8C` | `ctr/nn_y2r` | 20 B | `6_moderate_caller` | 🟢 Matched (C/C++) | Method chaining wrapper invoking func_0014A06C |
+| `0x00112DA0` | `func_00112DA0` | `ctr/nn_y2r` | 192 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Y2R image conversion context setup and dispatch |
+| `0x00112E60` | `func_00112E60` | `ctr/nn_y2r` | 16 B | `2_accessor` | 🟢 Matched (C/C++) | Y2R struct offset 8648 u16 reader |
+| `0x00112E70` | `func_00112E70` | `ctr/nn_y2r` | 88 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Y2R format query and dimension retrieval invoking func_00116CB4 |
+| `0x00112EC8` | `func_00112EC8` | `ctr/nn_y2r` | 28 B | `6_moderate_caller` | 🟢 Matched (C/C++) | Y2R mutex lock/unlock sequence on unk_00867CF8 |
+| `0x00112EE4` | `func_00112EE4` | `ctr/nn_y2r` | 16 B | `6_moderate_caller` | 🟢 Matched (C/C++) | Y2R stack buffer query invoking func_002FDAC4 |
+| `0x00112F58` | `func_00112F58` | `ctr/nn_y2r` | 120 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Y2R buffer structure initialization and alignment registration |
+| `0x00112FF0` | `svcCreateTimer` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x2D) |
+| `0x00113008` | `func_00113008` | `ctr/svc` | 36 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x08 CreateThread) |
+| `0x001130CC` | `func_001130CC` | `ctr/nn_y2r` | 396 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Y2R VFP register context saving and parameter batch processing |
+| `0x00113650` | `func_00113650` | `ctr/nn_y2r` | 52 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Y2R global flag 0x008150AC disable toggle |
+| `0x00113684` | `func_00113684` | `ctr/nn_y2r` | 56 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | Y2R global flag 0x008150AC enable toggle |
+| `0x001136BC` | `func_001136BC` | `ctr/nn_y2r` | 68 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Y2R initialization check and configuration helper |
+| `0x00113700` | `func_00113700` | `ctr/nn_y2r` | 64 B | `7_complex_caller` | 🟢 Matched (C/C++) | Y2R buffer deallocation sequence on unk_00814F28 |
+| `0x00113740` | `func_00113740` | `ctr/nn_y2r` | 128 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Y2R buffer allocation and initialization on unk_00814F28 |
+| `0x001137C0` | `func_001137C0` | `ctr/nn_y2r` | 20 B | `6_moderate_caller` | 🟢 Matched (C/C++) | Helper invoking func_00136154(&unk_0086A0A4) |
+| `0x001137D8` | `func_001137D8` | `ctr/nn_y2r` | 48 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Y2R buffer validation sequence with unk_0086A0A4 |
+| `0x00113808` | `func_00113808` | `ctr/nn_y2r` | 112 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Y2R state update and event clearance sequence (svc 0x19) |
+| `0x00113878` | `func_00113878` | `ctr/nn_y2r` | 88 B | `5_simple_wrapper` | ⚪ ASM Stub (Verified) | Y2R microsecond conversion and dispatch invoking func_001468F0 |
+| `0x001138D0` | `func_001138D0` | `ctr/nn_y2r` | 44 B | `7_complex_caller` | 🟢 Matched (C/C++) | Y2R error reporting thunk invoking func_0011F51C |
+| `0x001138FC` | `func_001138FC` | `ctr/nn_y2r` | 392 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Y2R subsystem complete deinitialization and channel shutdown sequence |
+| `0x00113A84` | `func_00113A84` | `ctr/nn_y2r` | 1148 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Y2R subsystem initialization sequence and hardware channel configuration |
+| `0x00113F00` | `func_00113F00` | `ctr/nn_y2r` | 24 B | `7_complex_caller` | 🟢 Matched (C/C++) | Y2R initialization sequence invoking func_0011F46C func_0011FA98 |
+| `0x00113F18` | `func_00113F18` | `ctr/nn_y2r` | 52 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Y2R finalize sequence invoking func_0011FABC func_0011FCFC |
+| `0x00113F4C` | `func_00113F4C` | `ctr/nn_y2r` | 12 B | `7_complex_caller` | 🟢 Matched (C/C++) | Y2R tail-call thunk to func_0011FDAC with unk_008661EC |
+| `0x00113F58` | `func_00113F58` | `ctr/nn_y2r` | 20 B | `2_accessor` | 🟢 Matched (C/C++) | Y2R global bit 3 flag getter via literal pool (0x008661EC) |
+| `0x00113F70` | `func_00113F70` | `ctr/nn_y2r` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | Y2R global float field getter via literal pool (0x00815090) |
+| `0x00113F80` | `func_00113F80` | `ctr/nn_y2r` | 152 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Y2R hardware mode dispatch and channel reset sequence |
 | `0x001274A0` | `func_001274A0` | `ctr/nn_os` | 24 B | `3_arithmetic_logic` | 🟡 In Review | nn::os atomic spinlock acquire loop (ldrex/strex synchronization) |
-| `0x00127520` | `func_00127520` | `ctr/nn_os` | 12 B | `2_accessor` | 🟢 Matched | CTR-SDK .text size / limit getter via literal pool (0x005F32AC) |
-| `0x001275D8` | `func_001275D8` | `ctr/nn_os` | 12 B | `2_accessor` | 🟢 Matched | CTR-SDK .text base VMA getter via literal pool (0x00100000) |
-| `0x0012788C` | `func_0012788C` | `ctr/nn_os` | 16 B | `2_accessor` | 🟢 Matched | nn::os global flag setter via literal pool (0x00828EEC) |
-| `0x00127EE0` | `func_00127EE0` | `ctr/nn_ndm` | 12 B | `2_accessor` | 🟢 Matched | nn::ndm global state offset reader via literal pool (0x00865F18) |
-| `0x00127EEC` | `func_00127EEC` | `ctr/nn_ndm` | 12 B | `2_accessor` | 🟢 Matched | nn::ndm global state pointer getter via literal pool (0x00865F10) |
-| `0x001280A8` | `func_001280A8` | `ctr/nn_ndm` | 24 B | `3_arithmetic_logic` | 🟢 Matched | nn::ndm bounds-checked struct array element indexer (stride 8, offset +0x0C) |
-| `0x001284E4` | `func_001284E4` | `ctr/nn_applet` | 28 B | `2_accessor` | 🟢 Matched | nn::applet::CTR::IsApplication attribute check via literal pool (0x00814E00) |
-| `0x00128544` | `func_00128544` | `ctr/nn_applet` | 20 B | `2_simple_accessor` | 🟢 Matched | nn::applet::detail::SetCallback2C |
-| `0x00128558` | `func_00128558` | `ctr/nn_applet` | 16 B | `2_simple_accessor` | 🟢 Matched | nn::applet::detail::SetState10 |
-| `0x00128568` | `func_00128568` | `ctr/nn_applet` | 16 B | `2_simple_accessor` | 🟢 Matched | nn::applet::detail::GetState0C |
-| `0x00128578` | `func_00128578` | `ctr/nn_applet` | 16 B | `2_simple_accessor` | 🟢 Matched | nn::applet::detail::SetState0C |
-| `0x00128588` | `func_00128588` | `ctr/nn_applet` | 20 B | `2_simple_accessor` | 🟢 Matched | nn::applet::detail::SetCallback20 |
-| `0x0012859C` | `func_0012859C` | `ctr/nn_applet` | 20 B | `2_simple_accessor` | 🟢 Matched | nn::applet::detail::SetState08_1 |
-| `0x001285B0` | `func_001285B0` | `ctr/nn_applet` | 16 B | `2_simple_accessor` | 🟢 Matched | nn::applet::detail::GetState08 |
-| `0x001285C0` | `func_001285C0` | `ctr/nn_applet` | 20 B | `2_simple_accessor` | 🟢 Matched | nn::applet::detail::SetCallback24 |
-| `0x001285D4` | `func_001285D4` | `ctr/nn_applet` | 20 B | `2_simple_accessor` | 🟢 Matched | nn::applet::detail::SetState08_0 |
-| `0x001285E8` | `func_001285E8` | `ctr/nn_applet` | 16 B | `2_simple_accessor` | 🟢 Matched | nn::applet::detail::GetState0B |
-| `0x0012CB00` | `func_0012CB00` | `engine/lxp` | 12 B | `2_accessor` | 🟢 Matched | Level-5 engine global singleton getter via literal pool (0x00868A9C) |
-| `0x0012F190` | `svcExitThread` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x09) |
-| `0x0012F198` | `svcCreateResourceLimit` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x35) |
-| `0x0012FEC0` | `func_0012FEC0` | `engine/lxp` | 8 B | `1_leaf_stub` | 🟢 Matched | lxpCMemory boolean true stub (returns constant 1) |
-| `0x00130018` | `func_00130018` | `engine/lxp` | 8 B | `1_leaf_stub` | 🟢 Matched | lxpCMemory virtual boolean true stub (returns constant 1) |
-| `0x001300B0` | `func_001300B0` | `engine/lxp` | 12 B | `2_accessor` | 🟢 Matched | lxpCMemory manager pointer getter via literal pool (0x00868F10) |
-| `0x0013EC38` | `func_0013EC38` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x3C panic reason 4) |
-| `0x0013EC48` | `svcBreak` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x3C) |
-| `0x0013EC50` | `func_0013EC50` | `ctr/svc` | 20 B | `1_leaf_stub` | 🟢 Matched | Thread yield stub via svc 0x0A (svcSleepThread(0)) |
-| `0x0013EC5C` | `func_0013EC5C` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x0A) |
-| `0x0013EC64` | `svcWaitSynchronizationN` | `ctr/svc` | 36 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x25 WaitSynchronizationN) |
-| `0x0013F29C` | `func_0013F29C` | `engine/core` | 12 B | `2_accessor` | 🟢 Matched | Level-5 engine subsystem pointer getter via literal pool (0x00867DA8) |
-| `0x00151628` | `func_00151628` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 2D vector element-wise multiplication (VEC2Mul) |
-| `0x00151644` | `func_00151644` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 2D vector element-wise addition (VEC2Add) |
-| `0x00151D04` | `func_00151D04` | `ctr/nn_math` | 32 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 2D vector linear interpolation (VEC2Lerp) |
-| `0x00151D24` | `func_00151D24` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | 🟢 Matched | nn::math::ARMv6::VEC3AddAsm vector-vector addition |
-| `0x00151D40` | `func_00151D40` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | 🟢 Matched | nn::math::ARMv6::VEC3SubAsm vector-vector subtraction |
-| `0x00151D5C` | `func_00151D5C` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | 🟢 Matched | nn::math::ARMv6::VEC3MulAsm vector-vector multiplication |
-| `0x00151D78` | `func_00151D78` | `ctr/nn_math` | 24 B | `3_arithmetic_logic` | 🟢 Matched | nn::math::ARMv6::VEC3AddAsm vector-scalar addition |
-| `0x00151D90` | `func_00151D90` | `ctr/nn_math` | 24 B | `3_arithmetic_logic` | 🟢 Matched | nn::math::ARMv6::VEC3SubAsm vector-scalar subtraction |
-| `0x00151DA8` | `func_00151DA8` | `ctr/nn_math` | 24 B | `3_arithmetic_logic` | 🟢 Matched | nn::math::ARMv6::VEC3MulAsm vector-scalar multiplication |
-| `0x00151DC0` | `func_00151DC0` | `ctr/nn_math` | 40 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 3D vector scalar triple product in registers (VEC3CrossDotReg) |
-| `0x00151DE8` | `func_00151DE8` | `ctr/nn_math` | 52 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 3D vector scalar triple product from pointers (VEC3CrossDot) |
-| `0x00151E1C` | `func_00151E1C` | `ctr/nn_math` | 40 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 3D vector linear interpolation (VEC3Lerp) |
-| `0x00151E44` | `func_00151E44` | `ctr/nn_math` | 40 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 3D vector cross product (VEC3Cross) |
-| `0x00151E6C` | `func_00151E6C` | `ctr/nn_math` | 32 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 4D vector addition (VEC4Add) |
-| `0x00151E8C` | `func_00151E8C` | `ctr/nn_math` | 32 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 4D vector subtraction (VEC4Sub) |
-| `0x00151EAC` | `func_00151EAC` | `ctr/nn_math` | 32 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 4D vector multiplication (VEC4Mul) |
-| `0x00151ECC` | `func_00151ECC` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 4D vector scalar addition (VEC4AddScalar) |
-| `0x00151EE8` | `func_00151EE8` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 4D vector scalar subtraction (VEC4SubScalar) |
-| `0x00151F04` | `func_00151F04` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 4D vector scalar multiplication (VEC4MulScalar) |
-| `0x00151F20` | `func_00151F20` | `ctr/nn_math` | 48 B | `3_arithmetic_logic` | 🟢 Matched | nn::math 4D vector linear interpolation (VEC4Lerp) |
-| `0x00151F50` | `func_00151F50` | `ctr/nn_math` | 80 B | `3_arithmetic_logic` | 🟢 Matched | nn::math Quaternion Hamilton multiplication (QUATMul) |
-| `0x00151FA0` | `svcCreateAddressArbiter` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x17) |
-| `0x00151FBC` | `svcSleepThread` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x28) |
-| `0x00151FC4` | `svcGetThreadId` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x37) |
-| `0x00166948` | `svcArbitrateAddress` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x22 ArbitrateAddress) |
-| `0x00171C78` | `func_00171C78` | `game/core` | 12 B | `2_accessor` | 🟢 Matched | Game subsystem global pointer getter via literal pool (0x0091B7B8) |
-| `0x0017656C` | `func_0017656C` | `game/core` | 4 B | `1_leaf_stub` | 🟢 Matched | Game subsystem leaf empty void stub function (bx lr) |
-| `0x0018A714` | `svcCloseHandle` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x23) |
-| `0x0018A71C` | `func_0018A71C` | `ctr/svc` | 28 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x1E CreateMemoryBlock) |
-| `0x0018A738` | `svcCreateMemoryBlock` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x13) |
-| `0x0018A750` | `svcCreateThread` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x27) |
-| `0x0018A768` | `svcGetHandleInfo` | `ctr/svc` | 28 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x29 GetHandleInfo) |
-| `0x0018A784` | `svcControlMemory` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x0B) |
-| `0x0018A868` | `svcWaitSynchronization1` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x24) |
-| `0x00301248` | `func_00301248` | `ctr/nn_nex` | 4 B | `1_leaf_stub` | 🟢 Matched | nn::nex leaf empty void stub function (bx lr) |
-| `0x0031F1E8` | `_ZN2nn3nex7qResultaSERKS1_` | `ctr/nn_nex` | 12 B | `2_accessor` | 🟢 Matched | nn::nex::qResult::operator=(const qResult&) |
+| `0x00127520` | `func_00127520` | `ctr/nn_os` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | CTR-SDK .text size / limit getter via literal pool (0x005F32AC) |
+| `0x001275D8` | `func_001275D8` | `ctr/nn_os` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | CTR-SDK .text base VMA getter via literal pool (0x00100000) |
+| `0x0012788C` | `func_0012788C` | `ctr/nn_os` | 16 B | `2_accessor` | 🟢 Matched (C/C++) | nn::os global flag setter via literal pool (0x00828EEC) |
+| `0x00127EE0` | `func_00127EE0` | `ctr/nn_ndm` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | nn::ndm global state offset reader via literal pool (0x00865F18) |
+| `0x00127EEC` | `func_00127EEC` | `ctr/nn_ndm` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | nn::ndm global state pointer getter via literal pool (0x00865F10) |
+| `0x001280A8` | `func_001280A8` | `ctr/nn_ndm` | 24 B | `3_arithmetic_logic` | 🟢 Matched (C/C++) | nn::ndm bounds-checked struct array element indexer (stride 8, offset +0x0C) |
+| `0x001284E4` | `func_001284E4` | `ctr/nn_applet` | 28 B | `2_accessor` | 🟢 Matched (C/C++) | nn::applet::CTR::IsApplication attribute check via literal pool (0x00814E00) |
+| `0x00128544` | `func_00128544` | `ctr/nn_applet` | 20 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | nn::applet::detail::SetCallback2C |
+| `0x00128558` | `func_00128558` | `ctr/nn_applet` | 16 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | nn::applet::detail::SetState10 |
+| `0x00128568` | `func_00128568` | `ctr/nn_applet` | 16 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | nn::applet::detail::GetState0C |
+| `0x00128578` | `func_00128578` | `ctr/nn_applet` | 16 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | nn::applet::detail::SetState0C |
+| `0x00128588` | `func_00128588` | `ctr/nn_applet` | 20 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | nn::applet::detail::SetCallback20 |
+| `0x0012859C` | `func_0012859C` | `ctr/nn_applet` | 20 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | nn::applet::detail::SetState08_1 |
+| `0x001285B0` | `func_001285B0` | `ctr/nn_applet` | 16 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | nn::applet::detail::GetState08 |
+| `0x001285C0` | `func_001285C0` | `ctr/nn_applet` | 20 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | nn::applet::detail::SetCallback24 |
+| `0x001285D4` | `func_001285D4` | `ctr/nn_applet` | 20 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | nn::applet::detail::SetState08_0 |
+| `0x001285E8` | `func_001285E8` | `ctr/nn_applet` | 16 B | `2_simple_accessor` | ⚪ ASM Stub (Verified) | nn::applet::detail::GetState0B |
+| `0x0012CB00` | `func_0012CB00` | `engine/lxp` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | Level-5 engine global singleton getter via literal pool (0x00868A9C) |
+| `0x0012F190` | `svcExitThread` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x09) |
+| `0x0012F198` | `svcCreateResourceLimit` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x35) |
+| `0x0012FEC0` | `func_0012FEC0` | `engine/lxp` | 8 B | `1_leaf_stub` | 🟢 Matched (C/C++) | lxpCMemory boolean true stub (returns constant 1) |
+| `0x00130018` | `func_00130018` | `engine/lxp` | 8 B | `1_leaf_stub` | 🟢 Matched (C/C++) | lxpCMemory virtual boolean true stub (returns constant 1) |
+| `0x001300B0` | `func_001300B0` | `engine/lxp` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | lxpCMemory manager pointer getter via literal pool (0x00868F10) |
+| `0x0013EC38` | `func_0013EC38` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x3C panic reason 4) |
+| `0x0013EC48` | `svcBreak` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x3C) |
+| `0x0013EC50` | `func_0013EC50` | `ctr/svc` | 20 B | `1_leaf_stub` | 🟢 Matched (C/C++) | Thread yield stub via svc 0x0A (svcSleepThread(0)) |
+| `0x0013EC5C` | `func_0013EC5C` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x0A) |
+| `0x0013EC64` | `svcWaitSynchronizationN` | `ctr/svc` | 36 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x25 WaitSynchronizationN) |
+| `0x0013F29C` | `func_0013F29C` | `engine/core` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | Level-5 engine subsystem pointer getter via literal pool (0x00867DA8) |
+| `0x00151628` | `func_00151628` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math 2D vector element-wise multiplication (VEC2Mul) |
+| `0x00151644` | `func_00151644` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math 2D vector element-wise addition (VEC2Add) |
+| `0x00151D04` | `func_00151D04` | `ctr/nn_math` | 32 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math 2D vector linear interpolation (VEC2Lerp) |
+| `0x00151D24` | `func_00151D24` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math::ARMv6::VEC3AddAsm vector-vector addition |
+| `0x00151D40` | `func_00151D40` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math::ARMv6::VEC3SubAsm vector-vector subtraction |
+| `0x00151D5C` | `func_00151D5C` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math::ARMv6::VEC3MulAsm vector-vector multiplication |
+| `0x00151D78` | `func_00151D78` | `ctr/nn_math` | 24 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math::ARMv6::VEC3AddAsm vector-scalar addition |
+| `0x00151D90` | `func_00151D90` | `ctr/nn_math` | 24 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math::ARMv6::VEC3SubAsm vector-scalar subtraction |
+| `0x00151DA8` | `func_00151DA8` | `ctr/nn_math` | 24 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math::ARMv6::VEC3MulAsm vector-scalar multiplication |
+| `0x00151DC0` | `func_00151DC0` | `ctr/nn_math` | 40 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math 3D vector scalar triple product in registers (VEC3CrossDotReg) |
+| `0x00151DE8` | `func_00151DE8` | `ctr/nn_math` | 52 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math 3D vector scalar triple product from pointers (VEC3CrossDot) |
+| `0x00151E1C` | `func_00151E1C` | `ctr/nn_math` | 40 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math 3D vector linear interpolation (VEC3Lerp) |
+| `0x00151E44` | `func_00151E44` | `ctr/nn_math` | 40 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math 3D vector cross product (VEC3Cross) |
+| `0x00151E6C` | `func_00151E6C` | `ctr/nn_math` | 32 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math 4D vector addition (VEC4Add) |
+| `0x00151E8C` | `func_00151E8C` | `ctr/nn_math` | 32 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math 4D vector subtraction (VEC4Sub) |
+| `0x00151EAC` | `func_00151EAC` | `ctr/nn_math` | 32 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math 4D vector multiplication (VEC4Mul) |
+| `0x00151ECC` | `func_00151ECC` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math 4D vector scalar addition (VEC4AddScalar) |
+| `0x00151EE8` | `func_00151EE8` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math 4D vector scalar subtraction (VEC4SubScalar) |
+| `0x00151F04` | `func_00151F04` | `ctr/nn_math` | 28 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math 4D vector scalar multiplication (VEC4MulScalar) |
+| `0x00151F20` | `func_00151F20` | `ctr/nn_math` | 48 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math 4D vector linear interpolation (VEC4Lerp) |
+| `0x00151F50` | `func_00151F50` | `ctr/nn_math` | 80 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::math Quaternion Hamilton multiplication (QUATMul) |
+| `0x00151FA0` | `svcCreateAddressArbiter` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x17) |
+| `0x00151FBC` | `svcSleepThread` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x28) |
+| `0x00151FC4` | `svcGetThreadId` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x37) |
+| `0x00166948` | `svcArbitrateAddress` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x22 ArbitrateAddress) |
+| `0x00171C78` | `func_00171C78` | `game/core` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | Game subsystem global pointer getter via literal pool (0x0091B7B8) |
+| `0x0017656C` | `func_0017656C` | `game/core` | 4 B | `1_leaf_stub` | 🟢 Matched (C/C++) | Game subsystem leaf empty void stub function (bx lr) |
+| `0x0018A714` | `svcCloseHandle` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x23) |
+| `0x0018A71C` | `func_0018A71C` | `ctr/svc` | 28 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x1E CreateMemoryBlock) |
+| `0x0018A738` | `svcCreateMemoryBlock` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x13) |
+| `0x0018A750` | `svcCreateThread` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x27) |
+| `0x0018A768` | `svcGetHandleInfo` | `ctr/svc` | 28 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x29 GetHandleInfo) |
+| `0x0018A784` | `svcControlMemory` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x0B) |
+| `0x0018A868` | `svcWaitSynchronization1` | `ctr/svc` | 8 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x24) |
+| `0x00301248` | `func_00301248` | `ctr/nn_nex` | 4 B | `1_leaf_stub` | 🟢 Matched (C/C++) | nn::nex leaf empty void stub function (bx lr) |
+| `0x0031F1E8` | `_ZN2nn3nex7qResultaSERKS1_` | `ctr/nn_nex` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | nn::nex::qResult::operator=(const qResult&) |
 | `0x0031F1F4` | `_ZN2nn3nex7qResultC1Ev` | `ctr/nn_nex` | 16 B | `2_accessor` | 🟢 Match (Community Accepted) | nn::nex::qResult::qResult() |
-| `0x0031F204` | `_ZN2nn3nex7qResultC1ERKS1_` | `ctr/nn_nex` | 12 B | `2_accessor` | 🟢 Matched | nn::nex::qResult::qResult(const qResult&) |
-| `0x0031F210` | `_ZNK2nn3nex7qResult8getValueEv` | `ctr/nn_nex` | 16 B | `2_accessor` | 🟢 Matched | nn::nex::qResult::getValue() const |
-| `0x00340CE8` | `_ZN2nn3nex10NexElementaSERKS1_` | `ctr/nn_nex` | 20 B | `2_accessor` | 🟢 Matched | nn::nex::NexElement::operator=(const NexElement&) |
-| `0x00340CFC` | `_ZN2nn3nex10NexElementC1Eis` | `ctr/nn_nex` | 12 B | `2_accessor` | 🟢 Matched | nn::nex::NexElement::NexElement(s32, s16) |
-| `0x00340D08` | `_ZN2nn3nex10NexElementC1Ev` | `ctr/nn_nex` | 16 B | `2_accessor` | 🟢 Matched | nn::nex::NexElement::NexElement() |
-| `0x00340D18` | `_ZN2nn3nex10NexElementD1Ev` | `ctr/nn_nex` | 4 B | `1_leaf_stub` | 🟢 Matched | nn::nex::NexElement::~NexElement() |
-| `0x00340D1C` | `_ZN2nn3nex10NexElementC1ERKS1_` | `ctr/nn_nex` | 20 B | `2_accessor` | 🟢 Matched | nn::nex::NexElement::NexElement(const NexElement&) |
+| `0x0031F204` | `_ZN2nn3nex7qResultC1ERKS1_` | `ctr/nn_nex` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | nn::nex::qResult::qResult(const qResult&) |
+| `0x0031F210` | `_ZNK2nn3nex7qResult8getValueEv` | `ctr/nn_nex` | 16 B | `2_accessor` | 🟢 Matched (C/C++) | nn::nex::qResult::getValue() const |
+| `0x00340CE8` | `_ZN2nn3nex10NexElementaSERKS1_` | `ctr/nn_nex` | 20 B | `2_accessor` | 🟢 Matched (C/C++) | nn::nex::NexElement::operator=(const NexElement&) |
+| `0x00340CFC` | `_ZN2nn3nex10NexElementC1Eis` | `ctr/nn_nex` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | nn::nex::NexElement::NexElement(s32, s16) |
+| `0x00340D08` | `_ZN2nn3nex10NexElementC1Ev` | `ctr/nn_nex` | 16 B | `2_accessor` | 🟢 Matched (C/C++) | nn::nex::NexElement::NexElement() |
+| `0x00340D18` | `_ZN2nn3nex10NexElementD1Ev` | `ctr/nn_nex` | 4 B | `1_leaf_stub` | 🟢 Matched (C/C++) | nn::nex::NexElement::~NexElement() |
+| `0x00340D1C` | `_ZN2nn3nex10NexElementC1ERKS1_` | `ctr/nn_nex` | 20 B | `2_accessor` | 🟢 Matched (C/C++) | nn::nex::NexElement::NexElement(const NexElement&) |
 | `0x00340E5C` | `_ZN2nn3nex21StationConnectionInfo11deserializeEPKh` | `ctr/nn_nex` | 72 B | `3_control_flow` | ⏳ Staged | nn::nex::StationConnectionInfo::deserialize(const u8*) |
-| `0x00340EAC` | `_ZN2nn3nex21StationConnectionInfo7setPortEt` | `ctr/nn_nex` | 12 B | `2_accessor` | 🟢 Matched | nn::nex::StationConnectionInfo::setPort(u16) |
-| `0x00340EB8` | `_ZN2nn3nex21StationConnectionInfo10setElementERKNS0_10NexElementE` | `ctr/nn_nex` | 20 B | `2_accessor` | 🟢 Matched | nn::nex::StationConnectionInfo::setElement(const NexElement&) |
-| `0x00340ECC` | `_ZN2nn3nex21StationConnectionInfo5resetEv` | `ctr/nn_nex` | 20 B | `2_accessor` | 🟢 Matched | nn::nex::StationConnectionInfo::reset() |
+| `0x00340EAC` | `_ZN2nn3nex21StationConnectionInfo7setPortEt` | `ctr/nn_nex` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | nn::nex::StationConnectionInfo::setPort(u16) |
+| `0x00340EB8` | `_ZN2nn3nex21StationConnectionInfo10setElementERKNS0_10NexElementE` | `ctr/nn_nex` | 20 B | `2_accessor` | 🟢 Matched (C/C++) | nn::nex::StationConnectionInfo::setElement(const NexElement&) |
+| `0x00340ECC` | `_ZN2nn3nex21StationConnectionInfo5resetEv` | `ctr/nn_nex` | 20 B | `2_accessor` | 🟢 Matched (C/C++) | nn::nex::StationConnectionInfo::reset() |
 | `0x00340EE8` | `_ZNK2nn3nex21StationConnectionInfo7compareERKS1_` | `ctr/nn_nex` | 136 B | `3_control_flow` | ⏳ Staged | nn::nex::StationConnectionInfo::compare(const StationConnectionInfo&) const |
-| `0x005F015C` | `func_005F015C` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched | CTR kernel syscall wrapper stub (svc 0x28 GetSystemTick to pointer) |
+| `0x005F015C` | `func_005F015C` | `ctr/svc` | 24 B | `1_leaf_stub` | 🟢 Matched (C/C++) | CTR kernel syscall wrapper stub (svc 0x28 GetSystemTick to pointer) |
 
 <!-- MANIFEST_TABLE_END -->
 
