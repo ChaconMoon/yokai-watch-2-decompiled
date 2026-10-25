@@ -33,7 +33,7 @@ For Carlos's full personal statement on the role, ethics, and daily reality of A
 
 ## Status
 
-Initial exploratory passes on the EU (`00040000001B2900`) ARM11 executable (`code.raw.bin`, 7,737,344 bytes, image base `0x00100000`).
+Initial exploratory passes on the EU (`00040000001B2900`) ARM11 decompressed CXI binary image (`code.raw.bin`, 7,737,344 bytes; executable `.text`: 6,238,892 bytes, base `0x00100000`).
 
 The current objective is establishing a reproducible verification pipeline, matching the first batch of atomic leaf functions, and classifying library vs game engine routines.
 
@@ -43,14 +43,15 @@ Progress is split into categories so that assembly is never counted as C decompi
 
 | Category | Count | Meaning |
 | :--- | :---: | :--- |
-| **Decompiled C/C++ (Byte-Exact Match)** | **72** / 18,225 (0.40%) | Real C/C++ code verified byte-exact (1,392 B / 0.0223%) |
-| **Assembly Stubs (`.s` extracted)** | **392** / 18,225 (2.15%) | Split stubs for building & progressive replacement (63,816 B / 1.0229%) |
-| **Total Binary Code Covered** | **464** / 18,225 (2.55%) | Combined C/C++ and extracted assembly (65,208 B / 1.0452%) |
-| **Layer 1: Nintendo CTR-SDK (`src/ctr/`)** | **61** C matched + **389** stubs | CRT startup, `svc`, `nn::os`, `nn::y2r`, `nn::nex` |
+| **Decompiled C/C++ (Decomp Mode)** | **72** / 18,225 (0.40%) | Real C/C++ verified byte-exact (1,392 B / 0.0223% of `.text` · 0.0180% of binary) |
+| **Assembly Stubs (`.s` extracted)** | **393** / 18,225 (2.16%) | Split stubs for building & progressive replacement (63,840 B / 1.0233% of `.text` · 0.8251% of binary) |
+| **Build Match Mode (Binary Code Coverage)** | **465** / 18,225 (2.55%) | Combined C/C++ & assembly matching `code.raw.bin` (65,232 B / 1.0456% of `.text` · 0.8431% of binary) |
+| **Layer 1: Nintendo CTR-SDK (`src/ctr/`)** | **61** C matched + **390** stubs | CRT startup, `svc`, `nn::os`, `nn::y2r`, `nn::nex`, `nn::dsp` |
 | **Layer 2: Level-5 Engine (`src/engine/`)** | **7** C matched + **3** stubs | `lfw` base classes, `lfwCLoop`, `lxp`, `gds` |
 | **Layer 3: Yo-kai Watch 2 Game (`src/game/`)** | **4** C matched + **0** stubs | `ywCLoop*` state machines, battle, RPG entities |
 | **Cataloged in Manifest** | **468** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
-| **Executable Size (`.text`)** | 6,238,892 B | Exact size from NCCH ExHeader (EU `00040000001B2900`) |
+| **Executable Size (`.text`)** | 6,238,892 B | Exact code segment size from NCCH ExHeader (EU `00040000001B2900`) |
+| **Full Binary Image (`code.raw.bin`)** | 7,737,344 B | Decompressed CXI `.code` image (`.text` + `.rodata` + `.data`) |
 | **Architecture** | ARM11 MPCore (ARMv6K) | 32-bit Little Endian, VMA `0x00100000` |
 | **Compiler** | ARMCC / RVCT 4.0 b821 | CTR-SDK 1.2.7 (`1.2.7.f-NINTENDO-CTR-SDK-v1`) |
 
@@ -60,7 +61,9 @@ Progress is split into categories so that assembly is never counted as C decompi
 
 ### Progress reporting policy
 
-Only real C implementations are counted as C-decompiled progress. Assembly, whether a library's own or an authorized inline exception, is counted separately, and so is anything under `scratches/` or unverified headers.
+Progress is presented under two complementary perspectives:
+- **Decomp Mode (C/C++ Matching):** Measures strictly genuine, hand-crafted or AI-assisted C/C++ implementations verified bit-for-bit against the original game code.
+- **Build Match Mode (Binary Code Coverage):** Measures total coverage of the executable (`.text`) and binary image (`code.raw.bin`), combining decompiled C/C++ and verified assembly stubs (`.s`) under the "Split & Replace" methodology. Assembly stubs are never counted as C decompilation. Scratches and unverified prototypes remain staged until verified.
 
 ---
 
@@ -278,7 +281,7 @@ Only real C implementations are counted as C-decompiled progress. Assembly, whet
 | `0x001272E8` | `func_001272E8` | `ctr/nn_os` | 220 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
 | `0x001273CC` | `func_001273CC` | `ctr/nn_os` | 156 B | `4_complex_leaf` | ⚪ ASM Stub (Verified) | Large leaf algorithm |
 | `0x0012746C` | `func_0012746C` | `ctr/nn_os` | 40 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
-| `0x001274A0` | `func_001274A0` | `ctr/nn_os` | 24 B | `3_arithmetic_logic` | 🟡 In Review | nn::os atomic spinlock acquire loop (ldrex/strex synchronization) |
+| `0x001274A0` | `func_001274A0` | `ctr/nn_os` | 24 B | `3_arithmetic_logic` | ⚪ ASM Stub (Verified) | nn::os atomic spinlock acquire loop (ldrex/strex synchronization) |
 | `0x001274B8` | `func_001274B8` | `ctr/nn_os` | 92 B | `7_complex_caller` | ⚪ ASM Stub (Verified) | Complex caller (4 calls) |
 | `0x00127520` | `func_00127520` | `ctr/nn_os` | 12 B | `2_accessor` | 🟢 Matched (C/C++) | CTR-SDK .text size / limit getter via literal pool (0x005F32AC) |
 | `0x0012752C` | `func_0012752C` | `ctr/nn_os` | 156 B | `6_moderate_caller` | ⚪ ASM Stub (Verified) | Moderate caller (2 subcalls) |
