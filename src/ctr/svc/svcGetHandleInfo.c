@@ -1,5 +1,15 @@
 #include <ctr/svc.h>
 
+/**
+ * @brief nn::svc::GetHandleInfo (svcGetHandleInfo)
+ * @address 0x0018A768
+ * CTR kernel syscall wrapper for svc 0x29.
+ * Queries diagnostic information and properties about a kernel handle.
+ * @param out Pointer receiving the 64-bit handle information.
+ * @param handle Target kernel handle.
+ * @param type Information query sub-type.
+ * @return Kernel Result code.
+ */
 __attribute__((naked))
 Result
 svcGetHandleInfo(s64 *out, Handle handle, u32 type)

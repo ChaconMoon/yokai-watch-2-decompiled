@@ -1,5 +1,13 @@
 #include <ctr/svc.h>
 
+/**
+ * @brief nn::svc::GetSystemTickToPtr (func_005F015C)
+ * @address 0x005F015C
+ * Invokes CTR kernel syscall svc 0x28 (GetSystemTick) to retrieve the 64-bit hardware
+ * timer tick and stores the 64-bit value into the supplied pointer via strd.
+ * @param outTick Pointer to an s64 variable that receives the system tick.
+ * @return Returns the destination pointer outTick.
+ */
 __attribute__((naked))
 s64 *func_005F015C(s64 *outTick)
 {

@@ -4,6 +4,12 @@ namespace nn
 {
 namespace nex
 {
+    /**
+     * @brief StationConnectionInfo::reset
+     * @address 0x00340ECC
+     * Resets the station connection state by clearing both fields of the internal
+     * NexElement structure and zeroing the connection port.
+     */
     void StationConnectionInfo::reset()
     {
         m_element.unk_01 = 0;
@@ -11,18 +17,42 @@ namespace nex
         m_port = 0;
     }
 
+    /**
+     * @brief StationConnectionInfo::setPort
+     * @address 0x00340EAC
+     * Sets the network port (offset 0x0C) for this station connection.
+     * @param port 16-bit network port number.
+     * @return Always returns 0 (success).
+     */
     u32 StationConnectionInfo::setPort(u16 port)
     {
         m_port = port;
         return 0;
     }
 
+    /**
+     * @brief StationConnectionInfo::setElement
+     * @address 0x00340EB8
+     * Sets the internal network element by delegating to NexElement::operator=.
+     * @param element Reference to the source NexElement.
+     * @return Always returns 0 (success).
+     */
     u32 StationConnectionInfo::setElement(const NexElement &element)
     {
         m_element = element;
         return 0;
     }
 
+    /**
+     * @brief StationConnectionInfo::deserialize
+     * @address 0x00340E5C
+     * Deserializes station connection information from a binary network buffer.
+     * Performs a bounds check to verify the pointer lies within the valid application
+     * VMA range [0x00100000, 0x20000000). Deserializes the embedded NexElement at offset
+     * 0x04 and reads the 16-bit big-endian port at buffer offset 0x06.
+     * @param buf Pointer to the serialized network payload.
+     * @return 0 on success, 0xE0E14826 if pointer is invalid, or negative qResult on failure.
+     */
     u32 StationConnectionInfo::deserialize(const u8 *buf)
     {
         u32 res = 0xE0E14826;
@@ -39,6 +69,15 @@ namespace nex
         return res;
     }
 
+    /**
+     * @brief StationConnectionInfo::compare
+     * @address 0x00340EE8
+     * Performs a three-way comparison between this instance and another StationConnectionInfo.
+     * Compares the 64-bit identifier obtained from each instance's NexElement via func_0063A6E8.
+     * If equal, breaks ties using the 16-bit port number (m_port).
+     * @param other The StationConnectionInfo instance to compare against.
+     * @return -1 if this < other, 1 if this > other, or 0 if equal.
+     */
     s32 StationConnectionInfo::compare(const StationConnectionInfo &other) const
     {
         s64 a = func_0063A6E8(&m_element);
