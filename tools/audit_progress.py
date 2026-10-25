@@ -158,9 +158,10 @@ def format_progress_table(metrics):
     lines = [
         "| Category | Count | Meaning |",
         "| :--- | :---: | :--- |",
-        f"| **Decompiled C/C++ (Decomp Mode)** | **{cmc}** / {ESTIMATED_TOTAL_FUNCTIONS:,} ({cfp:.2f}%) | Real C/C++ verified byte-exact ({cmb:,} B / {cbp:.4f}% of `.text` · {c_bin_percent:.4f}% of binary) |",
-        f"| **Assembly Stubs (`.s` extracted)** | **{amc}** / {ESTIMATED_TOTAL_FUNCTIONS:,} ({afp:.2f}%) | Split stubs for building & progressive replacement ({amb:,} B / {abp:.4f}% of `.text` · {asm_bin_percent:.4f}% of binary) |",
-        f"| **Build Match Mode (Binary Code Coverage)** | **{tot_count}** / {ESTIMATED_TOTAL_FUNCTIONS:,} ({tot_func_percent:.2f}%) | Combined C/C++ & assembly matching `code.raw.bin` ({tot_bytes:,} B / {tot_text_percent:.4f}% of `.text` · {tot_bin_percent:.4f}% of binary) |",
+        f"| **Decompiled C/C++ (Functions)** | **{cmc}** / {ESTIMATED_TOTAL_FUNCTIONS:,} ({cfp:.2f}%) | Functions implemented in C/C++ and verified byte-exact |",
+        f"| **Total Binary Code Covered** | **{cmb:,} B** / {TOTAL_CODE_BYTES:,} B ({cbp:.4f}%) | C/C++ compiled bytes vs total executable `.text` ({c_bin_percent:.4f}% of `{TOTAL_BINARY_BYTES:,} B` binary) |",
+        f"| **Assembly Stubs (`.s` extracted)** | **{amc}** / {ESTIMATED_TOTAL_FUNCTIONS:,} ({afp:.2f}%) | Split stubs for building & progressive replacement ({amb:,} B / {abp:.4f}%) |",
+        f"| **Build Coverage (C/C++ + ASM Stubs)** | **{tot_count}** / {ESTIMATED_TOTAL_FUNCTIONS:,} ({tot_func_percent:.2f}%) | Combined C/C++ & assembly matching `code.raw.bin` ({tot_bytes:,} B / {tot_text_percent:.4f}%) |",
         f"| **Layer 1: Nintendo CTR-SDK (`src/ctr/`)** | **{len(c_layer['ctr'])}** C matched + **{len(asm_layer['ctr'])}** stubs | CRT startup, `svc`, `nn::os`, `nn::y2r`, `nn::nex`, `nn::dsp` |",
         f"| **Layer 2: Level-5 Engine (`src/engine/`)** | **{len(c_layer['engine'])}** C matched + **{len(asm_layer['engine'])}** stubs | `lfw` base classes, `lfwCLoop`, `lxp`, `gds` |",
         f"| **Layer 3: Yo-kai Watch 2 Game (`src/game/`)** | **{len(c_layer['game'])}** C matched + **{len(asm_layer['game'])}** stubs | `ywCLoop*` state machines, battle, RPG entities |",
@@ -422,14 +423,13 @@ def main():
     print("============================================================")
     print("  Yo-kai Watch 2 (3DS) — 3-Layer Matching Progress Auditor")
     print("============================================================")
-    print(f"  Decompiled C/C++ (Decomp Mode) : {metrics['c_matched_count']} / {ESTIMATED_TOTAL_FUNCTIONS:,} ({metrics['c_func_percent']:.2f}%)")
-    print(f"   ├─ Layer 1 (CTR)              : {len(metrics['c_by_layer']['ctr'])} C matched")
-    print(f"   ├─ Layer 2 (Eng)              : {len(metrics['c_by_layer']['engine'])} C matched")
-    print(f"   └─ Layer 3 (Game)             : {len(metrics['c_by_layer']['game'])} C matched")
-    print(f"  Matched C bytes                : {metrics['c_matched_bytes']:,} bytes ({metrics['c_byte_percent']:.4f}% of .text · {c_bin_pct:.4f}% of binary)")
-    print(f"  Assembly stubs (.s)            : {metrics['asm_count']} functions ({metrics['asm_bytes']:,} bytes)")
-    print(f"  Build Match Mode (Coverage)    : {tot_count} / {ESTIMATED_TOTAL_FUNCTIONS:,} ({(tot_count / ESTIMATED_TOTAL_FUNCTIONS) * 100:.2f}%)")
-    print(f"  Total covered bytes            : {tot_bytes:,} bytes ({tot_text_pct:.4f}% of .text · {tot_bin_pct:.4f}% of binary)")
+    print(f"  Decompiled C/C++ Functions    : {metrics['c_matched_count']} / {ESTIMATED_TOTAL_FUNCTIONS:,} ({metrics['c_func_percent']:.2f}%)")
+    print(f"   ├─ Layer 1 (CTR)             : {len(metrics['c_by_layer']['ctr'])} C matched")
+    print(f"   ├─ Layer 2 (Eng)             : {len(metrics['c_by_layer']['engine'])} C matched")
+    print(f"   └─ Layer 3 (Game)            : {len(metrics['c_by_layer']['game'])} C matched")
+    print(f"  Total Binary Code Covered (C) : {metrics['c_matched_bytes']:,} B / {TOTAL_CODE_BYTES:,} B ({metrics['c_byte_percent']:.4f}% of .text · {c_bin_pct:.4f}% of binary)")
+    print(f"  Assembly stubs (.s)           : {metrics['asm_count']} functions ({metrics['asm_bytes']:,} bytes)")
+    print(f"  Build Coverage (C + ASM)      : {tot_count} / {ESTIMATED_TOTAL_FUNCTIONS:,} ({(tot_count / ESTIMATED_TOTAL_FUNCTIONS) * 100:.2f}%) ({tot_bytes:,} B / {tot_text_pct:.4f}%)")
     print("============================================================")
 
     progress_table = format_progress_table(metrics)

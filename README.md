@@ -43,9 +43,10 @@ Progress is split into categories so that assembly is never counted as C decompi
 
 | Category | Count | Meaning |
 | :--- | :---: | :--- |
-| **Decompiled C/C++ (Decomp Mode)** | **72** / 18,225 (0.40%) | Real C/C++ verified byte-exact (1,392 B / 0.0223% of `.text` · 0.0180% of binary) |
-| **Assembly Stubs (`.s` extracted)** | **393** / 18,225 (2.16%) | Split stubs for building & progressive replacement (63,840 B / 1.0233% of `.text` · 0.8251% of binary) |
-| **Build Match Mode (Binary Code Coverage)** | **465** / 18,225 (2.55%) | Combined C/C++ & assembly matching `code.raw.bin` (65,232 B / 1.0456% of `.text` · 0.8431% of binary) |
+| **Decompiled C/C++ (Functions)** | **72** / 18,225 (0.40%) | Functions implemented in C/C++ and verified byte-exact |
+| **Total Binary Code Covered** | **1,392 B** / 6,238,892 B (0.0223%) | C/C++ compiled bytes vs total executable `.text` (0.0180% of `7,737,344 B` binary) |
+| **Assembly Stubs (`.s` extracted)** | **393** / 18,225 (2.16%) | Split stubs for building & progressive replacement (63,840 B / 1.0233%) |
+| **Build Coverage (C/C++ + ASM Stubs)** | **465** / 18,225 (2.55%) | Combined C/C++ & assembly matching `code.raw.bin` (65,232 B / 1.0456%) |
 | **Layer 1: Nintendo CTR-SDK (`src/ctr/`)** | **61** C matched + **390** stubs | CRT startup, `svc`, `nn::os`, `nn::y2r`, `nn::nex`, `nn::dsp` |
 | **Layer 2: Level-5 Engine (`src/engine/`)** | **7** C matched + **3** stubs | `lfw` base classes, `lfwCLoop`, `lxp`, `gds` |
 | **Layer 3: Yo-kai Watch 2 Game (`src/game/`)** | **4** C matched + **0** stubs | `ywCLoop*` state machines, battle, RPG entities |
@@ -62,8 +63,8 @@ Progress is split into categories so that assembly is never counted as C decompi
 ### Progress reporting policy
 
 Progress is presented under two complementary perspectives:
-- **Decomp Mode (C/C++ Matching):** Measures strictly genuine, hand-crafted or AI-assisted C/C++ implementations verified bit-for-bit against the original game code.
-- **Build Match Mode (Binary Code Coverage):** Measures total coverage of the executable (`.text`) and binary image (`code.raw.bin`), combining decompiled C/C++ and verified assembly stubs (`.s`) under the "Split & Replace" methodology. Assembly stubs are never counted as C decompilation. Scratches and unverified prototypes remain staged until verified.
+- **Total Binary Code Covered (C/C++ Decompilation):** Measures strictly genuine, hand-crafted or AI-assisted C/C++ compiled bytes verified bit-for-bit against the original executable (`.text` and full binary).
+- **Build Coverage (C/C++ + Assembly Stubs):** Measures total code covered by decompiled C/C++ alongside modular assembly stubs (`.s`) under the "Split & Replace" methodology to allow clean rebuilding. Assembly stubs are never counted as C decompilation. Scratches and unverified prototypes remain staged until verified.
 
 ---
 
