@@ -272,7 +272,7 @@ def format_classes_roadmap(classes_csv: Path) -> str:
     return "\n".join(output_lines)
 
 
-def update_readme(readme_path: Path, progress_table: str, manifest_table: str, classes_table: str = ""):
+def update_readme(readme_path: Path, progress_table: str, manifest_table: str = "", classes_table: str = ""):
     if not readme_path.exists():
         print(f"⚠️ README not found at {readme_path}")
         return False
@@ -292,15 +292,13 @@ def update_readme(readme_path: Path, progress_table: str, manifest_table: str, c
         print("⚠️ Marker <!-- PROGRESS_STATS_START --> not found in README.")
 
     manifest_pattern = r"(<!-- MANIFEST_TABLE_START -->)(.*?)(<!-- MANIFEST_TABLE_END -->)"
-    if re.search(manifest_pattern, content, flags=re.DOTALL):
+    if manifest_table and re.search(manifest_pattern, content, flags=re.DOTALL):
         content = re.sub(
             manifest_pattern,
             rf"\g<1>\n\n{manifest_table}\n\n\g<3>",
             content,
             flags=re.DOTALL
         )
-    else:
-        print("⚠️ Marker <!-- MANIFEST_TABLE_START --> not found in README.")
 
     classes_pattern = r"(<!-- TARGET_CLASSES_TABLE_START -->)(.*?)(<!-- TARGET_CLASSES_TABLE_END -->)"
     if classes_table and re.search(classes_pattern, content, flags=re.DOTALL):
@@ -310,13 +308,11 @@ def update_readme(readme_path: Path, progress_table: str, manifest_table: str, c
             content,
             flags=re.DOTALL
         )
-    elif classes_table:
-        print("⚠️ Marker <!-- TARGET_CLASSES_TABLE_START --> not found in README.")
 
     with open(readme_path, "w", encoding="utf-8") as f:
         f.write(content)
 
-    print("✅ README.md automatically updated with audited 3-layer progress.")
+    print("✅ README.md automatically updated with audited progress.")
     return True
 
 
