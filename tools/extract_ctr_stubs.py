@@ -60,23 +60,23 @@ def fix_arm_ual(line):
 
 def get_subsystem_dir(subsystem):
     if subsystem == "svc":
-        return PROJECT_ROOT / "src" / "ctr" / "svc"
+        return PROJECT_ROOT / "asm" / "ctr" / "svc"
     elif subsystem == "crt":
-        return PROJECT_ROOT / "src" / "ctr" / "crt"
+        return PROJECT_ROOT / "asm" / "ctr" / "crt"
     elif subsystem == "nn_os":
-        return PROJECT_ROOT / "src" / "ctr" / "nn" / "os"
+        return PROJECT_ROOT / "asm" / "ctr" / "nn" / "os"
     elif subsystem == "nn_dsp":
-        return PROJECT_ROOT / "src" / "ctr" / "nn" / "dsp"
+        return PROJECT_ROOT / "asm" / "ctr" / "nn" / "dsp"
     elif subsystem == "nn_y2r":
-        return PROJECT_ROOT / "src" / "ctr" / "nn" / "y2r"
+        return PROJECT_ROOT / "asm" / "ctr" / "nn" / "y2r"
     elif subsystem == "nn_applet":
-        return PROJECT_ROOT / "src" / "ctr" / "nn" / "applet"
+        return PROJECT_ROOT / "asm" / "ctr" / "nn" / "applet"
     elif subsystem == "nn_ndm":
-        return PROJECT_ROOT / "src" / "ctr" / "nn" / "ndm"
+        return PROJECT_ROOT / "asm" / "ctr" / "nn" / "ndm"
     elif subsystem == "nn_math":
-        return PROJECT_ROOT / "src" / "ctr" / "nn" / "math"
+        return PROJECT_ROOT / "asm" / "ctr" / "nn" / "math"
     else:
-        return PROJECT_ROOT / "src" / "ctr" / "nn" / subsystem.replace("nn_", "")
+        return PROJECT_ROOT / "asm" / "ctr" / "nn" / subsystem.replace("nn_", "")
 
 
 def assemble_and_verify(s_content, addr, size, raw_bytes):

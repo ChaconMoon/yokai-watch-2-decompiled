@@ -13,6 +13,10 @@ build/
 *.o
 *.elf
 
+# Disassembled assembly stubs extracted locally from ROM
+asm/
+!asm/.gitkeep
+
 # Track expected target object slices for objdiff / decomp.dev
 !expected/*.o
 expected/undecompiled.o
