@@ -47,6 +47,23 @@ Whenever the user requests functions to decompile, deliver them one by one follo
 ```
 ```
 
+### 🎓 Metodología del Ejercicio Didáctico Interactivo (OBLIGATORIO)
+
+Para asegurar que el desarrollador (Carlos) comprenda a fondo la arquitectura, registros y semántica antes de organizar el código:
+
+1. **Preparación Automática por la IA:**
+   - Escribir el stub limpio `.s` en el directorio local protegido `asm/<layer>/<subsystem>/<symbol>.s` (ignorado en git) y proporcionar un enlace markdown clickeable para abrirlo en una pestaña del editor.
+   - Actualizar automáticamente la cabecera correspondiente en `include/<layer>/` con el prototipo de la función y las declaraciones `extern` de variables de memoria.
+2. **Planteamiento del Ejercicio:**
+   - Entregar la función una por una con el formato estándar.
+   - Plantear preguntas didácticas sobre qué hacen las instrucciones (desreferenciación, mnemónicos, tipos de datos C, convención AAPCS y retorno).
+3. **Regla Socrática Estricta (NUNCA DAR LA SOLUCIÓN DIRECTA):**
+   - **Si el desarrollador se equivoca o comete una imprecisión, la IA NUNCA debe darle la solución ni escribirle la respuesta.**
+   - La IA debe responder con preguntas guía, pistas sobre registros o instrucciones concretas y analogías didácticas para que sea el propio desarrollador quien deduzca y corrija el error.
+4. **Validación y Documentación:**
+   - Una vez que el desarrollador explica o escribe el código C correcto, la IA lo consolida en `src/<layer>/<subsystem>/<symbol>.c` incorporando su explicación a los comentarios Doxygen.
+   - Se valida inmediatamente con `make check` asegurando 100% byte-exact matching sin regresiones.
+
 ---
 
 ## 🏛️ 3-Layer Repository Architecture & Didactic Methodology

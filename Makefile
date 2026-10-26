@@ -98,7 +98,24 @@ build/src/ctr/nn/os/func_0010655C.o: CFLAGS += -ffixed-r3 -ffixed-r2
 build/src/ctr/nn/os/func_0010678C.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
 build/src/ctr/nn/os/func_0012788C.o: CFLAGS += -ffixed-r3 -ffixed-r2
 build/src/ctr/nn/applet/func_001284E4.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
+build/src/ctr/nn/applet/func_00128558.o: CFLAGS += -ffixed-r3 -ffixed-r2
+build/src/ctr/nn/applet/func_00128568.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
+build/src/ctr/nn/applet/func_001285B0.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
+build/src/ctr/nn/applet/func_001285E8.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
+build/src/ctr/nn/applet/func_00128608.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
+build/src/ctr/nn/applet/func_0012863C.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
+build/src/ctr/nn/applet/func_00128578.o: CFLAGS += -ffixed-r3 -ffixed-r2
+build/src/ctr/nn/applet/func_001285F8.o: CFLAGS += -ffixed-r3 -ffixed-r2
+build/src/ctr/nn/applet/func_00128618.o: CFLAGS += -ffixed-r3 -ffixed-r2
 build/src/ctr/nn/ndm/func_001280A8.o: CFLAGS += -ffixed-r3
+build/src/ctr/nn/dsp/func_00137054.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
+build/src/ctr/nn/dsp/func_001389BC.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
+build/src/ctr/nn/dsp/func_00138A80.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
+build/src/ctr/nn/dsp/func_00138A90.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
+build/src/engine/lfw/func_0010BBB8.o: CFLAGS += -ffixed-r3 -ffixed-r2
+build/src/engine/lfw/func_0010C598.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
+build/src/engine/lfw/func_0010C5C8.o: CFLAGS += -ffixed-r3 -ffixed-r2
+build/src/engine/lfw/func_0010C6A4.o: CFLAGS += -ffixed-r3 -ffixed-r2
 
 WIBO     := tools/wibo
 ARMCC    := $(WIBO) tools/armcc/4.0/b821/bin/armcc.exe
@@ -106,6 +123,51 @@ ARMFLAGS := --cpu=mpcore -O3 --gnu -c -I . -I include
 build/src/ctr/nn/nex/qResult.o: ARMFLAGS += -Otime
 
 build/src/game/loops/func_0011054C.o: src/game/loops/func_0011054C.c
+	@mkdir -p $(dir $@)
+	@if [ -f "tools/armcc/4.0/b821/bin/armcc.exe" ]; then \
+		$(ARMCC) $(ARMFLAGS) $< -o $@; \
+	else \
+		echo "⚠️ Warning: ARMCC not found, compiling with GCC fallback..."; \
+		$(CC) $(CFLAGS) $< -o $@; \
+	fi
+
+build/src/ctr/nn/dsp/func_00136318.o: src/ctr/nn/dsp/func_00136318.c
+	@mkdir -p $(dir $@)
+	@if [ -f "tools/armcc/4.0/b821/bin/armcc.exe" ]; then \
+		$(ARMCC) $(ARMFLAGS) $< -o $@; \
+	else \
+		echo "⚠️ Warning: ARMCC not found, compiling with GCC fallback..."; \
+		$(CC) $(CFLAGS) $< -o $@; \
+	fi
+
+build/src/ctr/nn/applet/func_0012859C.o: src/ctr/nn/applet/func_0012859C.c
+	@mkdir -p $(dir $@)
+	@if [ -f "tools/armcc/4.0/b821/bin/armcc.exe" ]; then \
+		$(ARMCC) $(ARMFLAGS) $< -o $@; \
+	else \
+		echo "⚠️ Warning: ARMCC not found, compiling with GCC fallback..."; \
+		$(CC) $(CFLAGS) $< -o $@; \
+	fi
+
+build/src/ctr/nn/applet/func_001285D4.o: src/ctr/nn/applet/func_001285D4.c
+	@mkdir -p $(dir $@)
+	@if [ -f "tools/armcc/4.0/b821/bin/armcc.exe" ]; then \
+		$(ARMCC) $(ARMFLAGS) $< -o $@; \
+	else \
+		echo "⚠️ Warning: ARMCC not found, compiling with GCC fallback..."; \
+		$(CC) $(CFLAGS) $< -o $@; \
+	fi
+
+build/src/ctr/nn/applet/func_00128628.o: src/ctr/nn/applet/func_00128628.c
+	@mkdir -p $(dir $@)
+	@if [ -f "tools/armcc/4.0/b821/bin/armcc.exe" ]; then \
+		$(ARMCC) $(ARMFLAGS) $< -o $@; \
+	else \
+		echo "⚠️ Warning: ARMCC not found, compiling with GCC fallback..."; \
+		$(CC) $(CFLAGS) $< -o $@; \
+	fi
+
+build/src/ctr/nn/applet/func_0012864C.o: src/ctr/nn/applet/func_0012864C.c
 	@mkdir -p $(dir $@)
 	@if [ -f "tools/armcc/4.0/b821/bin/armcc.exe" ]; then \
 		$(ARMCC) $(ARMFLAGS) $< -o $@; \

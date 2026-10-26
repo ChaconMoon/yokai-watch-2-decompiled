@@ -41,14 +41,14 @@ Progress is split into categories so that extracted assembly stubs are never cou
 
 | Category | Count | Meaning |
 | :--- | :---: | :--- |
-| **Decompiled C/C++ (Functions)** | **72** / 18,225 (0.40%) | Functions implemented in C/C++ and verified byte-exact |
-| **Total Binary Code Covered** | **1,392 B** / 6,238,892 B (0.0223%) | C/C++ compiled bytes vs total executable `.text` (0.0180% of `7,737,344 B` binary) |
-| **Assembly Stubs (`.s` extracted)** | **393** / 18,225 (2.16%) | Split stubs for building & progressive replacement (63,840 B / 1.0233%) |
-| **Build Coverage (C/C++ + ASM Stubs)** | **465** / 18,225 (2.55%) | Combined C/C++ & assembly matching `code.raw.bin` (65,232 B / 1.0456%) |
-| **Layer 1: Nintendo CTR-SDK (`src/ctr/`)** | **61** C matched + **390** stubs | CRT startup, `svc`, `nn::os`, `nn::y2r`, `nn::nex`, `nn::dsp` |
-| **Layer 2: Level-5 Engine (`src/engine/`)** | **7** C matched + **3** stubs | `lfw` base classes, `lfwCLoop`, `lxp`, `gds` |
+| **Decompiled C/C++ (Functions)** | **94** / 18,225 (0.52%) | Functions implemented in C/C++ and verified byte-exact |
+| **Total Binary Code Covered** | **1,764 B** / 6,238,892 B (0.0283%) | C/C++ compiled bytes vs total executable `.text` (0.0228% of `7,737,344 B` binary) |
+| **Assembly Stubs (`.s` extracted)** | **381** / 18,225 (2.09%) | Split stubs for building & progressive replacement (63,652 B / 1.0202%) |
+| **Build Coverage (C/C++ + ASM Stubs)** | **475** / 18,225 (2.61%) | Combined C/C++ & assembly matching `code.raw.bin` (65,416 B / 1.0485%) |
+| **Layer 1: Nintendo CTR-SDK (`src/ctr/`)** | **79** C matched + **378** stubs | CRT startup, `svc`, `nn::os`, `nn::y2r`, `nn::nex`, `nn::dsp` |
+| **Layer 2: Level-5 Engine (`src/engine/`)** | **11** C matched + **3** stubs | `lfw` base classes, `lfwCLoop`, `lxp`, `gds` |
 | **Layer 3: Yo-kai Watch 2 Game (`src/game/`)** | **4** C matched + **0** stubs | `ywCLoop*` state machines, battle, RPG entities |
-| **Cataloged in Manifest** | **468** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
+| **Cataloged in Manifest** | **478** / 18,225 | Functions actively tracked across `src/` and `scratches/` |
 | **Executable Size (`.text`)** | 6,238,892 B | Exact code segment size from NCCH ExHeader (EU `00040000001B2900`) |
 | **Full Binary Image (`code.raw.bin`)** | 7,737,344 B | Decompressed CXI `.code` image (`.text` + `.rodata` + `.data`) |
 | **Architecture** | ARM11 MPCore (ARMv6K) | 32-bit Little Endian, VMA `0x00100000` |

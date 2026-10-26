@@ -163,6 +163,10 @@ address,symbol,size,layer,subsystem,level,status,description
 0x0010B7FC,func_0010B7FC,140,engine,lfw,6_moderate_caller,asm_stub,lfwCLoop hardware profile switch dispatch table
 0x0010B888,func_0010B888,48,engine,lfw,3_arithmetic_logic,asm_stub,lfwCLoop state and channel reset sequence
 0x0010B8B8,func_0010B8B8,156,engine,lfw,7_complex_caller,asm_stub,lfwCLoop UTF-8 string stream decoding and registration buffer
+0x0010BBB8,func_0010BBB8,16,engine,lfw,2_accessor,matched,Level-5 Framework global pointer setter (0x00815DA8)
+0x0010C598,func_0010C598,16,engine,lfw,2_accessor,matched,Level-5 Framework applet attribute getter (0x00814E00 offset 0x18)
+0x0010C5C8,func_0010C5C8,16,engine,lfw,2_accessor,matched,Level-5 Framework applet attribute setter (0x00814E00 offset 0x18)
+0x0010C6A4,func_0010C6A4,16,engine,lfw,2_accessor,matched,Level-5 Framework applet unk_14 setter (0x00814E00 offset 0x14)
 0x0010C894,func_0010C894,12,game,loops,2_accessor,matched,Game loop subsystem pointer getter via literal pool (0x0086C8CC)
 0x0011054C,func_0011054C,24,game,loops,3_arithmetic_logic,matched,"Struct header reset (zeros 8 bytes, sets byte 0 to 0xFF)"
 0x001128F8,func_001128F8,148,ctr,nn_y2r,7_complex_caller,asm_stub,Y2R virtual dispatch for image conversion parameters
@@ -251,15 +255,21 @@ address,symbol,size,layer,subsystem,level,status,description
 0x001284AC,func_001284AC,52,ctr,nn_os,6_moderate_caller,asm_stub,Moderate caller (3 subcalls)
 0x001284E4,func_001284E4,28,ctr,nn_applet,2_accessor,matched,nn::applet::CTR::IsApplication attribute check via literal pool (0x00814E00)
 0x00128544,func_00128544,20,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::SetCallback2C
-0x00128558,func_00128558,16,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::SetState10
-0x00128568,func_00128568,16,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::GetState0C
-0x00128578,func_00128578,16,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::SetState0C
+0x00128558,func_00128558,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState10 (offset 0x10)
+0x00128568,func_00128568,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::GetState0C (offset 0x0C)
+0x00128578,func_00128578,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState0C (offset 0x0C)
 0x00128588,func_00128588,20,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::SetCallback20
-0x0012859C,func_0012859C,20,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::SetState08_1
-0x001285B0,func_001285B0,16,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::GetState08
+0x0012859C,func_0012859C,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState08_1 (offset 0x08 = 1)
+0x001285B0,func_001285B0,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::GetState08 (offset 0x08)
 0x001285C0,func_001285C0,20,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::SetCallback24
-0x001285D4,func_001285D4,20,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::SetState08_0
-0x001285E8,func_001285E8,16,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::GetState0B
+0x001285D4,func_001285D4,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState08_0 (offset 0x08 = 0)
+0x001285E8,func_001285E8,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::GetState0B (offset 0x0B)
+0x001285F8,func_001285F8,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState0B (offset 0x0B)
+0x00128608,func_00128608,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::GetState0D (offset 0x0D)
+0x00128618,func_00128618,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState0D (offset 0x0D)
+0x00128628,func_00128628,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState07_1 (offset 0x07 = 1)
+0x0012863C,func_0012863C,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::GetState07 (offset 0x07)
+0x0012864C,func_0012864C,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState07_0 (offset 0x07 = 0)
 0x0012CB00,func_0012CB00,12,engine,lxp,2_accessor,matched,Level-5 engine global singleton getter via literal pool (0x00868A9C)
 0x0012F190,svcExitThread,8,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x09)
 0x0012F198,svcCreateResourceLimit,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x35)
@@ -270,7 +280,7 @@ address,symbol,size,layer,subsystem,level,status,description
 0x00136204,func_00136204,136,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (8 calls)
 0x0013628C,thunk_FUN_0013457c,4,ctr,nn_dsp,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
 0x00136290,func_00136290,136,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (11 calls)
-0x00136318,func_00136318,20,ctr,nn_dsp,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00136318,func_00136318,20,ctr,nn_dsp,2_simple_accessor,matched,nn::dsp struct header initializer (magic 0xE7E3FFFF status 0)
 0x00136330,func_00136330,60,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (4 calls)
 0x0013636C,func_0013636C,32,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (4 calls)
 0x0013638C,func_0013638C,144,ctr,nn_dsp,7_complex_caller,asm_stub,"Complex caller (5 calls, vtable)"
@@ -289,7 +299,7 @@ address,symbol,size,layer,subsystem,level,status,description
 0x00136D58,func_00136D58,360,ctr,nn_dsp,7_complex_caller,asm_stub,"Complex caller (30 calls, vtable)"
 0x00136EC4,func_00136EC4,256,ctr,nn_dsp,7_complex_caller,asm_stub,"Complex caller (18 calls, vtable)"
 0x00136FC4,func_00136FC4,60,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
-0x00137054,func_00137054,12,ctr,nn_dsp,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00137054,func_00137054,16,ctr,nn_dsp,2_simple_accessor,matched,nn::dsp global 32-bit state getter (0x00815DFC)
 0x00137064,func_00137064,156,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (8 calls)
 0x00137114,func_00137114,60,ctr,nn_dsp,6_moderate_caller,asm_stub,Moderate caller (2 subcalls)
 0x00137158,func_00137158,84,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (8 calls)
@@ -347,12 +357,12 @@ address,symbol,size,layer,subsystem,level,status,description
 0x00138880,func_00138880,72,ctr,nn_dsp,4_complex_leaf,asm_stub,Large leaf algorithm
 0x001388CC,func_001388CC,32,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
 0x001388EC,func_001388EC,192,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (8 calls)
-0x001389BC,func_001389BC,12,ctr,nn_dsp,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x001389BC,func_001389BC,16,ctr,nn_dsp,2_simple_accessor,matched,nn::dsp global signed byte getter (0x00815DAC)
 0x001389CC,func_001389CC,76,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (6 calls)
 0x001389F4,func_001389F4,60,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
 0x00138A30,func_00138A30,40,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
-0x00138A80,func_00138A80,12,ctr,nn_dsp,2_simple_accessor,asm_stub,Single field getter/setter or global read
-0x00138A90,func_00138A90,12,ctr,nn_dsp,2_simple_accessor,asm_stub,Single field getter/setter or global read
+0x00138A80,func_00138A80,16,ctr,nn_dsp,2_simple_accessor,matched,nn::dsp global signed byte getter (0x00815CA0)
+0x00138A90,func_00138A90,16,ctr,nn_dsp,2_simple_accessor,matched,nn::dsp global applet state field getter (0x00814E00 offset 0x10)
 0x00138AA0,func_00138AA0,8,ctr,nn_dsp,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
 0x00138AAC,func_00138AAC,8,ctr,nn_dsp,5_simple_wrapper,asm_stub,Single function call wrapper / thunk
 0x00138AB8,func_00138AB8,148,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (6 calls)
