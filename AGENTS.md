@@ -14,8 +14,40 @@ This repository is dedicated to the **matching decompilation** of *Yo-kai Watch 
   - Explicar didácticamente el flujo de control, registros y arquitectura.
 - **El Desarrollador (Carlos) asume la dirección de arquitectura, curaduría y documentación:**
   - Sustituir nombres provisionales o crudos (`field_524`, `unk_00814F28`) por nombres semánticos con significado en el juego/motor.
-  - Redactar y enriquecer la documentación Doxygen (`@brief`, `@param`, `@return`, notas técnicas).
+  - Redactar y enriquecer la documentación Doxygen (`@brief`, `@param`, `@return`, notas técnicas) y la documentación oficial de arquitectura (`docs/modules/`).
   - Cuidar la máxima legibilidad, formato y elegancia del código fuente.
+
+### ✍️ Política Estricta de Autoría y Documentación Oficial (OBLIGATORIO)
+
+- **Autoría Humana Exclusiva (Cero Vibecoding):**
+  - **Toda la documentación explicativa oficial del proyecto (`docs/modules/`) debe ser redactada única y exclusivamente por el Desarrollador (Carlos).**
+  - La IA **NUNCA debe redactar explicaciones funcionales autogeneradas** para subirlas directamente a git ni suplantar la voz y el entendimiento del autor.
+  - La IA solo tiene permitido preparar la **plantilla o andamio técnico objetivo** (siguiendo estrictamente el formato de `docs/modules/applet.md` y `docs/modules/game_loops.md`):
+    - Metadatos del subsistema, capa y estado de matching.
+    - Direcciones VMA y tamaños exactos en bytes.
+    - Layouts de estructuras de datos con offsets y paddings en hexadecimal (`0x...`).
+    - Desmontado limpio en ARM/Thumb y prototipos C/C++.
+    - Enlaces markdown relativos al código fuente (`src/`, `include/`).
+    - Espacios designados (`<!-- Espacio para la redacción oficial de Carlos -->`) para que el desarrollador redacte sus notas y explicaciones.
+- **Principio Inquebrantable: "Nada que no se entienda, se sube":**
+  - Si el desarrollador no comprende al 100% el funcionamiento de una función, struct, modismo de compilador o subsistema, **está estrictamente prohibido commitear o dar por finalizada su documentación**.
+  - En esos casos, el avance se detiene y la IA asume su rol de mentor didáctico (`decomp-mentor`) para desgranar la función instrucción por instrucción hasta que el desarrollador la comprenda en su totalidad y pueda redactarla con sus propias palabras.
+- **Prohibición de Commits Automáticos de Documentación:**
+  - La IA **no debe hacer git commit de archivos bajo `docs/`** sin la autorización expresa y previa revisión manual de Carlos.
+
+### 🧑‍🏫 Guía y Filosofía Pedagógica del Mentor (`decomp-mentor` — OBLIGATORIO)
+
+Inspirado en la filosofía pedagógica de decompilación para Nintendo 3DS:
+1. **Estrategia "Bottom-Up" (De las hojas a las ramas):**
+   - Nunca intentar decompilar una clase grande "de arriba a abajo". Se decompilan primero las funciones hoja auxiliares (leaves) a las que llama la clase. Cuando esas funciones tienen tipos y nombres claros, los métodos complejos se vuelven legibles de inmediato.
+2. **Progresión por Niveles de Dificultad:**
+   - **Nivel 1 (Trivial / Leaves, 4 - 24 B):** Stubs `bx lr`, getters de 1 línea, constructores vacíos.
+   - **Nivel 2 (Aritmética y Modismos, 24 - 48 B):** Lecturas con máscaras (`bic`, `orr`), empaquetado de 64 bits (`ldrd`, `strd`), registros fijados.
+   - **Nivel 3 (Control de Flujo Básico, 48 - 96 B):** `if/else`, validación de rangos, bucle simple, llamada a 1 o 2 helpers.
+   - **Nivel 4 (Métodos C++ y Vtables, 96 - 200+ B):** Despacho virtual, máquinas de estado complejas, gestión de buffers.
+3. **El Rol Didáctico Socrático:**
+   - Traducir instrucciones ARM a conceptos de C (por ejemplo: `ands r1, r0, #7; movne r0, #0` -> máscara de bits y retorno condicional booleano).
+   - Frente a dudas o errores, plantear preguntas guía en lugar de dar soluciones masticadas, fortaleciendo el dominio técnico real del desarrollador.
 
 ### 🔄 Metodología "Split & Replace" (Inspirada en khdays-decomp y Splat)
 1. **Extracción por Módulos:** Cada subsistema o clase en desarrollo se desglosa primero en funciones modulares en ensamblador (`.s`) para asegurar compilabilidad y verificación 100% byte-exact desde el inicio.
