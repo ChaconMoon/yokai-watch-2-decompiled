@@ -54,6 +54,7 @@ Para asegurar que el desarrollador (Carlos) comprenda a fondo la arquitectura, r
 1. **Preparación Automática por la IA:**
    - Escribir el stub limpio `.s` en el directorio local protegido `asm/<layer>/<subsystem>/<symbol>.s` (ignorado en git) y proporcionar un enlace markdown clickeable para abrirlo en una pestaña del editor.
    - Actualizar automáticamente la cabecera correspondiente en `include/<layer>/` con el prototipo de la función y las declaraciones `extern` de variables de memoria.
+   - Actualizar el estado en directo ejecutando `python3 tools/export_live.py --symbol <symbol>` para sincronizar `live.json` y `live.txt` con la nueva función activa para el directo/stream.
 2. **Planteamiento del Ejercicio:**
    - Entregar la función una por una con el formato estándar.
    - Plantear preguntas didácticas sobre qué hacen las instrucciones (desreferenciación, mnemónicos, tipos de datos C, convención AAPCS y retorno).
@@ -63,6 +64,8 @@ Para asegurar que el desarrollador (Carlos) comprenda a fondo la arquitectura, r
 4. **Validación y Documentación:**
    - Una vez que el desarrollador explica o escribe el código C correcto, la IA lo consolida en `src/<layer>/<subsystem>/<symbol>.c` incorporando su explicación a los comentarios Doxygen.
    - Se valida inmediatamente con `make check` asegurando 100% byte-exact matching sin regresiones.
+5. **Reanudación de Sesión:**
+   - Al iniciar o reanudar una conversación/sesión, la IA debe leer `.current_task` y `live.json` para identificar la función en curso y orientar al desarrollador exactamente en el punto donde se quedó.
 
 ---
 
@@ -124,6 +127,8 @@ Functions are **not** organized in a flat size-sorted folder. Instead, the proje
   - Classifies all `.text` functions (`0x00100000`–`0x006F32AC`) by architectural layer (`ctr`, `engine`, `game`), subsystem, and didactic difficulty (`1_trivial` to `7_complex_caller`) into `config/functions_classified.csv`.
 - `tools/audit_progress.py` (`make progress`):
   - Reads `config/functions.csv`, computes per-layer metrics relative to the exact `.text` size (`6,238,892` bytes / `18,225` functions), and updates `README.md` and `objdiff.json`.
+- `tools/export_live.py` (`make live`):
+  - Exports real-time decompilation status to `live.json` and `live.txt` for stream overlays (OBS text sources, web overlays, Discord bots), synchronizing current active function, layer breakdown, and progress percentages.
 - `tools/generate_expected.py` & `tools/generate_undecompiled.py` (`make report`):
   - Generates reference `.o` files in `expected/` and builds `build/report.json` via `tools/objdiff-cli`.
 - `tools/extract_rom.py` (`make extract`):

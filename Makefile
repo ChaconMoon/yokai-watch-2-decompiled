@@ -10,6 +10,7 @@ CLASSES  := $(PYTHON) $(TOOLS)/extract_classes.py
 CHECK    := $(PYTHON) $(TOOLS)/check_match.py
 DUMP     := $(PYTHON) $(TOOLS)/dump_asm.py
 INJECT   := $(PYTHON) $(TOOLS)/inject_code.py
+LIVE     := $(PYTHON) $(TOOLS)/export_live.py
 AZAHAR_MOD_DIR := $(HOME)/.local/share/azahar-emu/load/mods/00040000001B2900/exefs
 
 CC       := arm-none-eabi-gcc
@@ -26,7 +27,7 @@ OBJS     := $(patsubst src/%.c, build/src/%.o, $(C_SRCS)) \
             $(patsubst src/%.cpp, build/src/%.o, $(CPP_SRCS)) \
             $(patsubst src/%.s, build/src/%.o, $(S_SRCS))
 
-.PHONY: all build extract progress classes check inject dump report info clean distclean
+.PHONY: all build extract progress classes check inject dump report info clean distclean live
 
 all: build
 
@@ -70,6 +71,10 @@ progress:
 		$(PYTHON) $(TOOLS)/generate_expected.py >/dev/null; \
 	fi
 	@$(PROGRESS) --update-readme
+	@$(LIVE)
+
+live:
+	@$(LIVE)
 
 classes:
 	@$(CLASSES)
@@ -97,16 +102,6 @@ build/src/ctr/nn/os/func_001063F4.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
 build/src/ctr/nn/os/func_0010655C.o: CFLAGS += -ffixed-r3 -ffixed-r2
 build/src/ctr/nn/os/func_0010678C.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
 build/src/ctr/nn/os/func_0012788C.o: CFLAGS += -ffixed-r3 -ffixed-r2
-build/src/ctr/nn/applet/func_001284E4.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
-build/src/ctr/nn/applet/func_00128558.o: CFLAGS += -ffixed-r3 -ffixed-r2
-build/src/ctr/nn/applet/func_00128568.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
-build/src/ctr/nn/applet/func_001285B0.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
-build/src/ctr/nn/applet/func_001285E8.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
-build/src/ctr/nn/applet/func_00128608.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
-build/src/ctr/nn/applet/func_0012863C.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
-build/src/ctr/nn/applet/func_00128578.o: CFLAGS += -ffixed-r3 -ffixed-r2
-build/src/ctr/nn/applet/func_001285F8.o: CFLAGS += -ffixed-r3 -ffixed-r2
-build/src/ctr/nn/applet/func_00128618.o: CFLAGS += -ffixed-r3 -ffixed-r2
 build/src/ctr/nn/ndm/func_001280A8.o: CFLAGS += -ffixed-r3
 build/src/ctr/nn/dsp/func_00137054.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
 build/src/ctr/nn/dsp/func_001389BC.o: CFLAGS += -ffixed-r3 -ffixed-r2 -ffixed-r1
@@ -121,6 +116,7 @@ WIBO     := tools/wibo
 ARMCC    := $(WIBO) tools/armcc/4.0/b821/bin/armcc.exe
 ARMFLAGS := --cpu=mpcore -O3 --gnu -c -I . -I include
 build/src/ctr/nn/nex/qResult.o: ARMFLAGS += -Otime
+build/src/ctr/nn/applet/applet.o: ARMFLAGS += --split_sections
 
 build/src/game/loops/func_0011054C.o: src/game/loops/func_0011054C.c
 	@mkdir -p $(dir $@)
@@ -132,42 +128,6 @@ build/src/game/loops/func_0011054C.o: src/game/loops/func_0011054C.c
 	fi
 
 build/src/ctr/nn/dsp/func_00136318.o: src/ctr/nn/dsp/func_00136318.c
-	@mkdir -p $(dir $@)
-	@if [ -f "tools/armcc/4.0/b821/bin/armcc.exe" ]; then \
-		$(ARMCC) $(ARMFLAGS) $< -o $@; \
-	else \
-		echo "⚠️ Warning: ARMCC not found, compiling with GCC fallback..."; \
-		$(CC) $(CFLAGS) $< -o $@; \
-	fi
-
-build/src/ctr/nn/applet/func_0012859C.o: src/ctr/nn/applet/func_0012859C.c
-	@mkdir -p $(dir $@)
-	@if [ -f "tools/armcc/4.0/b821/bin/armcc.exe" ]; then \
-		$(ARMCC) $(ARMFLAGS) $< -o $@; \
-	else \
-		echo "⚠️ Warning: ARMCC not found, compiling with GCC fallback..."; \
-		$(CC) $(CFLAGS) $< -o $@; \
-	fi
-
-build/src/ctr/nn/applet/func_001285D4.o: src/ctr/nn/applet/func_001285D4.c
-	@mkdir -p $(dir $@)
-	@if [ -f "tools/armcc/4.0/b821/bin/armcc.exe" ]; then \
-		$(ARMCC) $(ARMFLAGS) $< -o $@; \
-	else \
-		echo "⚠️ Warning: ARMCC not found, compiling with GCC fallback..."; \
-		$(CC) $(CFLAGS) $< -o $@; \
-	fi
-
-build/src/ctr/nn/applet/func_00128628.o: src/ctr/nn/applet/func_00128628.c
-	@mkdir -p $(dir $@)
-	@if [ -f "tools/armcc/4.0/b821/bin/armcc.exe" ]; then \
-		$(ARMCC) $(ARMFLAGS) $< -o $@; \
-	else \
-		echo "⚠️ Warning: ARMCC not found, compiling with GCC fallback..."; \
-		$(CC) $(CFLAGS) $< -o $@; \
-	fi
-
-build/src/ctr/nn/applet/func_0012864C.o: src/ctr/nn/applet/func_0012864C.c
 	@mkdir -p $(dir $@)
 	@if [ -f "tools/armcc/4.0/b821/bin/armcc.exe" ]; then \
 		$(ARMCC) $(ARMFLAGS) $< -o $@; \

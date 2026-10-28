@@ -59,6 +59,17 @@ def get_symbols_from_elf(obj_path: Path):
         print(f"Error running readelf on {obj_path}: {e}")
         return {}
 
+    sec_cmd = ["arm-none-eabi-readelf", "-S", "-W", str(obj_path)]
+    sec_names = {}
+    try:
+        sec_out = subprocess.check_output(sec_cmd, text=True, stderr=subprocess.PIPE)
+        for line in sec_out.splitlines():
+            m = re.search(r"\[\s*(\d+)\]\s+([^\s]+)", line)
+            if m:
+                sec_names[m.group(1)] = m.group(2)
+    except Exception:
+        pass
+
     symbols = {}
     for line in out.splitlines():
         parts = line.strip().split()
@@ -69,33 +80,50 @@ def get_symbols_from_elf(obj_path: Path):
             try:
                 val = int(parts[1], 16)
                 size = int(parts[2])
-                symbols[name] = {"offset": val, "size": size}
+                sec_ndx = parts[6]
+                sec_name = sec_names.get(sec_ndx, ".text")
+                symbols[name] = {"offset": val, "size": size, "section": sec_name}
             except ValueError:
                 continue
     return symbols
 
 
 def get_relocations_from_elf(obj_path: Path):
-    """Parses relocations from .rel.text or .rela.text using arm-none-eabi-readelf."""
+    """Parses relocations by section from ELF using arm-none-eabi-readelf."""
     cmd = ["arm-none-eabi-readelf", "-r", "-W", str(obj_path)]
     try:
         out = subprocess.check_output(cmd, text=True, stderr=subprocess.PIPE)
     except subprocess.CalledProcessError as e:
         print(f"Error running readelf -r on {obj_path}: {e}")
-        return []
+        return {}
 
-    relocs = []
+    relocs_by_sec = {}
+    curr_sec = ".text"
     for line in out.splitlines():
+        m = re.search(r"Relocation section '([^']+)'", line)
+        if m:
+            sec = m.group(1)
+            if sec.startswith(".rela"):
+                curr_sec = sec[5:]
+            elif sec.startswith(".rel"):
+                curr_sec = sec[4:]
+            else:
+                curr_sec = sec
+            if curr_sec not in relocs_by_sec:
+                relocs_by_sec[curr_sec] = []
+            continue
         parts = line.strip().split()
         if len(parts) >= 5 and "R_ARM_" in parts[2]:
             try:
                 offset = int(parts[0], 16)
                 rtype = parts[2]
                 sym_name = parts[-1]
-                relocs.append({"offset": offset, "type": rtype, "symbol": sym_name})
+                if curr_sec not in relocs_by_sec:
+                    relocs_by_sec[curr_sec] = []
+                relocs_by_sec[curr_sec].append({"offset": offset, "type": rtype, "symbol": sym_name})
             except ValueError:
                 continue
-    return relocs
+    return relocs_by_sec
 
 
 def extract_section_bytes(obj_path: Path, section=".text"):
@@ -164,8 +192,8 @@ def main():
         if not symbols:
             continue
 
-        relocs = get_relocations_from_elf(obj)
-        text_bytes = extract_section_bytes(obj, ".text")
+        relocs_by_sec = get_relocations_from_elf(obj)
+        default_text_bytes = extract_section_bytes(obj, ".text")
 
         try:
             rel_path = obj.relative_to(BUILD_DIR)
@@ -201,6 +229,12 @@ def main():
                 mismatched_count += 1
                 continue
 
+            sec_name = sym_info.get("section", ".text")
+            if sec_name != ".text":
+                text_bytes = extract_section_bytes(obj, sec_name)
+            else:
+                text_bytes = default_text_bytes
+
             expected_slice = raw_bytes[raw_offset : raw_offset + size]
 
             obj_off = sym_info["offset"]
@@ -213,8 +247,9 @@ def main():
             comp_len = min(len(expected_slice), len(actual_slice))
 
             # Identify relocations belonging to this function
+            sec_relocs = relocs_by_sec.get(sec_name, [])
             fn_relocs = [
-                r for r in relocs if obj_off <= r["offset"] < obj_off + obj_size
+                r for r in sec_relocs if obj_off <= r["offset"] < obj_off + obj_size
             ]
             reloc_byte_indices = set()
             reloc_details = []

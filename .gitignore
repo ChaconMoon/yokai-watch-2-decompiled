@@ -24,6 +24,9 @@ expected/undecompiled.o
 # Local reverse-engineering notes and scratchpads
 notes/
 *.local.md
+.current_task
+live.json
+live.txt
 # Local proprietary compilers & emulators
 tools/armcc/
 tools/*.zip

@@ -637,244 +637,6 @@
       }
     },
     {
-      "name": "ctr/nn_applet/func_001284E4",
-      "target_path": "expected/func_001284E4.o",
-      "base_path": "build/src/ctr/nn/applet/func_001284E4.o",
-      "metadata": {
-        "complete": true,
-        "source_path": "src/ctr/nn/applet/func_001284E4.c",
-        "progress_categories": [
-          "ctr"
-        ]
-      },
-      "scratch": {
-        "platform": "n3ds",
-        "compiler": "armcc_40_821",
-        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
-      }
-    },
-    {
-      "name": "ctr/nn_applet/func_00128558",
-      "target_path": "expected/func_00128558.o",
-      "base_path": "build/src/ctr/nn/applet/func_00128558.o",
-      "metadata": {
-        "complete": true,
-        "source_path": "src/ctr/nn/applet/func_00128558.c",
-        "progress_categories": [
-          "ctr"
-        ]
-      },
-      "scratch": {
-        "platform": "n3ds",
-        "compiler": "armcc_40_821",
-        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
-      }
-    },
-    {
-      "name": "ctr/nn_applet/func_00128568",
-      "target_path": "expected/func_00128568.o",
-      "base_path": "build/src/ctr/nn/applet/func_00128568.o",
-      "metadata": {
-        "complete": true,
-        "source_path": "src/ctr/nn/applet/func_00128568.c",
-        "progress_categories": [
-          "ctr"
-        ]
-      },
-      "scratch": {
-        "platform": "n3ds",
-        "compiler": "armcc_40_821",
-        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
-      }
-    },
-    {
-      "name": "ctr/nn_applet/func_00128578",
-      "target_path": "expected/func_00128578.o",
-      "base_path": "build/src/ctr/nn/applet/func_00128578.o",
-      "metadata": {
-        "complete": true,
-        "source_path": "src/ctr/nn/applet/func_00128578.c",
-        "progress_categories": [
-          "ctr"
-        ]
-      },
-      "scratch": {
-        "platform": "n3ds",
-        "compiler": "armcc_40_821",
-        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
-      }
-    },
-    {
-      "name": "ctr/nn_applet/func_0012859C",
-      "target_path": "expected/func_0012859C.o",
-      "base_path": "build/src/ctr/nn/applet/func_0012859C.o",
-      "metadata": {
-        "complete": true,
-        "source_path": "src/ctr/nn/applet/func_0012859C.c",
-        "progress_categories": [
-          "ctr"
-        ]
-      },
-      "scratch": {
-        "platform": "n3ds",
-        "compiler": "armcc_40_821",
-        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
-      }
-    },
-    {
-      "name": "ctr/nn_applet/func_001285B0",
-      "target_path": "expected/func_001285B0.o",
-      "base_path": "build/src/ctr/nn/applet/func_001285B0.o",
-      "metadata": {
-        "complete": true,
-        "source_path": "src/ctr/nn/applet/func_001285B0.c",
-        "progress_categories": [
-          "ctr"
-        ]
-      },
-      "scratch": {
-        "platform": "n3ds",
-        "compiler": "armcc_40_821",
-        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
-      }
-    },
-    {
-      "name": "ctr/nn_applet/func_001285D4",
-      "target_path": "expected/func_001285D4.o",
-      "base_path": "build/src/ctr/nn/applet/func_001285D4.o",
-      "metadata": {
-        "complete": true,
-        "source_path": "src/ctr/nn/applet/func_001285D4.c",
-        "progress_categories": [
-          "ctr"
-        ]
-      },
-      "scratch": {
-        "platform": "n3ds",
-        "compiler": "armcc_40_821",
-        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
-      }
-    },
-    {
-      "name": "ctr/nn_applet/func_001285E8",
-      "target_path": "expected/func_001285E8.o",
-      "base_path": "build/src/ctr/nn/applet/func_001285E8.o",
-      "metadata": {
-        "complete": true,
-        "source_path": "src/ctr/nn/applet/func_001285E8.c",
-        "progress_categories": [
-          "ctr"
-        ]
-      },
-      "scratch": {
-        "platform": "n3ds",
-        "compiler": "armcc_40_821",
-        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
-      }
-    },
-    {
-      "name": "ctr/nn_applet/func_001285F8",
-      "target_path": "expected/func_001285F8.o",
-      "base_path": "build/src/ctr/nn/applet/func_001285F8.o",
-      "metadata": {
-        "complete": true,
-        "source_path": "src/ctr/nn/applet/func_001285F8.c",
-        "progress_categories": [
-          "ctr"
-        ]
-      },
-      "scratch": {
-        "platform": "n3ds",
-        "compiler": "armcc_40_821",
-        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
-      }
-    },
-    {
-      "name": "ctr/nn_applet/func_00128608",
-      "target_path": "expected/func_00128608.o",
-      "base_path": "build/src/ctr/nn/applet/func_00128608.o",
-      "metadata": {
-        "complete": true,
-        "source_path": "src/ctr/nn/applet/func_00128608.c",
-        "progress_categories": [
-          "ctr"
-        ]
-      },
-      "scratch": {
-        "platform": "n3ds",
-        "compiler": "armcc_40_821",
-        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
-      }
-    },
-    {
-      "name": "ctr/nn_applet/func_00128618",
-      "target_path": "expected/func_00128618.o",
-      "base_path": "build/src/ctr/nn/applet/func_00128618.o",
-      "metadata": {
-        "complete": true,
-        "source_path": "src/ctr/nn/applet/func_00128618.c",
-        "progress_categories": [
-          "ctr"
-        ]
-      },
-      "scratch": {
-        "platform": "n3ds",
-        "compiler": "armcc_40_821",
-        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
-      }
-    },
-    {
-      "name": "ctr/nn_applet/func_00128628",
-      "target_path": "expected/func_00128628.o",
-      "base_path": "build/src/ctr/nn/applet/func_00128628.o",
-      "metadata": {
-        "complete": true,
-        "source_path": "src/ctr/nn/applet/func_00128628.c",
-        "progress_categories": [
-          "ctr"
-        ]
-      },
-      "scratch": {
-        "platform": "n3ds",
-        "compiler": "armcc_40_821",
-        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
-      }
-    },
-    {
-      "name": "ctr/nn_applet/func_0012863C",
-      "target_path": "expected/func_0012863C.o",
-      "base_path": "build/src/ctr/nn/applet/func_0012863C.o",
-      "metadata": {
-        "complete": true,
-        "source_path": "src/ctr/nn/applet/func_0012863C.c",
-        "progress_categories": [
-          "ctr"
-        ]
-      },
-      "scratch": {
-        "platform": "n3ds",
-        "compiler": "armcc_40_821",
-        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
-      }
-    },
-    {
-      "name": "ctr/nn_applet/func_0012864C",
-      "target_path": "expected/func_0012864C.o",
-      "base_path": "build/src/ctr/nn/applet/func_0012864C.o",
-      "metadata": {
-        "complete": true,
-        "source_path": "src/ctr/nn/applet/func_0012864C.c",
-        "progress_categories": [
-          "ctr"
-        ]
-      },
-      "scratch": {
-        "platform": "n3ds",
-        "compiler": "armcc_40_821",
-        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
-      }
-    },
-    {
       "name": "engine/lxp/func_0012CB00",
       "target_path": "expected/func_0012CB00.o",
       "base_path": "build/src/engine/lxp/func_0012CB00.o",
@@ -1419,6 +1181,23 @@
       }
     },
     {
+      "name": "ctr/applet",
+      "target_path": "expected/applet.o",
+      "base_path": "build/src/ctr/nn/applet/applet.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/ctr/nn/applet/applet.cpp",
+        "progress_categories": [
+          "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
       "name": "ctr/qResult",
       "target_path": "expected/qResult.o",
       "base_path": "build/src/ctr/nn/nex/qResult.o",
@@ -1461,6 +1240,193 @@
         "source_path": "src/ctr/nn/nex/StationConnectionInfo.cpp",
         "progress_categories": [
           "ctr"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "game/ywCLoopRPG",
+      "target_path": "expected/ywCLoopRPG.o",
+      "base_path": "build/src/game/loops/ywCLoopRPG.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/game/loops/ywCLoopRPG.cpp",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "game/ywCLoopCapsule",
+      "target_path": "expected/ywCLoopCapsule.o",
+      "base_path": "build/src/game/loops/ywCLoopCapsule.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/game/loops/ywCLoopCapsule.cpp",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "game/ywCLoopYokaispot",
+      "target_path": "expected/ywCLoopYokaispot.o",
+      "base_path": "build/src/game/loops/ywCLoopYokaispot.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/game/loops/ywCLoopYokaispot.cpp",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "game/ywCLoopRace",
+      "target_path": "expected/ywCLoopRace.o",
+      "base_path": "build/src/game/loops/ywCLoopRace.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/game/loops/ywCLoopRace.cpp",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "game/ywCLoopBattle",
+      "target_path": "expected/ywCLoopBattle.o",
+      "base_path": "build/src/game/loops/ywCLoopBattle.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/game/loops/ywCLoopBattle.cpp",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "game/ywCLoopOrgeTime",
+      "target_path": "expected/ywCLoopOrgeTime.o",
+      "base_path": "build/src/game/loops/ywCLoopOrgeTime.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/game/loops/ywCLoopOrgeTime.cpp",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "game/ywCLoopQR",
+      "target_path": "expected/ywCLoopQR.o",
+      "base_path": "build/src/game/loops/ywCLoopQR.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/game/loops/ywCLoopQR.cpp",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "game/ywCLoopMain",
+      "target_path": "expected/ywCLoopMain.o",
+      "base_path": "build/src/game/loops/ywCLoopMain.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/game/loops/ywCLoopMain.cpp",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "game/ywCLoopEvent",
+      "target_path": "expected/ywCLoopEvent.o",
+      "base_path": "build/src/game/loops/ywCLoopEvent.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/game/loops/ywCLoopEvent.cpp",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "game/ywCLoopWatchmap",
+      "target_path": "expected/ywCLoopWatchmap.o",
+      "base_path": "build/src/game/loops/ywCLoopWatchmap.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/game/loops/ywCLoopWatchmap.cpp",
+        "progress_categories": [
+          "game"
+        ]
+      },
+      "scratch": {
+        "platform": "n3ds",
+        "compiler": "armcc_40_821",
+        "c_flags": "--cpu=MPCore -O3 -Otime --split_sections"
+      }
+    },
+    {
+      "name": "game/ywCLoopMenu",
+      "target_path": "expected/ywCLoopMenu.o",
+      "base_path": "build/src/game/loops/ywCLoopMenu.o",
+      "metadata": {
+        "complete": true,
+        "source_path": "src/game/loops/ywCLoopMenu.cpp",
+        "progress_categories": [
+          "game"
         ]
       },
       "scratch": {

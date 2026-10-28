@@ -168,6 +168,28 @@ address,symbol,size,layer,subsystem,level,status,description
 0x0010C5C8,func_0010C5C8,16,engine,lfw,2_accessor,matched,Level-5 Framework applet attribute setter (0x00814E00 offset 0x18)
 0x0010C6A4,func_0010C6A4,16,engine,lfw,2_accessor,matched,Level-5 Framework applet unk_14 setter (0x00814E00 offset 0x14)
 0x0010C894,func_0010C894,12,game,loops,2_accessor,matched,Game loop subsystem pointer getter via literal pool (0x0086C8CC)
+0x0010CEE8,_ZN10ywCLoopRPG12getClassTypeEv,8,game,loops,1_leaf_stub,matched,ywCLoopRPG::getClassType()
+0x0010CEF0,_ZN10ywCLoopRPG12getClassNameEv,12,game,loops,2_accessor,matched,ywCLoopRPG::getClassName()
+0x0010CFF4,_ZN11ywCLoopMain12getClassTypeEv,8,game,loops,1_leaf_stub,matched,ywCLoopMain::getClassType()
+0x0010CFFC,_ZN11ywCLoopMain12getClassNameEv,12,game,loops,2_accessor,matched,ywCLoopMain::getClassName()
+0x0010D134,_ZN11ywCLoopMenu12getClassTypeEv,8,game,loops,1_leaf_stub,matched,ywCLoopMenu::getClassType()
+0x0010D13C,_ZN11ywCLoopMenu12getClassNameEv,12,game,loops,2_accessor,matched,ywCLoopMenu::getClassName()
+0x0010D234,_ZN11ywCLoopRace12getClassTypeEv,8,game,loops,1_leaf_stub,matched,ywCLoopRace::getClassType()
+0x0010D23C,_ZN11ywCLoopRace12getClassNameEv,12,game,loops,2_accessor,matched,ywCLoopRace::getClassName()
+0x0010D3A8,_ZN12ywCLoopEvent12getClassTypeEv,8,game,loops,1_leaf_stub,matched,ywCLoopEvent::getClassType()
+0x0010D3B0,_ZN12ywCLoopEvent12getClassNameEv,12,game,loops,2_accessor,matched,ywCLoopEvent::getClassName()
+0x0010D500,_ZN13ywCLoopBattle12getClassTypeEv,8,game,loops,1_leaf_stub,matched,ywCLoopBattle::getClassType()
+0x0010D508,_ZN13ywCLoopBattle12getClassNameEv,12,game,loops,2_accessor,matched,ywCLoopBattle::getClassName()
+0x0010D63C,_ZN14ywCLoopCapsule12getClassTypeEv,8,game,loops,1_leaf_stub,matched,ywCLoopCapsule::getClassType()
+0x0010D644,_ZN14ywCLoopCapsule12getClassNameEv,12,game,loops,2_accessor,matched,ywCLoopCapsule::getClassName()
+0x0010DC40,_ZN15ywCLoopOrgeTime12getClassTypeEv,8,game,loops,1_leaf_stub,matched,ywCLoopOrgeTime::getClassType()
+0x0010DC48,_ZN15ywCLoopOrgeTime12getClassNameEv,12,game,loops,2_accessor,matched,ywCLoopOrgeTime::getClassName()
+0x0010DD40,_ZN15ywCLoopWatchmap12getClassTypeEv,8,game,loops,1_leaf_stub,matched,ywCLoopWatchmap::getClassType()
+0x0010DD48,_ZN15ywCLoopWatchmap12getClassNameEv,12,game,loops,2_accessor,matched,ywCLoopWatchmap::getClassName()
+0x0010E35C,_ZN16ywCLoopYokaispot12getClassTypeEv,8,game,loops,1_leaf_stub,matched,ywCLoopYokaispot::getClassType()
+0x0010E364,_ZN16ywCLoopYokaispot12getClassNameEv,12,game,loops,2_accessor,matched,ywCLoopYokaispot::getClassName()
+0x0010FEBC,_ZN9ywCLoopQR12getClassTypeEv,8,game,loops,1_leaf_stub,matched,ywCLoopQR::getClassType()
+0x0010FEC4,_ZN9ywCLoopQR12getClassNameEv,12,game,loops,2_accessor,matched,ywCLoopQR::getClassName()
 0x0011054C,func_0011054C,24,game,loops,3_arithmetic_logic,matched,"Struct header reset (zeros 8 bytes, sets byte 0 to 0xFF)"
 0x001128F8,func_001128F8,148,ctr,nn_y2r,7_complex_caller,asm_stub,Y2R virtual dispatch for image conversion parameters
 0x0011298C,func_0011298C,284,ctr,nn_y2r,7_complex_caller,asm_stub,Y2R image transformation and coordinate scaling sequence
@@ -253,23 +275,23 @@ address,symbol,size,layer,subsystem,level,status,description
 0x001283BC,func_001283BC,96,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (12 calls)
 0x00128424,func_00128424,80,ctr,nn_os,7_complex_caller,asm_stub,Complex caller (12 calls)
 0x001284AC,func_001284AC,52,ctr,nn_os,6_moderate_caller,asm_stub,Moderate caller (3 subcalls)
-0x001284E4,func_001284E4,28,ctr,nn_applet,2_accessor,matched,nn::applet::CTR::IsApplication attribute check via literal pool (0x00814E00)
-0x00128544,func_00128544,20,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::SetCallback2C
-0x00128558,func_00128558,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState10 (offset 0x10)
-0x00128568,func_00128568,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::GetState0C (offset 0x0C)
-0x00128578,func_00128578,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState0C (offset 0x0C)
-0x00128588,func_00128588,20,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::SetCallback20
-0x0012859C,func_0012859C,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState08_1 (offset 0x08 = 1)
-0x001285B0,func_001285B0,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::GetState08 (offset 0x08)
-0x001285C0,func_001285C0,20,ctr,nn_applet,2_simple_accessor,asm_stub,nn::applet::detail::SetCallback24
-0x001285D4,func_001285D4,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState08_0 (offset 0x08 = 0)
-0x001285E8,func_001285E8,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::GetState0B (offset 0x0B)
-0x001285F8,func_001285F8,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState0B (offset 0x0B)
-0x00128608,func_00128608,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::GetState0D (offset 0x0D)
-0x00128618,func_00128618,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState0D (offset 0x0D)
-0x00128628,func_00128628,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState07_1 (offset 0x07 = 1)
-0x0012863C,func_0012863C,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::GetState07 (offset 0x07)
-0x0012864C,func_0012864C,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState07_0 (offset 0x07 = 0)
+0x001284E4,_ZN2nn6applet3CTR13IsApplicationEv,28,ctr,nn_applet,2_accessor,matched,nn::applet::CTR::IsApplication
+0x00128544,_ZN2nn6applet6detail23SetNotificationCallbackEPvS2_,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetNotificationCallback
+0x00128558,_ZN2nn6applet6detail10SetState10Ej,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState10
+0x00128568,_ZN2nn6applet6detail10GetState0CEv,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::GetState0C
+0x00128578,_ZN2nn6applet6detail10SetState0CEh,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState0C
+0x00128588,_ZN2nn6applet6detail16SetSleepCallbackEPvS2_,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetSleepCallback
+0x0012859C,_ZN2nn6applet6detail12SetState08_1Ev,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState08_1
+0x001285B0,_ZN2nn6applet6detail10GetState08Ev,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::GetState08
+0x001285C0,_ZN2nn6applet6detail16SetAwakeCallbackEPvS2_,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetAwakeCallback
+0x001285D4,_ZN2nn6applet6detail12SetState08_0Ev,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState08_0
+0x001285E8,_ZN2nn6applet6detail10GetState0BEv,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::GetState0B
+0x001285F8,_ZN2nn6applet6detail10SetState0BEh,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState0B
+0x00128608,_ZN2nn6applet6detail10GetState0DEv,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::GetState0D
+0x00128618,_ZN2nn6applet6detail10SetState0DEa,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState0D
+0x00128628,_ZN2nn6applet6detail12SetState07_1Ev,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState07_1
+0x0012863C,_ZN2nn6applet6detail10GetState07Ev,16,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::GetState07
+0x0012864C,_ZN2nn6applet6detail12SetState07_0Ev,20,ctr,nn_applet,2_simple_accessor,matched,nn::applet::detail::SetState07_0
 0x0012CB00,func_0012CB00,12,engine,lxp,2_accessor,matched,Level-5 engine global singleton getter via literal pool (0x00868A9C)
 0x0012F190,svcExitThread,8,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x09)
 0x0012F198,svcCreateResourceLimit,24,ctr,svc,1_leaf_stub,matched,CTR kernel syscall wrapper stub (svc 0x35)

@@ -11,6 +11,7 @@ import argparse
 import csv
 import os
 from pathlib import Path
+import re
 import struct
 import subprocess
 import sys
@@ -31,13 +32,32 @@ def get_symbols_from_elf(obj_path: Path):
     except Exception:
         return {}
 
+    sec_cmd = ["arm-none-eabi-readelf", "-S", "-W", str(obj_path)]
+    sec_names = {}
+    try:
+        sec_out = subprocess.check_output(sec_cmd, text=True, stderr=subprocess.PIPE)
+        for line in sec_out.splitlines():
+            m = re.search(r"\[\s*(\d+)\]\s+([^\s]+)", line)
+            if m:
+                sec_names[m.group(1)] = m.group(2)
+    except Exception:
+        pass
+
     symbols = {}
     for line in out.splitlines():
         parts = line.strip().split()
         if len(parts) >= 8 and parts[3] == "FUNC":
+            if parts[6] == "UND":
+                continue
             name = parts[7]
             try:
-                symbols[name] = {"offset": int(parts[1], 16), "size": int(parts[2])}
+                sec_ndx = parts[6]
+                sec_name = sec_names.get(sec_ndx, ".text")
+                symbols[name] = {
+                    "offset": int(parts[1], 16),
+                    "size": int(parts[2]),
+                    "section": sec_name,
+                }
             except ValueError:
                 continue
     return symbols
@@ -48,21 +68,36 @@ def get_relocations_from_elf(obj_path: Path):
     try:
         out = subprocess.check_output(cmd, text=True, stderr=subprocess.PIPE)
     except Exception:
-        return []
+        return {}
 
-    relocs = []
+    relocs_by_sec = {}
+    curr_sec = ".text"
     for line in out.splitlines():
+        m = re.search(r"Relocation section '([^']+)'", line)
+        if m:
+            sec = m.group(1)
+            if sec.startswith(".rela"):
+                curr_sec = sec[5:]
+            elif sec.startswith(".rel"):
+                curr_sec = sec[4:]
+            else:
+                curr_sec = sec
+            if curr_sec not in relocs_by_sec:
+                relocs_by_sec[curr_sec] = []
+            continue
         parts = line.strip().split()
         if len(parts) >= 5 and "R_ARM_" in parts[2]:
             try:
-                relocs.append({
+                if curr_sec not in relocs_by_sec:
+                    relocs_by_sec[curr_sec] = []
+                relocs_by_sec[curr_sec].append({
                     "offset": int(parts[0], 16),
                     "type": parts[2],
                     "symbol": parts[-1]
                 })
             except ValueError:
                 continue
-    return relocs
+    return relocs_by_sec
 
 
 def extract_section_bytes(obj_path: Path, section=".text"):
@@ -117,10 +152,8 @@ def main():
         if not symbols:
             continue
 
-        relocs = get_relocations_from_elf(obj)
-        text_bytes = extract_section_bytes(obj, ".text")
-        if not text_bytes:
-            continue
+        relocs_by_sec = get_relocations_from_elf(obj)
+        default_text_bytes = extract_section_bytes(obj, ".text")
 
         for sym, sym_info in symbols.items():
             meta = manifest.get(sym)
@@ -141,11 +174,24 @@ def main():
                 print(f"  ⚠️ Skipping {sym}: address 0x{addr:08X} out of binary bounds")
                 continue
 
+            sec_name = sym_info.get("section", ".text")
+            if sec_name != ".text":
+                text_bytes = extract_section_bytes(obj, sec_name)
+            else:
+                text_bytes = default_text_bytes
+
+            if not text_bytes:
+                continue
+
             obj_off = sym_info["offset"]
-            obj_size = sym_info["size"]
+            effective_size = max(sym_info["size"], size)
+            if obj_off + effective_size > len(text_bytes):
+                effective_size = len(text_bytes) - obj_off
+            obj_size = effective_size
             fn_bytes = bytearray(text_bytes[obj_off : obj_off + obj_size])
 
             # For relocations: preserve target reference address from raw binary
+            relocs = relocs_by_sec.get(sec_name, [])
             for r in relocs:
                 if obj_off <= r["offset"] < obj_off + obj_size:
                     rel_local = r["offset"] - obj_off
