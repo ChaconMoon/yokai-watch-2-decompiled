@@ -119,8 +119,101 @@ def main():
             ("0x0031F1F4", "_ZN2nn3nex7qResultC1Ev"),
             ("0x0031F204", "_ZN2nn3nex7qResultC1ERKS1_"),
             ("0x0031F210", "_ZNK2nn3nex7qResult8getValueEv"),
-        ]
+        ],
+        "applet": [
+            ("0x001284E4", "_ZN2nn6applet3CTR13IsApplicationEv"),
+            ("0x00128544", "_ZN2nn6applet6detail23SetNotificationCallbackEPvS2_"),
+            ("0x00128558", "_ZN2nn6applet6detail10SetState10Ej"),
+            ("0x00128568", "_ZN2nn6applet6detail10GetState0CEv"),
+            ("0x00128578", "_ZN2nn6applet6detail10SetState0CEh"),
+            ("0x00128588", "_ZN2nn6applet6detail16SetSleepCallbackEPvS2_"),
+            ("0x0012859C", "_ZN2nn6applet6detail12SetState08_1Ev"),
+            ("0x001285B0", "_ZN2nn6applet6detail10GetState08Ev"),
+            ("0x001285C0", "_ZN2nn6applet6detail16SetAwakeCallbackEPvS2_"),
+            ("0x001285D4", "_ZN2nn6applet6detail12SetState08_0Ev"),
+            ("0x001285E8", "_ZN2nn6applet6detail10GetState0BEv"),
+            ("0x001285F8", "_ZN2nn6applet6detail10SetState0BEh"),
+            ("0x00128608", "_ZN2nn6applet6detail10GetState0DEv"),
+            ("0x00128618", "_ZN2nn6applet6detail10SetState0DEa"),
+            ("0x00128628", "_ZN2nn6applet6detail12SetState07_1Ev"),
+            ("0x0012863C", "_ZN2nn6applet6detail10GetState07Ev"),
+            ("0x0012864C", "_ZN2nn6applet6detail12SetState07_0Ev"),
+        ],
+        "ywCLoopMain": [
+            ("0x0010CFF4", "_ZN11ywCLoopMain12getClassTypeEv"),
+            ("0x0010CFFC", "_ZN11ywCLoopMain12getClassNameEv"),
+        ],
+        "ywCLoopRPG": [
+            ("0x0010CEE8", "_ZN10ywCLoopRPG12getClassTypeEv"),
+            ("0x0010CEF0", "_ZN10ywCLoopRPG12getClassNameEv"),
+        ],
+        "ywCLoopMenu": [
+            ("0x0010D134", "_ZN11ywCLoopMenu12getClassTypeEv"),
+            ("0x0010D13C", "_ZN11ywCLoopMenu12getClassNameEv"),
+        ],
+        "ywCLoopRace": [
+            ("0x0010D234", "_ZN11ywCLoopRace12getClassTypeEv"),
+            ("0x0010D23C", "_ZN11ywCLoopRace12getClassNameEv"),
+        ],
+        "ywCLoopEvent": [
+            ("0x0010D3A8", "_ZN12ywCLoopEvent12getClassTypeEv"),
+            ("0x0010D3B0", "_ZN12ywCLoopEvent12getClassNameEv"),
+        ],
+        "ywCLoopBattle": [
+            ("0x0010D500", "_ZN13ywCLoopBattle12getClassTypeEv"),
+            ("0x0010D508", "_ZN13ywCLoopBattle12getClassNameEv"),
+        ],
+        "ywCLoopCapsule": [
+            ("0x0010D63C", "_ZN14ywCLoopCapsule12getClassTypeEv"),
+            ("0x0010D644", "_ZN14ywCLoopCapsule12getClassNameEv"),
+        ],
+        "ywCLoopOrgeTime": [
+            ("0x0010DC40", "_ZN15ywCLoopOrgeTime12getClassTypeEv"),
+            ("0x0010DC48", "_ZN15ywCLoopOrgeTime12getClassNameEv"),
+        ],
+        "ywCLoopWatchmap": [
+            ("0x0010DD40", "_ZN15ywCLoopWatchmap12getClassTypeEv"),
+            ("0x0010DD48", "_ZN15ywCLoopWatchmap12getClassNameEv"),
+        ],
+        "ywCLoopYokaispot": [
+            ("0x0010E35C", "_ZN16ywCLoopYokaispot12getClassTypeEv"),
+            ("0x0010E364", "_ZN16ywCLoopYokaispot12getClassNameEv"),
+        ],
+        "ywCLoopQR": [
+            ("0x0010FEBC", "_ZN9ywCLoopQR12getClassTypeEv"),
+            ("0x0010FEC4", "_ZN9ywCLoopQR12getClassNameEv"),
+        ],
     }
+
+    # Auto-discover any other multi-function TU from compiled objects in build/
+    manifest_by_sym = {}
+    with open(MANIFEST, "r", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            manifest_by_sym[row["symbol"].strip()] = row["address"].strip()
+
+    build_dir = PROJECT_ROOT / "build" / "src"
+    if build_dir.exists():
+        for obj_file in build_dir.rglob("*.o"):
+            stem = obj_file.stem
+            if stem in manifest_by_sym or stem in consolidated_tus:
+                continue
+            try:
+                out = subprocess.check_output(
+                    ["arm-none-eabi-readelf", "-s", "-W", str(obj_file)],
+                    text=True, stderr=subprocess.PIPE
+                )
+                discovered = []
+                for line in out.splitlines():
+                    p = line.split()
+                    if len(p) >= 8 and p[3] == "FUNC" and p[6] != "UND":
+                        sym = p[7]
+                        if sym in manifest_by_sym:
+                            discovered.append((manifest_by_sym[sym], sym))
+                if discovered:
+                    discovered.sort(key=lambda x: int(x[0], 16))
+                    consolidated_tus[stem] = discovered
+            except Exception:
+                pass
 
     for tu_name, tu_funcs in consolidated_tus.items():
         out_o = EXPECTED_DIR / f"{tu_name}.o"
