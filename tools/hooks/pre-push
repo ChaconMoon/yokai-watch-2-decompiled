@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# ==============================================================================
+#  Git Pre-Push Hook — Yo-kai Watch 2 (Nintendo 3DS Decompilation)
+#
+#  Verifica antes de subir cambios a GitHub:
+#    1. Byte-matching exacto sin regresiones (make check)
+#    2. GitHub Action (make report)
+#    3. README.md y objdiff.json actualizados
+# ==============================================================================
+set -e
+
+HOOK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+"${HOOK_DIR}/pre-commit"

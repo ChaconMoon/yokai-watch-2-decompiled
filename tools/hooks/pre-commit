@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+# ==============================================================================
+#  Git Pre-Commit Hook — Yo-kai Watch 2 (Nintendo 3DS Decompilation)
+#
+#  Verifica automáticamente antes de commitear o subir a GitHub:
+#    1. Byte-matching exacto sin regresiones (make check)
+#    2. Ejecución correcta de la GitHub Action (make report)
+#    3. Sincronización exacta de README.md y objdiff.json con el progreso real
+# ==============================================================================
+set -e
+
+# Configuración de colores para salida en terminal
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+BOLD='\033[1m'
+NC='\033[0m' # No Color
+
+echo -e "${BLUE}${BOLD}============================================================${NC}"
+echo -e "${BLUE}${BOLD}  🔍 [Git Pre-Commit] Verificación de Integridad y Progreso  ${NC}"
+echo -e "${BLUE}${BOLD}============================================================${NC}"
+
+# ------------------------------------------------------------------------------
+# 1. Verificación de Byte-Matching (Cero Regresiones)
+# ------------------------------------------------------------------------------
+echo -e "\n${CYAN}${BOLD}[1/3] Verificando byte-matching de funciones (make check)...${NC}"
+if ! make check; then
+    echo -e "\n${RED}${BOLD}❌ ERROR: 'make check' ha fallado.${NC}"
+    echo -e "${RED}Se han detectado errores de compilación o regresiones en funciones que no coinciden byte-exact.${NC}"
+    echo -e "${YELLOW}Por favor, corrige el código antes de hacer commit.${NC}"
+    exit 1
+fi
+echo -e "${GREEN}✓ Matching byte-exact verificado sin regresiones.${NC}"
+
+# ------------------------------------------------------------------------------
+# 2. Verificación de la GitHub Action (make report / objdiff-cli)
+# ------------------------------------------------------------------------------
+echo -e "\n${CYAN}${BOLD}[2/3] Verificando ejecución de la GitHub Action (make report)...${NC}"
+if ! make report; then
+    echo -e "\n${RED}${BOLD}❌ ERROR: 'make report' (GitHub Action) ha fallado.${NC}"
+    echo -e "${RED}No se ha podido generar el reporte de progreso para objdiff / decomp.dev.${NC}"
+    exit 1
+fi
+
+if [ ! -f "build/report.json" ]; then
+    echo -e "\n${RED}${BOLD}❌ ERROR: 'build/report.json' no existe tras ejecutar 'make report'.${NC}"
+    exit 1
+fi
+echo -e "${GREEN}✓ GitHub Action (make report) ejecutada con éxito (build/report.json generado).${NC}"
+
+# ------------------------------------------------------------------------------
+# 3. Verificación de actualización del README.md y objdiff.json
+# ------------------------------------------------------------------------------
+echo -e "\n${CYAN}${BOLD}[3/3] Verificando que README.md y objdiff.json estén actualizados...${NC}"
+
+# Ejecutar la auditoría oficial para actualizar tablas y métricas
+python3 tools/audit_progress.py --update-readme > /dev/null
+
+# Comprobar si hay cambios no staged en README.md u objdiff.json
+README_DIFF=$(git diff --name-only README.md)
+OBJDIFF_DIFF=$(git diff --name-only objdiff.json)
+
+if [ -n "$README_DIFF" ] || [ -n "$OBJDIFF_DIFF" ]; then
+    echo -e "\n${RED}${BOLD}❌ ERROR: README.md o objdiff.json no están actualizados en el commit.${NC}"
+    echo -e "${YELLOW}Las métricas de progreso han cambiado respecto a las registradas en el repositorio.${NC}"
+    echo -e "Archivos con cambios pendientes:"
+    [ -n "$README_DIFF" ] && echo -e "  - ${RED}README.md${NC}"
+    [ -n "$OBJDIFF_DIFF" ] && echo -e "  - ${RED}objdiff.json${NC}"
+    echo -e "\n${BOLD}Para actualizar y continuar con el commit:${NC}"
+    echo -e "  ${GREEN}make progress${NC}"
+    echo -e "  ${GREEN}git add README.md objdiff.json${NC}"
+    echo -e "  ${GREEN}git commit${NC}\n"
+    exit 1
+fi
+echo -e "${GREEN}✓ README.md y objdiff.json están 100% actualizados con el progreso real.${NC}"
+
+echo -e "\n${GREEN}${BOLD}============================================================${NC}"
+echo -e "${GREEN}${BOLD}  ✅ Pre-Commit superado: Todo en orden para commitear.    ${NC}"
+echo -e "${GREEN}${BOLD}============================================================${NC}\n"
+
+exit 0

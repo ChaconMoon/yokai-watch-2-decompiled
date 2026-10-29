@@ -27,7 +27,7 @@ OBJS     := $(patsubst src/%.c, build/src/%.o, $(C_SRCS)) \
             $(patsubst src/%.cpp, build/src/%.o, $(CPP_SRCS)) \
             $(patsubst src/%.s, build/src/%.o, $(S_SRCS))
 
-.PHONY: all build extract progress classes check inject dump report info clean distclean live
+.PHONY: all build extract progress classes check inject dump report info clean distclean live hooks
 
 all: build
 
@@ -42,12 +42,22 @@ report: $(OBJS)
 		echo "⚠️ objdiff-cli not found. Download it to tools/objdiff-cli first."; \
 	fi
 
+hooks:
+	@mkdir -p .git/hooks tools/hooks
+	@chmod +x tools/hooks/pre-commit tools/hooks/pre-push
+	@cp tools/hooks/pre-commit .git/hooks/pre-commit
+	@cp tools/hooks/pre-push .git/hooks/pre-push
+	@chmod +x .git/hooks/pre-commit .git/hooks/pre-push
+	@git config core.hooksPath tools/hooks 2>/dev/null || true
+	@echo "✅ Git pre-commit y pre-push hooks instalados y configurados correctamente."
+
 info:
 	@echo "============================================================"
 	@echo "  Yo-kai Watch 2: Psychic Specters — Decompilation (3DS)"
 	@echo "============================================================"
 	@echo "Available targets:"
 	@echo "  make check      - Compile and verify byte-matching of implemented functions"
+	@echo "  make hooks      - Install Git pre-commit & pre-push hooks (CI & README checks)"
 	@echo "  make inject     - Build 'build/code.bin' and install to Azahar emulator mods"
 	@echo "  make dump       - Dump clean assembly for decomp.me (e.g. make dump FUNC=0x0010B6D8)"
 	@echo "  make progress   - Audit progress and update README tables"
