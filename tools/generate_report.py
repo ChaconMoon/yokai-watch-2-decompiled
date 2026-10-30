@@ -8,6 +8,7 @@ frogress, and matching the exact schema used in reference projects (like Animal 
 import csv
 import json
 from pathlib import Path
+import re
 import subprocess
 import sys
 
@@ -139,34 +140,78 @@ def build_measures_dict(total_code, matched_code, total_data, matched_data, tota
     }
 
 
+def assign_target_unit(fn: dict) -> str:
+    """Pre-groups functions into canonical target C/C++ compilation units (.cpp / .c)."""
+    sym = fn["symbol"]
+    layer = fn["layer"]
+    subsys = fn["subsystem"]
+    dem = demangle(sym)
+
+    # 1. Game Loops: match specific C++ loop class names
+    if subsys == "loops" or layer == "game":
+        m = re.match(r"^(ywCLoop[A-Za-z0-9]+)::", dem)
+        if m:
+            return f"src/game/loops/{m.group(1)}.cpp"
+        if subsys == "loops":
+            return "src/game/loops/ywCLoop.cpp"
+
+    # 2. CTR: nn::nex classes
+    if subsys == "nn_nex":
+        m = re.match(r"^nn::nex::([A-Za-z0-9]+)::", dem)
+        if m:
+            return f"src/ctr/nn/nex/{m.group(1)}.cpp"
+        return "src/ctr/nn/nex/nex.cpp"
+
+    # 3. CTR: standard subsystems
+    if subsys == "nn_applet":
+        return "src/ctr/nn/applet/applet.cpp"
+    if subsys == "nn_dsp":
+        return "src/ctr/nn/dsp/dsp.cpp"
+    if subsys == "nn_os":
+        return "src/ctr/nn/os/os.cpp"
+    if subsys == "nn_y2r":
+        return "src/ctr/nn/y2r/y2r.cpp"
+    if subsys == "nn_ndm":
+        return "src/ctr/nn/ndm/ndm.cpp"
+    if subsys == "nn_math":
+        return "src/ctr/nn/math/math.cpp"
+    if subsys == "nn_cecd":
+        return "src/ctr/nn/cecd/cecd.cpp"
+    if subsys == "svc":
+        return "src/ctr/svc/svc.c"
+    if subsys == "crt":
+        return "src/ctr/crt/crt.c"
+
+    # 4. Engine subsystems
+    if layer == "engine":
+        if subsys == "lfw":
+            return "src/engine/lfw/lfwCLoop.cpp"
+        if subsys == "lxp":
+            return "src/engine/lxp/lxp.cpp"
+        return "src/engine/core/core.cpp"
+
+    # 5. Default fallback
+    return f"src/{layer}/{subsys}/{subsys}.cpp"
+
+
 def main():
     BUILD_DIR.mkdir(parents=True, exist_ok=True)
     all_funcs = load_all_functions()
-    file_map = find_source_files()
 
     # Track matched status
     matched_statuses = ("matched", "community_matched", "matched_community")
 
-    # Group functions by translation unit
-    # 1. Functions that have a source file in src/
-    decompiled_units = {}
-    remaining_funcs = []
-
+    # Pre-group all functions by their target translation unit (.cpp / .c)
+    units_map = {}
     for fn in all_funcs:
-        sym = fn["symbol"]
-        is_matched = fn["status"] in matched_statuses
-        if sym in file_map:
-            src_path = file_map[sym]
-            if src_path not in decompiled_units:
-                decompiled_units[src_path] = []
-            decompiled_units[src_path].append(fn)
-        else:
-            remaining_funcs.append(fn)
+        unit_path = assign_target_unit(fn)
+        if unit_path not in units_map:
+            units_map[unit_path] = []
+        units_map[unit_path].append(fn)
 
     # Calculate global metrics
     matched_funcs_list = [f for f in all_funcs if f["status"] in matched_statuses]
     total_code_matched = sum(f["size"] for f in matched_funcs_list)
-    total_functions_count = max(len(all_funcs), TOTAL_FUNCTIONS_EXPECTED)
     total_matched_functions_count = len(matched_funcs_list)
 
     # Layer breakdowns
@@ -212,12 +257,21 @@ def main():
     }
     report_units.append(data_unit)
 
-    # 2. Decompiled units from src/
-    for src_path, fns in sorted(decompiled_units.items()):
+    # Calculate total code accounted across grouped units
+    total_grouped_code = sum(sum(f["size"] for f in fns) for fns in units_map.values())
+    unmapped_code_slack = max(0, TOTAL_CODE_BYTES - total_grouped_code)
+
+    # 2. Add each pre-grouped C++ / C compilation unit
+    for unit_path, fns in sorted(units_map.items()):
         unit_code = sum(f["size"] for f in fns)
         unit_matched_code = sum(f["size"] for f in fns if f["status"] in matched_statuses)
         unit_fns_count = len(fns)
         unit_matched_fns = len([f for f in fns if f["status"] in matched_statuses])
+
+        # Absorb unmapped binary remainder into game/core/core.cpp so total_code reaches exact 6,238,892 B
+        if unit_path == "src/game/core/core.cpp" and unmapped_code_slack > 0:
+            unit_code += unmapped_code_slack
+
         is_complete = (unit_matched_code == unit_code and unit_code > 0)
 
         layer = fns[0]["layer"] if fns else "game"
@@ -250,8 +304,9 @@ def main():
                 "address": str(addr_rel)
             })
 
+        unit_exists_on_disk = (PROJECT_ROOT / unit_path).exists()
         unit_obj = {
-            "name": src_path,
+            "name": unit_path,
             "measures": build_measures_dict(
                 total_code=unit_code,
                 matched_code=unit_matched_code,
@@ -272,102 +327,11 @@ def main():
             "functions": fn_entries,
             "metadata": {
                 "progress_categories": [layer, "codebin"],
-                "auto_generated": False,
-                "source_path": src_path
+                "auto_generated": not unit_exists_on_disk,
+                "source_path": unit_path
             }
         }
         report_units.append(unit_obj)
-
-    # 3. Group remaining undecompiled functions by (layer, subsystem)
-    subsystem_groups = {}
-    for fn in remaining_funcs:
-        key = (fn["layer"], fn["subsystem"])
-        if key not in subsystem_groups:
-            subsystem_groups[key] = []
-        subsystem_groups[key].append(fn)
-
-    for (layer, subsys), fns in sorted(subsystem_groups.items()):
-        unit_code = sum(f["size"] for f in fns)
-        unit_fns_count = len(fns)
-        if layer not in layer_stats:
-            layer = "game"
-
-        layer_stats[layer]["code"] += unit_code
-        layer_stats[layer]["fns"] += unit_fns_count
-        layer_stats[layer]["units"] += 1
-
-        fn_entries = []
-        for fn in fns:
-            vma = fn["address"]
-            addr_rel = vma - BASE_VMA
-            fn_entries.append({
-                "name": fn["symbol"],
-                "size": str(fn["size"]),
-                "fuzzy_match_percent": 0.0,
-                "metadata": {
-                    "demangled_name": demangle(fn["symbol"]),
-                    "virtual_address": str(vma)
-                },
-                "address": str(addr_rel)
-            })
-
-        virtual_source = f"src/{layer}/{subsys}/unmatched.c"
-        unit_obj = {
-            "name": virtual_source,
-            "measures": build_measures_dict(
-                total_code=unit_code,
-                matched_code=0,
-                total_data=0,
-                matched_data=0,
-                total_fns=unit_fns_count,
-                matched_fns=0,
-                total_units=1,
-                complete_units=0
-            ),
-            "sections": [
-                {
-                    "name": ".text",
-                    "size": str(unit_code),
-                    "fuzzy_match_percent": 0.0
-                }
-            ],
-            "functions": fn_entries,
-            "metadata": {
-                "progress_categories": [layer, "codebin"],
-                "auto_generated": True,
-                "source_path": virtual_source
-            }
-        }
-        report_units.append(unit_obj)
-
-    # Adjust top-level total_code to reflect full .text size exactly
-    total_code_accounted = sum(int(u["measures"]["total_code"]) for u in report_units)
-    if total_code_accounted < TOTAL_CODE_BYTES:
-        unmapped_size = TOTAL_CODE_BYTES - total_code_accounted
-        unmapped_unit = {
-            "name": "src/game/unmapped_code.c",
-            "measures": build_measures_dict(
-                total_code=unmapped_size,
-                matched_code=0,
-                total_data=0,
-                matched_data=0,
-                total_fns=max(0, TOTAL_FUNCTIONS_EXPECTED - len(all_funcs)),
-                matched_fns=0,
-                total_units=1,
-                complete_units=0
-            ),
-            "sections": [
-                {"name": ".text", "size": str(unmapped_size), "fuzzy_match_percent": 0.0}
-            ],
-            "functions": [],
-            "metadata": {
-                "progress_categories": ["game", "codebin"],
-                "auto_generated": True,
-                "source_path": "src/game/unmapped_code.c"
-            }
-        }
-        report_units.append(unmapped_unit)
-        layer_stats["game"]["code"] += unmapped_size
 
     total_units_count = len(report_units)
     complete_units_count = sum(1 for u in report_units if u["measures"]["complete_units"] > 0)
