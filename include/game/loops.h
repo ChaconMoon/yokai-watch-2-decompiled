@@ -110,7 +110,24 @@ extern "C" {
 
 /* Loop Controller Globals */
 extern s32 unk_0086C8CC;
+
+typedef struct YwLoopControllerState
+{
+        u8    enabled;       /* +0x00: Flag booleano (1 = activo) */
+        u8    mode;          /* +0x01: Flag / modo de control */
+        u8    pad_02[0x02];  /* +0x02 - +0x03: Alineación a 4 bytes */
+        void *target;        /* +0x04: Puntero de destino / contexto */
+        void *callback;      /* +0x08: Puntero callback guardado por func_0010C870 */
+        u32   pad_0C;        /* +0x0C - +0x0F: Alineación final */
+} YwLoopControllerState;
+
+extern YwLoopControllerState g_LoopState_00815C90;
+
 void *func_0010C894(void);
+void  func_0010C870(void *callback);
+void  func_0010C880(void);
+void  func_0010C8A0(u8 mode);
+void  func_0010CA68(void *target);
 
 typedef struct YwLoopHeader
 {

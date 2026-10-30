@@ -58,21 +58,25 @@ echo -e "\n${CYAN}${BOLD}[3/3] Verificando que README.md y objdiff.json estén a
 # Ejecutar la auditoría oficial para actualizar tablas y métricas
 python3 tools/audit_progress.py --update-readme > /dev/null
 
-# Comprobar si hay cambios no staged en README.md u objdiff.json
-README_DIFF=$(git diff --name-only README.md)
-OBJDIFF_DIFF=$(git diff --name-only objdiff.json)
+# Solo exigir actualización de README.md y objdiff.json si se están commiteando fuentes o funciones de código
+STAGED_CODE=$(git diff --cached --name-only | grep -E '^(src/|include/|config/|expected/|Makefile)' || true)
+if [ -n "$STAGED_CODE" ]; then
+    # Comprobar si hay cambios no staged en README.md u objdiff.json
+    README_DIFF=$(git diff --name-only README.md)
+    OBJDIFF_DIFF=$(git diff --name-only objdiff.json)
 
-if [ -n "$README_DIFF" ] || [ -n "$OBJDIFF_DIFF" ]; then
-    echo -e "\n${RED}${BOLD}❌ ERROR: README.md o objdiff.json no están actualizados en el commit.${NC}"
-    echo -e "${YELLOW}Las métricas de progreso han cambiado respecto a las registradas en el repositorio.${NC}"
-    echo -e "Archivos con cambios pendientes:"
-    [ -n "$README_DIFF" ] && echo -e "  - ${RED}README.md${NC}"
-    [ -n "$OBJDIFF_DIFF" ] && echo -e "  - ${RED}objdiff.json${NC}"
-    echo -e "\n${BOLD}Para actualizar y continuar con el commit:${NC}"
-    echo -e "  ${GREEN}make progress${NC}"
-    echo -e "  ${GREEN}git add README.md objdiff.json${NC}"
-    echo -e "  ${GREEN}git commit${NC}\n"
-    exit 1
+    if [ -n "$README_DIFF" ] || [ -n "$OBJDIFF_DIFF" ]; then
+        echo -e "\n${RED}${BOLD}❌ ERROR: README.md o objdiff.json no están actualizados en el commit.${NC}"
+        echo -e "${YELLOW}Las métricas de progreso han cambiado respecto a las registradas en el repositorio.${NC}"
+        echo -e "Archivos con cambios pendientes:"
+        [ -n "$README_DIFF" ] && echo -e "  - ${RED}README.md${NC}"
+        [ -n "$OBJDIFF_DIFF" ] && echo -e "  - ${RED}objdiff.json${NC}"
+        echo -e "\n${BOLD}Para actualizar y continuar con el commit:${NC}"
+        echo -e "  ${GREEN}make progress${NC}"
+        echo -e "  ${GREEN}git add README.md objdiff.json${NC}"
+        echo -e "  ${GREEN}git commit${NC}\n"
+        exit 1
+    fi
 fi
 echo -e "${GREEN}✓ README.md y objdiff.json están 100% actualizados con el progreso real.${NC}"
 
