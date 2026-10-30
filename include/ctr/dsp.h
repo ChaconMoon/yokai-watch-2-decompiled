@@ -79,9 +79,11 @@ extern "C"
         void func_00136154(void *arg);
         void func_00136594(void *arg);
         void func_001365E4(void *arg);
+        void func_001371D4(void);
         void func_0013769C(void *arg);
         void func_00146570(u32 *pTemp, void *arg0);
         void func_00147C74(void *obj, void *param);
+        u32  func_001480C0(void);
         void func_0016A89C(void *arg);
         void func_00136318(DspHeader_00136318 *header); /* 0x00136318: initializes header */
         void func_0013636C(void *arg0);                 /* 0x0013636C: captures return from func_0012746C and passes to func_00146570 */
@@ -96,6 +98,7 @@ extern "C"
         bool32 func_00137F28(DspPair_00137F28 *obj, void *param1, void *param2); /* 0x00137F28: conditional pair setter (+0x14, +0x18) */
         u32    func_00137F40(DspBuffer_00137F40 *obj);                            /* 0x00137F40: buffer size computation */
         bool32 func_0013810C(DspPair_00137F28 *obj, void *param1, void *param2); /* 0x0013810C: conditional pair setter (+0x28, +0x2C) */
+        void   func_001385D0(void);                                               /* 0x001385D0: status check and conditional call to func_001371D4 */
         bool32 func_001386D4(const char *str);                                    /* 0x001386D4: validates non-empty string */
         u32 func_001388CC(const char *str, u32 max_len);                         /* 0x001388CC: strnlen loop */
         s8 func_001389BC(void);                         /* 0x001389BC: returns unk_00815DAC */

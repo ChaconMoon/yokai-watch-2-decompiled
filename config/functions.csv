@@ -367,7 +367,7 @@ address,symbol,size,layer,subsystem,level,status,description
 0x001384AC,func_001384AC,56,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (4 calls)
 0x001384E8,func_001384E8,160,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (14 calls)
 0x00138590,func_00138590,64,ctr,nn_dsp,7_complex_caller,asm_stub,Complex caller (4 calls)
-0x001385D0,func_001385D0,28,ctr,nn_dsp,6_moderate_caller,asm_stub,Moderate caller (3 subcalls)
+0x001385D0,func_001385D0,28,ctr,nn_dsp,6_moderate_caller,matched,nn::dsp status check and conditional call to func_001371D4
 0x001385EC,func_001385EC,60,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
 0x0013862C,func_0013862C,52,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
 0x00138660,func_00138660,40,ctr,nn_dsp,3_arithmetic_logic,asm_stub,Local arithmetic/bitwise computation
