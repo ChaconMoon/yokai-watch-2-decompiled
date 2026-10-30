@@ -4,6 +4,9 @@ A work-in-progress matching decompilation of *Yo-kai Watch 2: Psychic Specters* 
 
 The goal is clean, readable C/C++ source code that recompiles to a binary byte-for-byte identical to the original retail game (`code.raw.bin`).
 
+
+[![Overview](https://decomp.dev/ChaconMoon/yw2-decompiled)](https://decomp.dev/ChaconMoon/yw2-decompiled)
+
 Part of the [**#DecompilandoEn358Dias**](https://github.com/ChaconMoon/Decompilation-in-358-2) learning challenge.
 
 ---
